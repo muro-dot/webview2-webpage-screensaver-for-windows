@@ -215,5 +215,10 @@ namespace Web_Page_Screensaver
             setMultiScreenModeFromButtonState();
             ArrangeScreenTabs();
         }
+
+        private void prefsByScreenUserControl1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
