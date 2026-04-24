@@ -1,20 +1,25 @@
-[![Build Status](https://dev.azure.com/zen-projects/Chromium-Web-Page-Screensaver/_apis/build/status/ZenProjects.Chromium-Web-Page-Screensaver?branchName=master)](https://dev.azure.com/zen-projects/Chromium-Web-Page-Screensaver/_build/latest?definitionId=1&branchName=master)
+# WebView2 Web Page Screensaver
 
-# Chromium Web Page Screensaver
+A Fork of the old archived project [cwc/web-page-screensaver](https://github.com/cwc/web-page-screensaver) that uses **Microsoft Edge WebView2 (Chromium)** in place of the [CefSharp WinForms](https://github.com/cefsharp/CefSharp) to display web pages as your screensaver.
 
-Is a Fork of the old archived project [cwc/web-page-screensaver](https://github.com/cwc/web-page-screensaver) that use Chromium [(using CefSharp WinForms)](https://github.com/cefsharp/CefSharp) in place of the old [IE 11 Embeded WinForms](https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.webbrowser?view=netframework-4.8) to display web pages as your screensaver.
+## Key Improvements
+
+- **High DPI Support:** Perfect 1:1 pixel rendering on 4K/QHD monitors (No more blurry screens).
+- **Modern Engine:** Powered by the latest Chromium-based Microsoft Edge WebView2.
+- **Enhanced Input Detection:** Fixed issues where the screensaver wouldn't exit on keyboard input when the browser had focus.
+- **Improved Performance:** Lower memory footprint compared to legacy CefSharp builds.
 
 ## Dependencies
 
-- [.NET Framework v4.5.2+](https://www.microsoft.com/en-US/download/details.aspx?id=42642 ".NET Framework")
-- [CefSharp - Embedded Chromium for .NET v37+](https://cefsharp.github.io/ "CefSharp - Embedded Chromium for .NET")
-- Windows 7 & up
+- [.NET Framework v4.6.2+](https://www.microsoft.com/en-us/download/details.aspx?id=53344 ".NET Framework")
+- [Microsoft Edge WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/ "WebView2 Runtime")
+- Windows 10 & up
 
-## Download and Install the last CI Build
+## Download and Install
 
-- Download the ***[Lastest Chromium Web Screensaver binary](https://github.com/ZenProjects/Chromium-Web-Page-Screensaver/releases/latest)***
-- Unzip it
-- Find `Web-Page-Screensaver.scr` in the unziped directory, right click it
+- Download the ***[Latest WebView2 Web Screensaver binary](https://github.com/muro-dot/Webview2_WebPage_Screensaver/releases/latest)***
+- Unzip it to a permanent directory
+- Find `Webview2_WebPage_Screensaver.scr` in the unziped directory, right click it
 - Select `Install` to install, or `Test` to test it out without installing it
 - If installing it, the windows `Screen Saver Settings` dialog will pop up with the correct screen saver already selected
 - Use the `Settings...` button in the same dialog to change the web page(s) list displayed by the screen saver
@@ -22,11 +27,9 @@ Is a Fork of the old archived project [cwc/web-page-screensaver](https://github.
 ## Build 
 
 - Clone the source repository
-- Open the `.sln` project file with Visual Studio (i've tested only with VS 2019).
-- Build in `Release` with `x86` mode
-- Find `Web-Page-Screensaver.scr` in `bin/x86/Release` of your project directory, right click it
-- Select `Install` to install, or `Test` to test it out without installing it
-- If installing it, the windows `Screen Saver Settings` dialog will pop up with the correct screen saver already selected
-- Use the `Settings...` button in the same dialog to change the web page(s) list displayed by the screen saver
-
-
+- Open the `.sln` project file with Visual Studio (Tested with VS 2022).
+- Restore NuGet packages to download the `Microsoft.Web.WebView2` dependency.
+- Build in `Release` with `Any CPU` or `x64` mode
+- Find `Webview2_WebPage_Screensaver.exe` in `bin/Release`, and rename it to `Webview2_WebPage_Screensaver.scr`
+- Right click the `.scr` file, select `Install` to install, or `Test` to test it out
+- Use the `Settings...` button to configure your custom URLs.
