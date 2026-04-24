@@ -1,6 +1,6 @@
 # WebView2 Web Page Screensaver
 
-A Fork of the old archived project [cwc/web-page-screensaver](https://github.com/cwc/web-page-screensaver) that uses **Microsoft Edge WebView2 (Chromium)** in place of the [CefSharp WinForms](https://github.com/cefsharp/CefSharp) to display web pages as your screensaver.
+A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](https://github.com/ZenProjects/Chromium-Web-Page-Screensaver) that uses **Microsoft Edge WebView2 (Chromium)** in place of the [CefSharp WinForms](https://github.com/cefsharp/CefSharp) to display web pages as your screensaver.
 
 ## Key Improvements
 
@@ -36,7 +36,7 @@ A Fork of the old archived project [cwc/web-page-screensaver](https://github.com
 
 # WebView2 웹 페이지 화면 보호기 (Web Page Screensaver)
 
-이 프로젝트는 오래된 [cwc/web-page-screensaver](https://github.com/cwc/web-page-screensaver) 프로젝트를 포크하여 개선한 버전입니다. 기존의 [CefSharp WinForms](https://github.com/cefsharp/CefSharp) 대신 **Microsoft Edge WebView2 (Chromium)** 엔진을 사용하여 웹 페이지를 화면 보호기로 부드럽고 선명하게 출력합니다.
+이 프로젝트는 오래된 [ZenProjects/Chromium-Web-Page-Screensaver](https://github.com/ZenProjects/Chromium-Web-Page-Screensaver) 프로젝트를 포크하여 개선한 버전입니다. 기존의 [CefSharp WinForms](https://github.com/cefsharp/CefSharp) 대신 **Microsoft Edge WebView2 (Chromium)** 엔진을 사용하여 웹 페이지를 화면 보호기로 부드럽고 선명하게 출력합니다.
 
 ## 주요 개선 사항
 
