@@ -10,7 +10,7 @@ namespace Web_Page_Screensaver
 
     using global::Web_Page_Screensaver;
 
-    public partial class PreferencesForm : Form
+    public partial class PreferencesForm : Form 
     {
         private PreferencesManager prefsManager = new PreferencesManager();
 
