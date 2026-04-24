@@ -33,3 +33,4 @@ A Fork of the old archived project [cwc/web-page-screensaver](https://github.com
 - Find `Webview2_WebPage_Screensaver.exe` in `bin/Release`, and rename it to `Webview2_WebPage_Screensaver.scr`
 - Right click the `.scr` file, select `Install` to install, or `Test` to test it out
 - Use the `Settings...` button to configure your custom URLs.
+<img width="692" height="561" alt="2026-04-24 12 10 59" src="https://github.com/user-attachments/assets/2c0d02f8-5adc-45b5-b589-fe8e8fecbf45" />
