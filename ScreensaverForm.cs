@@ -29,7 +29,7 @@ namespace Web_Page_Screensaver
 
         public ScreensaverForm(int? screenNumber = null)
         {
-            // [해결 1] 폼이 생성되자마자 시작 시간을 기록하여 마우스 타이머의 오작동(조기 종료) 방지
+            // [Fix 1] Record the start time as soon as the form is created to prevent mouse timer malfunction (premature termination)
             StartTime = DateTime.Now;
 
             if (screenNumber == null) screenNum = prefsManager.EffectiveScreensList.FindIndex(s => s.IsPrimary);
@@ -49,7 +49,7 @@ namespace Web_Page_Screensaver
 
         private void MouseMonitorTimer_Tick(object sender, EventArgs e)
         {
-            // 프로그램 실행 후 1.5초 동안은 마우스가 흔들려도 종료되지 않도록 유예기간 부여
+            // Grant a grace period of 1.5 seconds after program execution so it doesn't terminate even if the mouse jitters
             if (StartTime.AddSeconds(1.5) > DateTime.Now)
             {
                 initialMousePos = Cursor.Position;
@@ -58,7 +58,7 @@ namespace Web_Page_Screensaver
 
             Point currentPos = Cursor.Position;
 
-            // X나 Y 좌표가 3픽셀 이상 움직였을 때만 반응
+            // React only when the X or Y coordinates move by more than 3 pixels
             if (Math.Abs(initialMousePos.X - currentPos.X) > 3 ||
                 Math.Abs(initialMousePos.Y - currentPos.Y) > 3)
             {
@@ -78,26 +78,27 @@ namespace Web_Page_Screensaver
                 this.Controls["closeButton"].BringToFront();
             }
 
-            // [해결 2] 권한 문제가 없는 안전한 폴더(LocalAppData)에 WebView2 임시 데이터를 저장
+            // [Fix 2] Save WebView2 temporary data in a safe folder (LocalAppData) with no permission issues
             string userDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "LibraryScreensaver_Data");
             var env = await CoreWebView2Environment.CreateAsync(null, userDataFolder);
 
             await webView.EnsureCoreWebView2Async(env);
-// ---------------------------------------------------------
-// [수정된 부분] CoreWebView2가 아닌 WebView2 컨트롤 자체의 이벤트를 사용합니다.
 
-// 1. 일반적인 문자, 숫자 키 감지
-webView.KeyDown += (sender, e) =>
-{
-    Application.Exit();
-};
+            // ---------------------------------------------------------
+            // [Modified part] Use events of the WebView2 control itself, not CoreWebView2.
+            // 1. Detect general character and number keys
+            webView.KeyDown += (sender, e) =>
+            {
+                Application.Exit();
+            };
 
-            // 2. 방향키, Tab, Esc 등 일반 KeyDown에서 놓칠 수 있는 특수키 감지 (안전장치)
+            // 2. Detect special keys like arrow keys, Tab, Esc, etc., that might be missed by general KeyDown (safety measure)
             webView.PreviewKeyDown += (sender, e) =>
             {
                 Application.Exit();
             };
             // ---------------------------------------------------------
+
             StartScreensaverLogic();
         }
 
@@ -115,7 +116,7 @@ webView.KeyDown += (sender, e) =>
 
         private void ScreensaverForm_Load(object sender, EventArgs e)
         {
-            // StartTime은 생성자에서 처리하므로 여기는 비워둡니다.
+            // StartTime is handled in the constructor, so leave this empty.
         }
 
         private void StartScreensaverLogic()
