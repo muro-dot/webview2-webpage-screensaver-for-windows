@@ -75,7 +75,6 @@ namespace Web_Page_Screensaver
         }
 
         #endregion
-
         private System.Windows.Forms.Button closeButton;
     }
 }
