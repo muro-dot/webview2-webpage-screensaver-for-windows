@@ -17,7 +17,7 @@ A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](h
 
 ## Download and Install
 
-- Download the ***[Latest WebView2 Web Screensaver binary](https://github.com/muro-dot/Webview2_WebPage_Screensaver/releases/latest)***
+- Download the ***[Latest WebView2 Web Screensaver binary](https://github.com/muro-dot/Webview2_WebPage_Screensaver/releases/latest)*** ![Downloads](https://img.shields.io/github/downloads/muro-dot/Webview2_WebPage_Screensaver/total)
 - Unzip it to a permanent directory
 - Find `Webview2_WebPage_Screensaver.scr` in the unziped directory, right click it
 - Select `Install` to install, or `Test` to test it out without installing it
@@ -53,7 +53,7 @@ A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](h
 
 ## 다운로드 및 설치 방법
 
-- ***[최신 WebView2 화면 보호기 실행 파일 다운로드](https://github.com/muro-dot/Webview2_WebPage_Screensaver/releases/latest)***
+- ***[최신 WebView2 화면 보호기 실행 파일 다운로드](https://github.com/muro-dot/Webview2_WebPage_Screensaver/releases/latest)*** ![Downloads](https://img.shields.io/github/downloads/muro-dot/Webview2_WebPage_Screensaver/total)
 - 다운로드한 압축 파일을 원하는 폴더(예: `C:\Program Files\WebScreensaver`)에 풉니다.
 - 폴더 내의 `Webview2_WebPage_Screensaver.scr` 파일을 마우스 우클릭합니다.
 - **'설치'**를 선택하여 시스템에 등록하거나, **'테스트'**를 눌러 즉시 실행해 볼 수 있습니다.
@@ -69,4 +69,3 @@ A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](h
 - 생성된 `.scr` 파일을 우클릭하여 설치 및 사용합니다.
 
 <img width="692" height="561" alt="설정 화면 미리보기" src="https://github.com/user-attachments/assets/2c0d02f8-5adc-45b5-b589-fe8e8fecbf45" />
-
