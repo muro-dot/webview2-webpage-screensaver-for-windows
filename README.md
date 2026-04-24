@@ -11,8 +11,8 @@ A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](h
 
 ## Dependencies
 
-- [.NET Framework v4.6.2+](https://www.microsoft.com/en-us/download/details.aspx?id=53344 ".NET Framework")
-- [Microsoft Edge WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/ "WebView2 Runtime")
+- [.NET Framework v4.8+](https://dotnet.microsoft.com/ko-kr/download/dotnet-framework/net48)
+- [Microsoft Edge WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/)
 - Windows 10 & up
 
 ## Download and Install
@@ -47,7 +47,7 @@ A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](h
 
 ## 요구 사항
 
-- [.NET Framework v4.6.2 이상](https://www.microsoft.com/en-us/download/details.aspx?id=53344 ".NET Framework")
+- [.NET Framework v4.8+](https://dotnet.microsoft.com/ko-kr/download/dotnet-framework/net48)
 - [Microsoft Edge WebView2 런타임](https://developer.microsoft.com/en-us/microsoft-edge/webview2/ "WebView2 Runtime")
 - Windows 10 이상 (권장)
 
