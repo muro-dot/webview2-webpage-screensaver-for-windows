@@ -16,7 +16,7 @@ namespace Web_Page_Screensaver
         [STAThread]
         static void Main(string[] args)
         {
-            // 1. 고해상도 스케일링 무시 (1:1 매칭)
+            // 1. Ignore high DPI scaling (1:1 mapping)
             if (Environment.OSVersion.Version.Major >= 6)
             {
                 SetProcessDPIAware();
@@ -25,18 +25,18 @@ namespace Web_Page_Screensaver
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // 2. 화면보호기 미리보기 모드 (/p)
+            // 2. Screensaver preview mode (/p)
             if (args.Length > 0 && args[0].ToLower().Contains("/p"))
             {
                 return;
             }
 
-            // 3. 화면보호기 설정 모드 (/c)
+            // 3. Screensaver configuration mode (/c)
             if (args.Length > 0 && args[0].ToLower().Contains("/c"))
             {
                 Application.Run(new PreferencesForm());
             }
-            // 4. 화면보호기 실행 모드 (/s 또는 인자 없음)
+            // 4. Screensaver execution mode (/s or no arguments)
             else
             {
                 var formsList = new List<Form>();
@@ -53,7 +53,7 @@ namespace Web_Page_Screensaver
                     formsList.Add(screensaverForm);
                 }
 
-                // [핵심 추가] 애플리케이션 전역에서 키보드/마우스 입력을 감지하는 필터 등록
+                // [Core addition] Register a message filter to detect keyboard/mouse inputs globally across the application
                 Application.AddMessageFilter(new ScreensaverInputFilter());
 
                 Application.Run(new MultiFormContext(formsList));
@@ -61,7 +61,7 @@ namespace Web_Page_Screensaver
         }
     }
 
-    // [추가된 클래스] 윈도우 입력 메시지 가로채기
+    // [Added class] Intercept Windows input messages
     public class ScreensaverInputFilter : IMessageFilter
     {
         private const int WM_KEYDOWN = 0x0100;
@@ -74,24 +74,24 @@ namespace Web_Page_Screensaver
 
         public bool PreFilterMessage(ref Message m)
         {
-            // 키보드 키를 누르거나 마우스 클릭을 한 경우 무조건 종료
+            // Exit unconditionally upon keyboard press or mouse click
             if (m.Msg == WM_KEYDOWN || m.Msg == WM_LBUTTONDOWN || m.Msg == WM_RBUTTONDOWN || m.Msg == WM_MBUTTONDOWN)
             {
                 Application.Exit();
                 return true;
             }
 
-            // 마우스를 움직인 경우
+            // If the mouse is moved
             if (m.Msg == WM_MOUSEMOVE)
             {
                 if (_originalMouseLocation.X == int.MaxValue)
                 {
-                    // 최초 마우스 위치 저장
+                    // Save the initial mouse location
                     _originalMouseLocation = Cursor.Position;
                 }
                 else
                 {
-                    // 책상 진동 등으로 인한 미세한 마우스 움직임은 무시 (오차 범위 10픽셀)
+                    // Ignore slight mouse movements due to desk vibrations, etc. (Tolerance margin of 10 pixels)
                     if (Math.Abs(Cursor.Position.X - _originalMouseLocation.X) > 10 ||
                         Math.Abs(Cursor.Position.Y - _originalMouseLocation.Y) > 10)
                     {
