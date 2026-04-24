@@ -27,7 +27,7 @@ A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](h
 ## Build 
 
 - Clone the source repository
-- Open the `.sln` project file with Visual Studio (Tested with VS 2022).
+- Open the `.sln` project file with Visual Studio (Tested with VS 2026).
 - Restore NuGet packages to download the `Microsoft.Web.WebView2` dependency.
 - Build in `Release` with `Any CPU` or `x64` mode
 - Find `Webview2_WebPage_Screensaver.exe` in `bin/Release`, and rename it to `Webview2_WebPage_Screensaver.scr`
@@ -62,7 +62,7 @@ A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](h
 ## 빌드 방법 (개발자용)
 
 - 소스 코드를 클론(Clone)합니다.
-- Visual Studio로 `.sln` 솔루션 파일을 엽니다 (VS 2022 권장).
+- Visual Studio로 `.sln` 솔루션 파일을 엽니다 (VS 2026 권장).
 - **NuGet 패키지 복원**을 통해 `Microsoft.Web.WebView2` 의존성을 다운로드합니다.
 - 빌드 구성을 `Release`, 플랫폼을 `Any CPU` 또는 `x64`로 설정하여 빌드합니다.
 - `bin/Release` 폴더에 생성된 `Webview2_WebPage_Screensaver.exe` 파일의 확장자를 `.scr`로 변경합니다.
