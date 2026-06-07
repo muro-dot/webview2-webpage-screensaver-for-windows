@@ -30,7 +30,7 @@ A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](h
 - Open the `.sln` project file with Visual Studio (Tested with VS 2026).
 - Restore NuGet packages to download the `Microsoft.Web.WebView2` dependency.
 - Build in `Release` with `Any CPU` or `x64` mode
-- Find `Webview2_WebPage_Screensaver.exe` in `bin/Release`, and rename it to `Webview2_WebPage_Screensaver.scr`
+- Find `Webview2_WebPage_Screensaver.scr` in `bin/Release`
 - Right click the `.scr` file, select `Install` to install, or `Test` to test it out
 - Use the `Settings...` button to configure your custom URLs.
 
@@ -65,7 +65,6 @@ A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](h
 - Visual Studio로 `.sln` 솔루션 파일을 엽니다 (VS 2026 권장).
 - **NuGet 패키지 복원**을 통해 `Microsoft.Web.WebView2` 의존성을 다운로드합니다.
 - 빌드 구성을 `Release`, 플랫폼을 `Any CPU` 또는 `x64`로 설정하여 빌드합니다.
-- `bin/Release` 폴더에 생성된 `Webview2_WebPage_Screensaver.exe` 파일의 확장자를 `.scr`로 변경합니다.
-- 생성된 `.scr` 파일을 우클릭하여 설치 및 사용합니다.
+- `bin/Release` 폴더에 생성된 `Webview2_WebPage_Screensaver.scr` 파일을 우클릭하여 설치 및 사용합니다.
 
 <img width="692" height="561" alt="설정 화면 미리보기" src="https://github.com/user-attachments/assets/2c0d02f8-5adc-45b5-b589-fe8e8fecbf45" />
