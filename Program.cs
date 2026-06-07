@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Diagnostics; // Added to get the process module for the global hook
 
 namespace Web_Page_Screensaver
 {
@@ -53,18 +54,27 @@ namespace Web_Page_Screensaver
                     formsList.Add(screensaverForm);
                 }
 
-                // [Core addition] Register a message filter to detect keyboard/mouse inputs globally across the application
+                // [Mouse Detection] Register application-wide message filter (detects mouse clicks and movements)
                 Application.AddMessageFilter(new ScreensaverInputFilter());
 
-                Application.Run(new MultiFormContext(formsList));
+                // [Keyboard Detection] Register global keyboard hook (prevents WebView2 from intercepting keys)
+                using (var keyboardHook = new GlobalKeyboardHook())
+                {
+                    keyboardHook.KeyPressed += (s, e) =>
+                    {
+                        Application.Exit();
+                    };
+
+                    // Run screensaver forms
+                    Application.Run(new MultiFormContext(formsList));
+                } // The hook is automatically released when exiting the using block (Dispose is called)
             }
         }
     }
 
-    // [Added class] Intercept Windows input messages
+    // [Modified Class] Intercept mouse input messages only (keyboard is handled by the global hook)
     public class ScreensaverInputFilter : IMessageFilter
     {
-        private const int WM_KEYDOWN = 0x0100;
         private const int WM_MOUSEMOVE = 0x0200;
         private const int WM_LBUTTONDOWN = 0x0201;
         private const int WM_RBUTTONDOWN = 0x0204;
@@ -74,8 +84,8 @@ namespace Web_Page_Screensaver
 
         public bool PreFilterMessage(ref Message m)
         {
-            // Exit unconditionally upon keyboard press or mouse click
-            if (m.Msg == WM_KEYDOWN || m.Msg == WM_LBUTTONDOWN || m.Msg == WM_RBUTTONDOWN || m.Msg == WM_MBUTTONDOWN)
+            // Exit unconditionally upon mouse click
+            if (m.Msg == WM_LBUTTONDOWN || m.Msg == WM_RBUTTONDOWN || m.Msg == WM_MBUTTONDOWN)
             {
                 Application.Exit();
                 return true;
@@ -103,6 +113,70 @@ namespace Web_Page_Screensaver
 
             return false;
         }
+    }
+
+    // [Added Class] Global hook to intercept keyboard inputs at the OS level
+    public class GlobalKeyboardHook : IDisposable
+    {
+        private const int WH_KEYBOARD_LL = 13;
+        private const int WM_KEYDOWN = 0x0100;
+        private const int WM_SYSKEYDOWN = 0x0104;
+
+        private LowLevelKeyboardProc _proc;
+        private IntPtr _hookID = IntPtr.Zero;
+
+        public event EventHandler KeyPressed;
+
+        public GlobalKeyboardHook()
+        {
+            _proc = HookCallback;
+            _hookID = SetHook(_proc);
+        }
+
+        private IntPtr SetHook(LowLevelKeyboardProc proc)
+        {
+            using (Process curProcess = Process.GetCurrentProcess())
+            using (ProcessModule curModule = curProcess.MainModule)
+            {
+                return SetWindowsHookEx(WH_KEYBOARD_LL, proc, GetModuleHandle(curModule.ModuleName), 0);
+            }
+        }
+
+        private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
+
+        private IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
+        {
+            // When a keyboard press event is detected (Standard or System key)
+            if (nCode >= 0 && (wParam == (IntPtr)WM_KEYDOWN || wParam == (IntPtr)WM_SYSKEYDOWN))
+            {
+                KeyPressed?.Invoke(this, EventArgs.Empty);
+            }
+            return CallNextHookEx(_hookID, nCode, wParam, lParam);
+        }
+
+        public void Dispose()
+        {
+            // The hook must be released when the program exits
+            if (_hookID != IntPtr.Zero)
+            {
+                UnhookWindowsHookEx(_hookID);
+                _hookID = IntPtr.Zero;
+            }
+        }
+
+        // --- Win32 API Imports ---
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool UnhookWindowsHookEx(IntPtr hhk);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern IntPtr GetModuleHandle(string lpModuleName);
     }
 
     public class MultiFormContext : ApplicationContext
