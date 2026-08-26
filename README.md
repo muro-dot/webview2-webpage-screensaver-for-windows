@@ -71,4 +71,4 @@ A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](h
 - 빌드 구성을 `Release`, 플랫폼을 `Any CPU` 또는 `x64`로 설정하여 빌드합니다.
 - `bin/Release` 폴더에 생성된 `Webview2_WebPage_Screensaver.scr` 파일을 우클릭하여 설치 및 사용합니다.
 
-<img width="692" height="561" alt="설정 화면 미리보기" src="https://github.com/user-attachments/assets/2c0d02f8-5adc-45b5-b589-fe8e8fecbf45" />
+<img width="692" alt="설정 화면 미리보기" src="assets/screenshot.png" />
