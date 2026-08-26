@@ -1,4 +1,4 @@
-﻿namespace Web_Page_Screensaver
+namespace Web_Page_Screensaver
 {
     using System;
     using System.Collections;
@@ -15,6 +15,7 @@
         private const string INTERVAL_PREF = "RotationInterval";
         private const string RANDOMIZE_PREF = "RandomOrder";
         private const string CLOSE_ON_ACTIVITY_PREF = "CloseOnActivity";
+        private const string LANGUAGE_PREF = "Language";
 
         private const string SCREEN_SPECIFIC_PREF_NAME_FORMATSTRING = "{0}Screen{1}";
 
@@ -24,6 +25,9 @@
         private const string INTERVAL_PREF_DEFAULT = "30";
         private const string RANDOMIZE_PREF_DEFAULT = "False";
         private const string CLOSE_ON_ACTIVITY_PREF_DEFAULT = "True";
+        private const string LANGUAGE_PREF_DEFAULT = "ko";
+
+        public string Language { get; set; }
 
         private static RegistryKey reg = Registry.CurrentUser.CreateSubKey(Program.KEY);
 
@@ -238,6 +242,7 @@
         {
             reg.SetValue(MULTISCREEN_PREF, MultiScreenMode);
             reg.SetValue(CLOSE_ON_ACTIVITY_PREF, CloseOnActivity);
+            reg.SetValue(LANGUAGE_PREF, Language ?? LANGUAGE_PREF_DEFAULT);
             SaveUrlsAllScreens();
             SavePrefAllScreens(INTERVAL_PREF, rotationIntervalsByScreen);
             SavePrefAllScreens(RANDOMIZE_PREF, randomizeFlagByScreen);
@@ -248,6 +253,7 @@
         {
             MultiScreenMode = (MultiScreenModeItem)Enum.Parse(typeof(MultiScreenModeItem), (string)reg.GetValue(MULTISCREEN_PREF, MULTISCREEN_PREF_DEFAULT));
             CloseOnActivity = bool.Parse((string)reg.GetValue(CLOSE_ON_ACTIVITY_PREF, CLOSE_ON_ACTIVITY_PREF_DEFAULT));
+            Language = (string)reg.GetValue(LANGUAGE_PREF, LANGUAGE_PREF_DEFAULT);
             urlsByScreen = LoadUrlsAllScreens();
             rotationIntervalsByScreen = LoadPrefAllScreens<int>(INTERVAL_PREF, INTERVAL_PREF_DEFAULT, INTERVAL_PREF_DEFAULT);
             randomizeFlagByScreen = LoadPrefAllScreens<bool>(RANDOMIZE_PREF, RANDOMIZE_PREF_DEFAULT, RANDOMIZE_PREF_DEFAULT);

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Drawing;
@@ -147,10 +147,11 @@ namespace Web_Page_Screensaver
         private IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
             // When a keyboard press event is detected (Standard or System key)
-            if (nCode >= 0 && (wParam == (IntPtr)WM_KEYDOWN || wParam == (IntPtr)WM_SYSKEYDOWN))
-            {
-                KeyPressed?.Invoke(this, EventArgs.Empty);
-            }
+                var handler = KeyPressed;
+                if (handler != null)
+                {
+                    handler(this, EventArgs.Empty);
+                }
             return CallNextHookEx(_hookID, nCode, wParam, lParam);
         }
 

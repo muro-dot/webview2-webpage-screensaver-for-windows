@@ -6,6 +6,8 @@ A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](h
 
 - **High DPI Support:** Perfect 1:1 pixel rendering on 4K/QHD monitors (No more blurry screens).
 - **Modern Engine:** Powered by the latest Chromium-based Microsoft Edge WebView2.
+- **Modern Dark UI (v1.0.3):** Features a sleek dark theme with silky smooth sub-pixel anti-aliased borders and intuitive URL editing.
+- **Multi-language Support (v1.0.3):** Switch instantly between English and Korean (ENG/KOR) right from the settings panel.
 - **Enhanced Input Detection:** Fixed issues where the screensaver wouldn't exit on keyboard input when the browser had focus.
 - **Improved Performance:** Lower memory footprint compared to legacy CefSharp builds.
 
@@ -42,6 +44,8 @@ A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](h
 
 - **고해상도(High DPI) 완벽 지원:** 4K 및 QHD 모니터에서 화면이 흐릿하게 보이던 문제를 해결하고, 1:1 픽셀 매칭으로 선명한 화질을 제공합니다.
 - **최신 브라우저 엔진:** 최신 크로미움(Chromium) 기반의 Microsoft Edge WebView2 엔진을 탑재했습니다.
+- **모던 다크 UI 적용 (v1.0.3):** 안티앨리어싱으로 부드럽게 마감된 둥근 테두리와 직관적인 URL 수정 모드를 지원하는 세련된 다크 테마를 적용했습니다.
+- **다국어 지원 (v1.0.3):** 설정 창에서 클릭 한 번으로 한국어(KOR)와 영어(ENG)를 실시간으로 전환할 수 있습니다.
 - **입력 감지 로직 강화:** 브라우저가 포커스를 가진 상태에서도 키보드 입력을 정확히 감지하여 화면 보호기가 정상적으로 종료되도록 수정했습니다.
 - **성능 최적화:** 기존 CefSharp 빌드 대비 메모리 점유율을 대폭 낮추어 시스템 부담을 줄였습니다.
 
