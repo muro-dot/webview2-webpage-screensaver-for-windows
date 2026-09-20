@@ -13,9 +13,13 @@ namespace Web_Page_Screensaver
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing)
             {
-                components.Dispose();
+                CleanupThemeEvents();
+                if (components != null)
+                {
+                    components.Dispose();
+                }
             }
             base.Dispose(disposing);
         }
@@ -37,15 +41,15 @@ namespace Web_Page_Screensaver
             this.lblSubtitle = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
             this.multiScreenCard = new Web_Page_Screensaver.ModernCard();
-            this.separateScreensButton = new System.Windows.Forms.RadioButton();
-            this.mirrorScreensButton = new System.Windows.Forms.RadioButton();
-            this.spanScreensButton = new System.Windows.Forms.RadioButton();
+            this.separateScreensButton = new Web_Page_Screensaver.ModernRadioButton();
+            this.mirrorScreensButton = new Web_Page_Screensaver.ModernRadioButton();
+            this.spanScreensButton = new Web_Page_Screensaver.ModernRadioButton();
             this.lblMultiScreen = new System.Windows.Forms.Label();
             this.screenTabControl = new Web_Page_Screensaver.ModernTabControl();
             this.screenTabPage1 = new System.Windows.Forms.TabPage();
             this.prefsByScreenUserControl1 = new Web_Page_Screensaver.PrefsByScreenUserControl();
             this.bottomPanel = new System.Windows.Forms.Panel();
-            this.cbCloseOnActivity = new System.Windows.Forms.CheckBox();
+            this.cbCloseOnActivity = new Web_Page_Screensaver.ModernCheckBox();
             this.cancelButton = new Web_Page_Screensaver.ModernButton();
             this.okButton = new Web_Page_Screensaver.ModernButton();
             this.screenModeTooltip = new System.Windows.Forms.ToolTip(this.components);
@@ -384,14 +388,14 @@ namespace Web_Page_Screensaver
         private ModernButton btnGithub;
         private ModernCard multiScreenCard;
         private System.Windows.Forms.Label lblMultiScreen;
-        private System.Windows.Forms.RadioButton spanScreensButton;
-        private System.Windows.Forms.RadioButton mirrorScreensButton;
-        private System.Windows.Forms.RadioButton separateScreensButton;
+        private ModernRadioButton spanScreensButton;
+        private ModernRadioButton mirrorScreensButton;
+        private ModernRadioButton separateScreensButton;
         private ModernTabControl screenTabControl;
         private System.Windows.Forms.TabPage screenTabPage1;
         private PrefsByScreenUserControl prefsByScreenUserControl1;
         private System.Windows.Forms.Panel bottomPanel;
-        private System.Windows.Forms.CheckBox cbCloseOnActivity;
+        private ModernCheckBox cbCloseOnActivity;
         private ModernButton cancelButton;
         private ModernButton okButton;
         private System.Windows.Forms.ToolTip screenModeTooltip;

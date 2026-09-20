@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using Microsoft.Win32;
 
 namespace Web_Page_Screensaver
 {
@@ -11,6 +12,7 @@ namespace Web_Page_Screensaver
         private PreferencesManager prefsManager = new PreferencesManager();
         private List<PrefsByScreenUserControl> screenUserControls;
         private string currentLanguage = "ko";
+        private bool isThemeEventRegistered = false;
 
         public PreferencesForm()
         {
@@ -25,21 +27,117 @@ namespace Web_Page_Screensaver
         {
             cbCloseOnActivity.Checked = prefsManager.CloseOnActivity;
 
-            // 저장된 언어 설정 로드 (기본 ko)
+            // 1. 윈도우 시스템 테마(다크/라이트) 감지 및 실시간 변경 이벤트 등록
+            RegisterThemeEvents();
+            bool isLight = ThemeManager.CheckWindowsLightTheme();
+            ThemeManager.IsLightTheme = isLight;
+            ApplyTheme(isLight);
+
+            // 2. 저장된 언어 설정 로드 (기본 ko)
             currentLanguage = !string.IsNullOrEmpty(prefsManager.Language) ? prefsManager.Language : "ko";
 
             if (Screen.AllScreens.Length <= 1)
             {
-                multiScreenCard.Enabled = false;
+                spanScreensButton.Enabled = false;
+                mirrorScreensButton.Enabled = false;
+                separateScreensButton.Enabled = false;
             }
             else
             {
-                multiScreenCard.Enabled = true;
                 SetMultiScreenButtonFromMode();
                 ArrangeScreenTabs();
             }
 
             ApplyLanguage(currentLanguage);
+        }
+
+        private void RegisterThemeEvents()
+        {
+            if (!isThemeEventRegistered)
+            {
+                SystemEvents.UserPreferenceChanged += SystemEvents_UserPreferenceChanged;
+                isThemeEventRegistered = true;
+            }
+        }
+
+        public void CleanupThemeEvents()
+        {
+            if (isThemeEventRegistered)
+            {
+                SystemEvents.UserPreferenceChanged -= SystemEvents_UserPreferenceChanged;
+                isThemeEventRegistered = false;
+            }
+        }
+
+        private void SystemEvents_UserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
+        {
+            // Windows 테마(라이트/다크) 변경 감지 시 UI 스레드에서 즉시 전환
+            if (e.Category == UserPreferenceCategory.General || e.Category == UserPreferenceCategory.Color)
+            {
+                if (IsHandleCreated && !IsDisposed)
+                {
+                    try
+                    {
+                        BeginInvoke((MethodInvoker)(() =>
+                        {
+                            bool isLight = ThemeManager.CheckWindowsLightTheme();
+                            ThemeManager.IsLightTheme = isLight;
+                            ApplyTheme(isLight);
+                        }));
+                    }
+                    catch { }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 다크 모드 / 라이트 모드 테마 적용
+        /// </summary>
+        public void ApplyTheme(bool isLight)
+        {
+            var colors = ThemeManager.Colors;
+
+            // 1. 폼 및 DWM 윈도우 타이틀바 테마 적용
+            BackColor = colors.Background;
+            ForeColor = colors.TextPrimary;
+            ThemeManager.SetFormTitleBarTheme(Handle, isLight);
+
+            // 2. 헤더 라벨
+            lblTitle.ForeColor = colors.TextPrimary;
+            lblSubtitle.ForeColor = colors.TextSecondary;
+
+            // 3. 다중 모니터 카드
+            multiScreenCard.BackColor = colors.CardBackground;
+            multiScreenCard.BorderColor = colors.CardBorder;
+
+            bool isSingleScreen = Screen.AllScreens.Length <= 1;
+            Color multiScreenTextColor = isSingleScreen ? colors.TextMuted : colors.TextPrimary;
+            lblMultiScreen.ForeColor = multiScreenTextColor;
+            spanScreensButton.ForeColor = multiScreenTextColor;
+            mirrorScreensButton.ForeColor = multiScreenTextColor;
+            separateScreensButton.ForeColor = multiScreenTextColor;
+
+            // 4. 탭 컨트롤 및 각 탭 페이지
+            screenTabControl.BackColor = colors.Background;
+            foreach (TabPage tab in screenTabControl.TabPages)
+            {
+                tab.BackColor = colors.CardBackground;
+            }
+
+            // 5. 하단 패널 및 컨트롤
+            cbCloseOnActivity.ForeColor = colors.TextPrimary;
+
+            // 6. 자식 화면 컨트롤들에 테마 전파
+            if (screenUserControls != null)
+            {
+                foreach (var ctrl in screenUserControls)
+                {
+                    ctrl.ApplyTheme(isLight);
+                }
+            }
+
+            // 전체 다시 그리기
+            Invalidate(true);
         }
 
         public void ApplyLanguage(string lang)
@@ -51,8 +149,8 @@ namespace Web_Page_Screensaver
             btnLangKor.IsSelected = isKo;
             btnLangEng.IsSelected = !isKo;
 
-            Text = isKo ? "웹 화면보호기 설정 v1.0.3" : "WebView2 Web Page Screensaver Settings v1.0.3";
-            lblTitle.Text = isKo ? "WebView2 웹 화면보호기 v1.0.3" : "WebView2 Web Screensaver v1.0.3";
+            Text = isKo ? "웹 화면보호기 설정 v1.0.4" : "WebView2 Web Page Screensaver Settings v1.0.4";
+            lblTitle.Text = isKo ? "WebView2 웹 화면보호기 v1.0.4" : "WebView2 Web Screensaver v1.0.4";
             lblSubtitle.Text = isKo ? "웹사이트 및 대시보드를 고해상도 화면보호기로 출력합니다" : "Display websites and live dashboards with Microsoft WebView2";
             lblMultiScreen.Text = isKo ? "다중 모니터 모드:" : "Multi-Monitor Mode:";
 
@@ -155,7 +253,7 @@ namespace Web_Page_Screensaver
                         if (i >= screenTabControl.TabPages.Count)
                         {
                             tabPage = new TabPage();
-                            tabPage.BackColor = DarkColors.CardBackground;
+                            tabPage.BackColor = ThemeManager.Colors.CardBackground;
                             tabPage.Padding = new Padding(12);
                             screenTabControl.TabPages.Add(tabPage);
 
@@ -165,11 +263,12 @@ namespace Web_Page_Screensaver
                                 {
                                     Name = string.Format("prefsByScreenUserControl{0}", i + 1),
                                     Dock = DockStyle.Fill,
-                                    BackColor = DarkColors.CardBackground,
+                                    BackColor = ThemeManager.Colors.CardBackground,
                                     Font = new Font("Segoe UI", 9f)
                                 };
                                 prefsByScreenUserControl.lvUrls.ContextMenuStrip =
                                     prefsByScreenUserControl1.lvUrls.ContextMenuStrip;
+                                prefsByScreenUserControl.ApplyTheme(ThemeManager.IsLightTheme);
                                 screenUserControls.Add(prefsByScreenUserControl);
                                 tabPage.Controls.Add(prefsByScreenUserControl);
                             }
@@ -267,6 +366,8 @@ namespace Web_Page_Screensaver
 
         protected override void OnClosed(EventArgs e)
         {
+            CleanupThemeEvents();
+
             if (DialogResult == DialogResult.OK)
             {
                 readBackValuesFromUI();

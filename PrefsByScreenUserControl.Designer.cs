@@ -13,9 +13,16 @@ namespace Web_Page_Screensaver
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing)
             {
-                components.Dispose();
+                if (themeChangeHandler != null)
+                {
+                    ThemeManager.ThemeChanged -= themeChangeHandler;
+                }
+                if (components != null)
+                {
+                    components.Dispose();
+                }
             }
             base.Dispose(disposing);
         }
@@ -43,7 +50,7 @@ namespace Web_Page_Screensaver
             this.lblSeconds = new System.Windows.Forms.Label();
             this.nudRotationInterval = new System.Windows.Forms.NumericUpDown();
             this.lblRotation = new System.Windows.Forms.Label();
-            this.cbRandomize = new System.Windows.Forms.CheckBox();
+            this.cbRandomize = new Web_Page_Screensaver.ModernCheckBox();
             this.urlButtonsTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.listCard.SuspendLayout();
             this.inputCard.SuspendLayout();
@@ -337,7 +344,7 @@ namespace Web_Page_Screensaver
         private System.Windows.Forms.Label lblRotation;
         public System.Windows.Forms.NumericUpDown nudRotationInterval;
         private System.Windows.Forms.Label lblSeconds;
-        public System.Windows.Forms.CheckBox cbRandomize;
+        public ModernCheckBox cbRandomize;
         private System.Windows.Forms.ToolTip urlButtonsTooltip;
     }
 }

@@ -9,10 +9,58 @@ namespace Web_Page_Screensaver
         private ListViewItem editingItem = null;
         private string currentLanguage = "en";
 
+        private Action themeChangeHandler;
+
         public PrefsByScreenUserControl()
         {
             InitializeComponent();
             ApplyModernStyles();
+
+            themeChangeHandler = () => ApplyTheme(ThemeManager.IsLightTheme);
+            ThemeManager.ThemeChanged += themeChangeHandler;
+
+            ApplyTheme(ThemeManager.IsLightTheme);
+        }
+
+        public void ApplyTheme(bool isLight)
+        {
+            var colors = ThemeManager.Colors;
+
+            BackColor = colors.CardBackground;
+
+            // URL 목록 영역
+            listCard.BackColor = colors.InputBackground;
+            listCard.BorderColor = colors.CardBorder;
+            lvUrls.BackColor = colors.InputBackground;
+            lvUrls.ForeColor = colors.TextPrimary;
+
+            // URL 입력 필드 영역
+            inputCard.BackColor = colors.InputBackground;
+            inputCard.BorderColor = colors.InputBorder;
+            tbNewUrl.BackColor = colors.InputBackground;
+            tbNewUrl.ForeColor = colors.TextPrimary;
+
+            // 하단 회전 주기 옵션 카드
+            optionsCard.BackColor = colors.CardBackground;
+            optionsCard.BorderColor = colors.CardBorder;
+            nudRotationInterval.BackColor = colors.InputBackground;
+            nudRotationInterval.ForeColor = colors.TextPrimary;
+
+            // 라벨 및 체크박스 텍스트 색상
+            lblRotation.ForeColor = colors.TextPrimary;
+            lblSeconds.ForeColor = colors.TextSecondary;
+            cbRandomize.ForeColor = colors.TextPrimary;
+
+            // 컨트롤들 다시 그리기
+            listCard.Invalidate();
+            inputCard.Invalidate();
+            optionsCard.Invalidate();
+            btnAddUrl.Invalidate();
+            btnUp.Invalidate();
+            btnDown.Invalidate();
+            btnEdit.Invalidate();
+            btnDelete.Invalidate();
+            cbRandomize.Invalidate();
         }
 
         private void ApplyModernStyles()
