@@ -6,9 +6,8 @@ namespace Web_Page_Screensaver
 {
     public partial class PrefsByScreenUserControl : UserControl
     {
-        private ListViewItem editingItem = null;
+        private ListViewItem newlyAddedItem = null;
         private string currentLanguage = "en";
-
         private Action themeChangeHandler;
 
         public PrefsByScreenUserControl()
@@ -34,12 +33,6 @@ namespace Web_Page_Screensaver
             lvUrls.BackColor = colors.InputBackground;
             lvUrls.ForeColor = colors.TextPrimary;
 
-            // URL 입력 필드 영역
-            inputCard.BackColor = colors.InputBackground;
-            inputCard.BorderColor = colors.InputBorder;
-            tbNewUrl.BackColor = colors.InputBackground;
-            tbNewUrl.ForeColor = colors.TextPrimary;
-
             // 하단 회전 주기 옵션 카드
             optionsCard.BackColor = colors.CardBackground;
             optionsCard.BorderColor = colors.CardBorder;
@@ -53,7 +46,6 @@ namespace Web_Page_Screensaver
 
             // 컨트롤들 다시 그리기
             listCard.Invalidate();
-            inputCard.Invalidate();
             optionsCard.Invalidate();
             btnAddUrl.Invalidate();
             btnUp.Invalidate();
@@ -85,90 +77,57 @@ namespace Web_Page_Screensaver
             currentLanguage = lang;
             bool isKo = (lang == "ko");
 
-            if (editingItem == null)
-            {
-                btnAddUrl.Text = isKo ? "+ URL 추가" : "+ Add URL";
-            }
-            else
-            {
-                btnAddUrl.Text = isKo ? "✓ 수정 완료" : "✓ Update";
-            }
-
+            btnAddUrl.Text = isKo ? "＋ URL 추가" : "＋ Add URL";
             btnUp.Text = isKo ? "▲ 위로" : "▲ Move Up";
             btnDown.Text = isKo ? "▼ 아래로" : "▼ Move Down";
             btnEdit.Text = isKo ? "✎ 수정" : "✎ Edit";
-            btnDelete.Text = isKo ? "삭제" : "Delete";
+            btnDelete.Text = isKo ? "✕ 삭제" : "✕ Delete";
 
             lblRotation.Text = isKo ? "웹사이트 전환 주기:" : "Rotate website every:";
             lblSeconds.Text = isKo ? "초" : "seconds";
             cbRandomize.Text = isKo ? "무작위 순서 재생 (Shuffle)" : "Shuffle display order";
 
-            urlButtonsTooltip.SetToolTip(btnUp, isKo ? "선택한 URL을 위로 이동합니다" : "Move selected URL up");
-            urlButtonsTooltip.SetToolTip(btnDown, isKo ? "선택한 URL을 아래로 이동합니다" : "Move selected URL down");
-            urlButtonsTooltip.SetToolTip(btnEdit, isKo ? "선택한 URL을 수정합니다" : "Edit selected URL");
-            urlButtonsTooltip.SetToolTip(btnDelete, isKo ? "선택한 URL을 삭제합니다" : "Delete selected URLs");
+            urlButtonsTooltip.SetToolTip(btnUp, isKo ? "선택한 URL을 위로 이동합니다 (Alt+▲)" : "Move selected URL up (Alt+▲)");
+            urlButtonsTooltip.SetToolTip(btnDown, isKo ? "선택한 URL을 아래로 이동합니다 (Alt+▼)" : "Move selected URL down (Alt+▼)");
+            urlButtonsTooltip.SetToolTip(btnAddUrl, isKo ? "목록에 새 사이트 URL을 추가하고 인라인으로 편집합니다" : "Add a new URL and edit inline");
+            urlButtonsTooltip.SetToolTip(btnEdit, isKo ? "선택한 URL을 목록에서 직접 수정합니다 (F2 / 더블클릭)" : "Edit selected URL directly in list (F2 / Double-click)");
+            urlButtonsTooltip.SetToolTip(btnDelete, isKo ? "선택한 URL을 삭제합니다 (Del)" : "Delete selected URLs (Del)");
         }
 
-        private void tbNewUrl_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                e.SuppressKeyPress = true;
-                HandleAddOrUpdate();
-            }
-            else if (e.KeyCode == Keys.Escape && editingItem != null)
-            {
-                // Escape로 수정 취소
-                CancelEdit();
-            }
-        }
+        #region URL 추가 / 수정 / 삭제 (인라인 편집 지원)
 
+        /// <summary>
+        /// 새 URL 항목을 목록 끝에 추가하고 즉시 인라인 편집 모드로 진입합니다.
+        /// </summary>
         private void btnAddUrl_Click(object sender, EventArgs e)
         {
-            HandleAddOrUpdate();
-        }
+            var item = new ListViewItem("https://");
+            lvUrls.Items.Add(item);
 
-        private void HandleAddOrUpdate()
-        {
-            string url = tbNewUrl.Text.Trim();
-
-            if (string.IsNullOrEmpty(url))
+            // 포커스 및 선택
+            foreach (ListViewItem old in lvUrls.SelectedItems)
             {
-                if (editingItem != null)
+                old.Selected = false;
+            }
+            item.Selected = true;
+            item.Focused = true;
+            item.EnsureVisible();
+
+            newlyAddedItem = item;
+
+            // UI 스레드 디스패치로 안전하게 인라인 편집 시작
+            BeginInvoke((MethodInvoker)(() =>
+            {
+                if (item != null && item.ListView != null && !item.ListView.IsDisposed)
                 {
-                    CancelEdit();
+                    item.BeginEdit();
                 }
-                return;
-            }
-
-            // 프로토콜 보정
-            if (!url.StartsWith("http://", StringComparison.OrdinalIgnoreCase) &&
-                !url.StartsWith("https://", StringComparison.OrdinalIgnoreCase) &&
-                !url.StartsWith("file://", StringComparison.OrdinalIgnoreCase))
-            {
-                url = "https://" + url;
-            }
-
-            if (editingItem != null)
-            {
-                // 수정 완료
-                editingItem.Text = url;
-                editingItem.Selected = true;
-                editingItem.EnsureVisible();
-                CancelEdit();
-            }
-            else
-            {
-                // 신규 추가
-                var item = new ListViewItem(url);
-                lvUrls.Items.Add(item);
-                item.Selected = true;
-                item.EnsureVisible();
-                tbNewUrl.Clear();
-                tbNewUrl.Focus();
-            }
+            }));
         }
 
+        /// <summary>
+        /// 선택된 항목의 인라인 편집을 시작합니다.
+        /// </summary>
         private void btnEdit_Click(object sender, EventArgs e)
         {
             StartEditSelected();
@@ -183,32 +142,120 @@ namespace Web_Page_Screensaver
         {
             if (lvUrls.SelectedItems.Count > 0)
             {
-                editingItem = lvUrls.SelectedItems[0];
-                tbNewUrl.Text = editingItem.Text;
-                tbNewUrl.Focus();
-                tbNewUrl.SelectAll();
-
-                bool isKo = (currentLanguage == "ko");
-                btnAddUrl.Text = isKo ? "✓ 수정 완료" : "✓ Update";
+                var item = lvUrls.SelectedItems[0];
+                BeginInvoke((MethodInvoker)(() =>
+                {
+                    if (item != null && item.ListView != null && !item.ListView.IsDisposed)
+                    {
+                        item.BeginEdit();
+                    }
+                }));
             }
         }
 
-        private void CancelEdit()
+        /// <summary>
+        /// 인라인 편집 완료 또는 취소 시 처리 (프로토콜 보정 및 빈 값 정리)
+        /// </summary>
+        private void lvUrls_AfterLabelEdit(object sender, LabelEditEventArgs e)
         {
-            editingItem = null;
-            tbNewUrl.Clear();
-            bool isKo = (currentLanguage == "ko");
-            btnAddUrl.Text = isKo ? "+ URL 추가" : "+ Add URL";
-        }
+            var item = lvUrls.Items[e.Item];
+            string editedText = e.Label;
 
-        private void lvUrls_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            // 다른 항목 선택 시 수정 중이던 항목 취소
-            if (editingItem != null && (lvUrls.SelectedItems.Count == 0 || lvUrls.SelectedItems[0] != editingItem))
+            // 사용자가 수정을 취소했거나 아무것도 입력하지 않은 경우
+            if (editedText == null)
             {
-                CancelEdit();
+                // 새로 추가된 행인데 취소되었거나 기본 템플릿 그대로인 경우 자동 제거
+                if (newlyAddedItem == item && (string.IsNullOrWhiteSpace(item.Text) || item.Text == "https://"))
+                {
+                    BeginInvoke((MethodInvoker)(() =>
+                    {
+                        item.Remove();
+                    }));
+                }
+                newlyAddedItem = null;
+                return;
+            }
+
+            editedText = editedText.Trim();
+
+            // 빈 값이 입력된 경우
+            if (string.IsNullOrEmpty(editedText) || editedText == "https://" || editedText == "http://")
+            {
+                e.CancelEdit = true;
+                if (newlyAddedItem == item)
+                {
+                    BeginInvoke((MethodInvoker)(() =>
+                    {
+                        item.Remove();
+                    }));
+                }
+                newlyAddedItem = null;
+                return;
+            }
+
+            // 프로토콜(https://) 자동 보정
+            if (!editedText.StartsWith("http://", StringComparison.OrdinalIgnoreCase) &&
+                !editedText.StartsWith("https://", StringComparison.OrdinalIgnoreCase) &&
+                !editedText.StartsWith("file://", StringComparison.OrdinalIgnoreCase))
+            {
+                editedText = "https://" + editedText;
+            }
+
+            e.CancelEdit = true; // 프레임워크 기본 대입 대신 보정된 텍스트 직접 할당
+            item.Text = editedText;
+            newlyAddedItem = null;
+        }
+
+        /// <summary>
+        /// 키보드 단축키 (F2: 수정, Del: 삭제, Alt+Up/Down: 순서 이동)
+        /// </summary>
+        private void lvUrls_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F2)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                StartEditSelected();
+            }
+            else if (e.KeyCode == Keys.Delete)
+            {
+                e.Handled = true;
+                DeleteAllSelectedUrls_Click(sender, e);
+            }
+            else if (e.Alt && e.KeyCode == Keys.Up)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                MoveAllSelectedUrlsUp_Click(sender, e);
+            }
+            else if (e.Alt && e.KeyCode == Keys.Down)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                MoveAllSelectedUrlsDown_Click(sender, e);
+            }
+            else if (e.KeyCode == Keys.Insert)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                btnAddUrl_Click(sender, e);
             }
         }
+
+        private void DeleteAllSelectedUrls_Click(object sender, EventArgs e)
+        {
+            for (int i = lvUrls.Items.Count - 1; i >= 0; i--)
+            {
+                if (lvUrls.Items[i].Selected)
+                {
+                    lvUrls.Items[i].Remove();
+                }
+            }
+        }
+
+        #endregion
+
+        #region 순서 이동 로직
 
         private void MoveAllSelectedUrlsDown_Click(object sender, EventArgs e)
         {
@@ -254,22 +301,6 @@ namespace Web_Page_Screensaver
             lvUrls.Select();
         }
 
-        private void DeleteAllSelectedUrls_Click(object sender, EventArgs e)
-        {
-            if (editingItem != null && editingItem.Selected)
-            {
-                CancelEdit();
-            }
-
-            for (int i = lvUrls.Items.Count - 1; i >= 0; i--)
-            {
-                if (lvUrls.Items[i].Selected)
-                {
-                    lvUrls.Items[i].Remove();
-                }
-            }
-        }
-
         private static void Swap(ListView.ListViewItemCollection itemsList, int indexA, int indexB)
         {
             var a = Math.Min(itemsList.Count - 1, Math.Max(0, indexA));
@@ -286,5 +317,7 @@ namespace Web_Page_Screensaver
                 itemsList[b].Selected = itemASelected;
             }
         }
+
+        #endregion
     }
 }

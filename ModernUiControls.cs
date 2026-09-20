@@ -57,23 +57,23 @@ namespace Web_Page_Screensaver
             TextSecondary = Color.FromArgb(161, 161, 170),
             TextMuted = Color.FromArgb(113, 113, 122),
 
-            Accent = Color.FromArgb(37, 99, 235),
-            AccentHover = Color.FromArgb(59, 130, 246),
-            AccentPressed = Color.FromArgb(29, 78, 216),
+            Accent = Color.FromArgb(41, 103, 195),             // 차분하고 세련된 슬레이트 사파이어 (과도한 쨍함 제거)
+            AccentHover = Color.FromArgb(56, 125, 225),        // 부드러운 액센트 호버
+            AccentPressed = Color.FromArgb(30, 80, 160),
 
             SecondaryBtn = Color.FromArgb(36, 36, 42),
             SecondaryBtnHover = Color.FromArgb(50, 50, 58),
             SecondaryBtnPressed = Color.FromArgb(28, 28, 33),
             SecondaryBtnBorder = Color.FromArgb(46, 46, 54),
 
-            Danger = Color.FromArgb(190, 30, 30),
-            DangerHover = Color.FromArgb(220, 45, 45),
-            DangerPressed = Color.FromArgb(160, 20, 20),
+            Danger = Color.FromArgb(185, 45, 45),              // 절제된 크림슨
+            DangerHover = Color.FromArgb(215, 55, 55),         // 호버 시 경고 레드
+            DangerPressed = Color.FromArgb(160, 30, 30),
 
-            TabIndicator = Color.FromArgb(37, 99, 235)
+            TabIndicator = Color.FromArgb(56, 125, 225)
         };
 
-        // 2. 라이트 테마 색상 정의 (Soft Clean White)
+        // 2. 라이트 테마 색상 정의 (Soft Clean White & Modern Slate)
         public static readonly ThemePalette Light = new ThemePalette
         {
             Background = Color.FromArgb(245, 246, 250),        // 부드러운 오프화이트 배경
@@ -86,20 +86,20 @@ namespace Web_Page_Screensaver
             TextSecondary = Color.FromArgb(71, 85, 105),       // 부드러운 슬레이트 보조 텍스트
             TextMuted = Color.FromArgb(148, 163, 184),         // 비활성 텍스트
 
-            Accent = Color.FromArgb(37, 99, 235),
-            AccentHover = Color.FromArgb(59, 130, 246),
-            AccentPressed = Color.FromArgb(29, 78, 216),
+            Accent = Color.FromArgb(30, 41, 59),               // 모던 슬레이트 딥 네이비 (원색 블루 대신 최고급 프리미엄 톤)
+            AccentHover = Color.FromArgb(51, 65, 85),          // 부드러운 슬레이트 700
+            AccentPressed = Color.FromArgb(15, 23, 42),
 
             SecondaryBtn = Color.FromArgb(241, 245, 249),
             SecondaryBtnHover = Color.FromArgb(226, 232, 240),
             SecondaryBtnPressed = Color.FromArgb(203, 213, 225),
             SecondaryBtnBorder = Color.FromArgb(226, 232, 240),
 
-            Danger = Color.FromArgb(220, 38, 38),
-            DangerHover = Color.FromArgb(239, 68, 68),
-            DangerPressed = Color.FromArgb(185, 28, 28),
+            Danger = Color.FromArgb(210, 45, 45),              // 절제된 소프트 레드
+            DangerHover = Color.FromArgb(225, 60, 60),
+            DangerPressed = Color.FromArgb(180, 35, 35),
 
-            TabIndicator = Color.FromArgb(37, 99, 235)
+            TabIndicator = Color.FromArgb(30, 41, 59)
         };
 
         private static bool isLightTheme = false;
@@ -351,8 +351,23 @@ namespace Web_Page_Screensaver
                     break;
 
                 case ModernButtonStyle.Danger:
-                    bgColor = isPressed ? colors.DangerPressed : (isHovered ? colors.DangerHover : colors.Danger);
-                    textColor = Color.White;
+                    if (isPressed)
+                    {
+                        bgColor = colors.DangerPressed;
+                        textColor = Color.White;
+                    }
+                    else if (isHovered)
+                    {
+                        bgColor = colors.DangerHover;
+                        textColor = Color.White;
+                    }
+                    else
+                    {
+                        // 평상시에는 튀지 않고 주변과 조화로운 세컨더리 서피스 + 소프트 레드 텍스트
+                        bgColor = colors.SecondaryBtn;
+                        textColor = ThemeManager.IsLightTheme ? Color.FromArgb(195, 40, 40) : Color.FromArgb(248, 113, 113);
+                        borderColor = colors.SecondaryBtnBorder;
+                    }
                     break;
 
                 case ModernButtonStyle.Segment:
