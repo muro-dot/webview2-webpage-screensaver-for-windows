@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -36,6 +36,11 @@ namespace Web_Page_Screensaver
             else screenNum = (int)screenNumber;
 
             InitializeComponent();
+            try
+            {
+                Icon = ModernAppIcon.CreateAppIcon(32);
+            }
+            catch { }
             InitializeWebViewAsync();
 
             Cursor.Hide();

@@ -906,4 +906,191 @@ namespace Web_Page_Screensaver
                 TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine | TextFormatFlags.NoPrefix);
         }
     }
+
+    /// <summary>
+    /// 모던 웹 화면보호기 앱 로고 및 타이틀바 아이콘 생성기
+    /// 웹(지구본) + 모니터(화면보호기) + 별빛 스파클을 결합한 세련된 모던 Fluent 스타일의 아이콘을 렌더링합니다.
+    /// </summary>
+    public static class ModernAppIcon
+    {
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern bool DestroyIcon(IntPtr handle);
+
+        public static Icon CreateAppIcon(int size = 32)
+        {
+            using (var bmp = CreateAppBitmap(size))
+            {
+                IntPtr hIcon = bmp.GetHicon();
+                Icon temp = Icon.FromHandle(hIcon);
+                Icon cloned = (Icon)temp.Clone();
+                DestroyIcon(hIcon);
+                return cloned;
+            }
+        }
+
+        public static Bitmap CreateAppBitmap(int size)
+        {
+            var bmp = new Bitmap(size, size, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            using (var g = Graphics.FromImage(bmp))
+            {
+                g.SmoothingMode = SmoothingMode.HighQuality;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                g.Clear(Color.Transparent);
+
+                float s = size / 256.0f;
+
+                // 1. 라운디드 앱 타일 베이스
+                float margin = 8f * s;
+                float w = size - (margin * 2);
+                var tileRect = new RectangleF(margin, margin, w, w);
+                float radius = 54f * s;
+
+                using (var path = ModernButton.GetRoundedRectangleF(tileRect, radius))
+                {
+                    // 딥 인디고 & 사파이어 그라디언트
+                    using (var brush = new LinearGradientBrush(
+                        new PointF(margin, margin),
+                        new PointF(size - margin, size - margin),
+                        Color.FromArgb(41, 112, 226),
+                        Color.FromArgb(15, 23, 42)))
+                    {
+                        g.FillPath(brush, path);
+                    }
+
+                    // 은은한 외곽선
+                    using (var borderPen = new Pen(Color.FromArgb(110, 255, 255, 255), Math.Max(1f, 3f * s)))
+                    {
+                        g.DrawPath(borderPen, path);
+                    }
+                }
+
+                // 2. 브라우저 창 프레임 (다크 글래스 느낌)
+                float winX = 32f * s;
+                float winY = 32f * s;
+                float winW = 192f * s;
+                float winH = 192f * s;
+                var winRect = new RectangleF(winX, winY, winW, winH);
+
+                using (var winPath = ModernButton.GetRoundedRectangleF(winRect, 30f * s))
+                {
+                    using (var winBg = new SolidBrush(Color.FromArgb(140, 10, 16, 32)))
+                    {
+                        g.FillPath(winBg, winPath);
+                    }
+                    using (var winPen = new Pen(Color.FromArgb(100, 255, 255, 255), Math.Max(1f, 2.5f * s)))
+                    {
+                        g.DrawPath(winPen, winPath);
+                    }
+                }
+
+                // 3. 브라우저 헤더 바 & 신호등 도트
+                float dotY = 52f * s;
+                float dotSize = 11f * s;
+                using (var d1 = new SolidBrush(Color.FromArgb(245, 108, 108)))
+                using (var d2 = new SolidBrush(Color.FromArgb(230, 162, 60)))
+                using (var d3 = new SolidBrush(Color.FromArgb(103, 194, 58)))
+                {
+                    g.FillEllipse(d1, 50f * s, dotY, dotSize, dotSize);
+                    g.FillEllipse(d2, 70f * s, dotY, dotSize, dotSize);
+                    g.FillEllipse(d3, 90f * s, dotY, dotSize, dotSize);
+                }
+
+                // 헤더 구분선
+                using (var linePen = new Pen(Color.FromArgb(60, 255, 255, 255), Math.Max(1f, 2f * s)))
+                {
+                    g.DrawLine(linePen, winX + 10f * s, 76f * s, winX + winW - 10f * s, 76f * s);
+                }
+
+                // 4. 중앙: 세련된 웹 글로브 (지구본)
+                float cx = 128f * s;
+                float cy = 144f * s;
+                float r = 46f * s;
+
+                // 지구본 외곽 원
+                using (var globePen = new Pen(Color.FromArgb(250, 255, 255, 255), Math.Max(1.4f, 5f * s)))
+                {
+                    g.DrawEllipse(globePen, cx - r, cy - r, r * 2, r * 2);
+                }
+
+                // 지구본 내부 경/위도선
+                using (var gridPen = new Pen(Color.FromArgb(180, 180, 220, 255), Math.Max(1f, 3f * s)))
+                {
+                    g.DrawLine(gridPen, cx - r, cy, cx + r, cy);
+                    g.DrawEllipse(gridPen, cx - (r * 0.5f), cy - r, r, r * 2);
+                }
+
+                // 5. 화면보호기를 상징하는 빛나는 별빛 스파클
+                float spX = 180f * s;
+                float spY = 96f * s;
+                float spSize = 16f * s;
+                using (var spBrush = new SolidBrush(Color.FromArgb(255, 255, 255, 255)))
+                {
+                    var path = new GraphicsPath();
+                    float inR = spSize * 0.32f;
+                    path.AddLines(new PointF[] {
+                        new PointF(spX, spY - spSize),
+                        new PointF(spX + inR, spY - inR),
+                        new PointF(spX + spSize, spY),
+                        new PointF(spX + inR, spY + inR),
+                        new PointF(spX, spY + spSize),
+                        new PointF(spX - inR, spY + inR),
+                        new PointF(spX - spSize, spY),
+                        new PointF(spX - inR, spY - inR)
+                    });
+                    path.CloseFigure();
+                    g.FillPath(spBrush, path);
+                }
+            }
+            return bmp;
+        }
+
+        /// <summary>
+        /// 윈도우 표준 다중 해상도 .ico 파일로 저장
+        /// </summary>
+        public static void SaveIco(string outputPath, int[] sizes)
+        {
+            using (var fs = new System.IO.FileStream(outputPath, System.IO.FileMode.Create, System.IO.FileAccess.Write))
+            using (var bw = new System.IO.BinaryWriter(fs))
+            {
+                var pngDatas = new byte[sizes.Length][];
+                for (int i = 0; i < sizes.Length; i++)
+                {
+                    using (var bmp = CreateAppBitmap(sizes[i]))
+                    using (var ms = new System.IO.MemoryStream())
+                    {
+                        bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                        pngDatas[i] = ms.ToArray();
+                    }
+                }
+
+                // 1. ICONDIR (6 bytes)
+                bw.Write((ushort)0);
+                bw.Write((ushort)1);
+                bw.Write((ushort)sizes.Length);
+
+                // 2. ICONDIRENTRY (16 bytes per image)
+                int offset = 6 + (sizes.Length * 16);
+                for (int i = 0; i < sizes.Length; i++)
+                {
+                    int sz = sizes[i];
+                    bw.Write((byte)(sz >= 256 ? 0 : sz));
+                    bw.Write((byte)(sz >= 256 ? 0 : sz));
+                    bw.Write((byte)0);
+                    bw.Write((byte)0);
+                    bw.Write((ushort)1);
+                    bw.Write((ushort)32);
+                    bw.Write((uint)pngDatas[i].Length);
+                    bw.Write((uint)offset);
+                    offset += pngDatas[i].Length;
+                }
+
+                // 3. PNG Image Data
+                for (int i = 0; i < sizes.Length; i++)
+                {
+                    bw.Write(pngDatas[i]);
+                }
+            }
+        }
+    }
 }

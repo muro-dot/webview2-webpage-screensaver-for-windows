@@ -17,6 +17,11 @@ namespace Web_Page_Screensaver
         public PreferencesForm()
         {
             InitializeComponent();
+            try
+            {
+                Icon = ModernAppIcon.CreateAppIcon(32);
+            }
+            catch { }
             RemoveExtraTabPages();
             screenTabControl.TabPages[0].Text = "Main Display";
             screenUserControls = new List<PrefsByScreenUserControl>() { prefsByScreenUserControl1 };
