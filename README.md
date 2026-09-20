@@ -4,13 +4,12 @@ A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](h
 
 ## Key Improvements
 
-- **High DPI Support:** Perfect 1:1 pixel rendering on 4K/QHD monitors (No more blurry screens).
-- **Modern Engine:** Powered by the latest Chromium-based Microsoft Edge WebView2.
-- **System Theme Auto Switching (v1.0.4):** Automatically detects Windows system theme (Light/Dark mode) and switches dynamically in real-time without app restart. Includes seamless DWM window title bar color integration.
-- **Modern UI & Dark/Light Mode (v1.0.4):** Sleek, eye-friendly design with silky smooth anti-aliased rounded borders, clear typography, and intuitive URL editing.
-- **Multi-language Support (v1.0.3):** Switch instantly between English and Korean (ENG/KOR) right from the settings panel.
-- **Enhanced Input Detection:** Fixed issues where the screensaver wouldn't exit on keyboard input when the browser had focus.
-- **Improved Performance:** Lower memory footprint compared to legacy CefSharp builds.
+- **System Theme Auto Switching (v1.0.4):** Real-time Light/Dark mode switching with DWM title bar sync.
+- **Inline Editing & Vertical Toolbar (v1.0.4):** In-place double-click/F2 URL editing with compact right-side toolbar.
+- **High DPI Support:** Sharp 1:1 pixel rendering on 4K/QHD monitors.
+- **Modern WebView2 Engine:** Chromium-based Microsoft Edge WebView2 for low memory usage.
+- **Multi-language Support (v1.0.3):** Instant switch between English and Korean (ENG/KOR).
+- **Modern App Logo (v1.0.4):** Sleek Fluent app tile logo for window title bar and executable.
 
 ## Dependencies
 
@@ -43,13 +42,13 @@ A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](h
 
 ## 주요 개선 사항
 
-- **윈도우 시스템 테마 실시간 자동 전환 (v1.0.4):** Windows 개인 설정의 라이트/다크 모드를 실시간 감지하여 재시작 없이 즉시 테마를 변경합니다. 창 상단 타이틀바(DWM)까지 완벽하게 테마가 동기화됩니다.
-- **고해상도(High DPI) 완벽 지원:** 4K 및 QHD 모니터에서 화면이 흐릿하게 보이던 문제를 해결하고, 1:1 픽셀 매칭으로 선명한 화질을 제공합니다.
-- **최신 브라우저 엔진:** 최신 크로미움(Chromium) 기반의 Microsoft Edge WebView2 엔진을 탑재했습니다.
-- **모던 UI 및 라이트/다크 디자인 (v1.0.4):** 안티앨리어싱으로 부드럽게 마감된 둥근 테두리와 직관적인 URL 수정 모드를 지원합니다.
-- **다국어 지원 (v1.0.3):** 설정 창에서 클릭 한 번으로 한국어(KOR)와 영어(ENG)를 실시간으로 전환할 수 있습니다.
-- **입력 감지 로직 강화:** 브라우저가 포커스를 가진 상태에서도 키보드 입력을 정확히 감지하여 화면 보호기가 정상적으로 종료되도록 수정했습니다.
-- **성능 최적화:** 기존 CefSharp 빌드 대비 메모리 점유율을 대폭 낮추어 시스템 부담을 줄였습니다.
+- **시스템 테마 실시간 자동 전환 (v1.0.4):** Windows 라이트/다크 모드 변경 시 재시작 없이 즉시 전환 및 타이틀바 일체화.
+- **목록 내 직접 인라인 편집 (v1.0.4):** 별도 입력창 없이 목록에서 바로 더블클릭/F2로 수정 및 새 행 추가.
+- **우측 일체형 버티컬 툴바 (v1.0.4):** 조작 버튼을 목록 우측에 밀착 배치하고 목록 뷰 높이 대폭 확장.
+- **고해상도(High DPI) 완벽 지원:** 4K 및 QHD 모니터에서 1:1 픽셀 매칭으로 흐림 없는 선명한 화질 제공.
+- **최신 WebView2 엔진 탑재:** 크로미움 기반 Edge WebView2 적용으로 메모리 점유율 및 성능 최적화.
+- **다국어 지원 (v1.0.3):** 설정 창에서 한국어(KOR)와 영어(ENG) 실시간 전환 지원.
+- **신규 모던 로고 적용 (v1.0.4):** 타이틀바 및 실행 파일 아이콘을 세련된 신규 Fluent 로고로 교체.
 
 ## 요구 사항
 
