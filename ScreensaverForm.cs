@@ -72,6 +72,8 @@ namespace Web_Page_Screensaver
             }
         }
 
+        private string currentLoadedUrl = string.Empty;
+
         private async void InitializeWebViewAsync()
         {
             webView = new WebView2();
@@ -85,9 +87,48 @@ namespace Web_Page_Screensaver
 
             // [Fix 2] Save WebView2 temporary data in a safe folder (LocalAppData) with no permission issues
             string userDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "LibraryScreensaver_Data");
-            var env = await CoreWebView2Environment.CreateAsync(null, userDataFolder);
+            
+            // InPrivate 모드 및 보안 옵션 설정
+            CoreWebView2EnvironmentOptions envOptions = null;
+            if (prefsManager.InPrivate)
+            {
+                envOptions = new CoreWebView2EnvironmentOptions
+                {
+                    AdditionalBrowserArguments = "--inprivate"
+                };
+            }
 
+            var env = await CoreWebView2Environment.CreateAsync(null, userDataFolder, envOptions);
             await webView.EnsureCoreWebView2Async(env);
+
+            // 오디오 자동 음소거 적용
+            if (webView.CoreWebView2 != null)
+            {
+                webView.CoreWebView2.IsMuted = prefsManager.MuteAudio;
+
+                // 웹페이지 로드 완료 및 오류 시 이벤트 처리
+                webView.CoreWebView2.NavigationCompleted += (s, e) =>
+                {
+                    if (!e.IsSuccess && e.WebErrorStatus != CoreWebView2WebErrorStatus.OperationCanceled)
+                    {
+                        // 네트워크 오류/서버 다운 시 우아한 모던 디지털 시계 Fallback 화면 렌더링
+                        string fallbackHtml = FallbackHtmlProvider.GetFallbackClockHtml(currentLoadedUrl, prefsManager.Language);
+                        webView.CoreWebView2.NavigateToString(fallbackHtml);
+                    }
+                    else if (e.IsSuccess)
+                    {
+                        // 1. 화면 확대/축소 배율(Zoom Factor) 적용
+                        int zoomPercent = prefsManager.GetZoomFactorByScreen(screenNum);
+                        webView.ZoomFactor = (zoomPercent > 0 ? zoomPercent : 100) / 100.0;
+
+                        // 2. 글래스모피즘 디지털 시계/날짜 HUD 오버레이 주입
+                        if (prefsManager.ShowClockOverlay)
+                        {
+                            webView.ExecuteScriptAsync(FallbackHtmlProvider.GetClockOverlayScript());
+                        }
+                    }
+                };
+            }
 
             // ---------------------------------------------------------
             // [Modified part] Use events of the WebView2 control itself, not CoreWebView2.
@@ -172,6 +213,7 @@ namespace Web_Page_Screensaver
             else
             {
                 webView.Visible = true;
+                currentLoadedUrl = url;
                 try
                 {
                     if (webView.CoreWebView2 != null)
@@ -185,7 +227,20 @@ namespace Web_Page_Screensaver
         {
             currentSiteIndex++;
             if (currentSiteIndex >= Urls.Count) currentSiteIndex = 0;
-            BrowseTo(Urls[currentSiteIndex]);
+
+            string rawUrl = Urls[currentSiteIndex];
+            var parsed = ScreensaverUrlItem.Parse(rawUrl);
+
+            // URL별 가변 인터벌(초) 타이머 동적 갱신
+            if (timer != null)
+            {
+                int intervalSec = parsed.CustomInterval.HasValue 
+                    ? parsed.CustomInterval.Value 
+                    : prefsManager.GetRotationIntervalByScreen(screenNum);
+                timer.Interval = Math.Max(1, intervalSec) * 1000;
+            }
+
+            BrowseTo(parsed.Url);
         }
 
         private void HandleUserActivity()

@@ -4,12 +4,18 @@ A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](h
 
 ## Key Improvements
 
+- **Audio Mute & InPrivate Browsing (v1.0.5):** Silent screensaver with automatic sound muting and privacy protection mode.
+- **Recommended Preset Library (v1.0.5):** One-click addition of popular aesthetic screensavers (Flip Clock, Drive & Listen, Matrix, NASA APOD, etc.).
+- **Graceful Fallback Clock (v1.0.5):** Elegant built-in neon digital clock when offline or page fails to load.
+- **Live Mini Web Preview (v1.0.5):** Instant in-dialog preview of selected URLs with active zoom and mute settings.
+- **Display Zoom Factor & Clock HUD (v1.0.5):** Scalable rendering (75%~200%) for 4K/QHD and sleek glassmorphism clock HUD overlay.
+- **Config Backup & Restore (v1.0.5):** Single-click JSON export and import for seamless cross-PC setup.
 - **System Theme Auto Switching (v1.0.4):** Real-time Light/Dark mode switching with DWM title bar sync.
 - **Inline Editing & Vertical Toolbar (v1.0.4):** In-place double-click/F2 URL editing with compact right-side toolbar.
 - **High DPI Support:** Sharp 1:1 pixel rendering on 4K/QHD monitors.
 - **Modern WebView2 Engine:** Chromium-based Microsoft Edge WebView2 for low memory usage.
 - **Multi-language Support (v1.0.3):** Instant switch between English and Korean (ENG/KOR).
-- **Modern App Logo (v1.0.4):** Sleek Fluent app tile logo for window title bar and executable.
+- **Auto Update Checker (v1.0.5):** Background notification badge when newer GitHub releases are published.
 
 ## Dependencies
 
@@ -42,13 +48,19 @@ A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](h
 
 ## 주요 개선 사항
 
+- **오디오 자동 음소거 및 시크릿 모드 (v1.0.5):** 웹페이지 소음 차단(기본 Mute) 및 쿠키/기록을 남기지 않는 안전한 브라우징.
+- **추천 프리셋 라이브러리 (v1.0.5):** 플립 시계, 드라이브&라디오, 매트릭스, NASA 천체 사진 등 검증된 인기 화면보호기 원클릭 추가.
+- **오프라인/오류 시 우아한 모던 시계 폴백 (v1.0.5):** 인터넷 연결이 끊겨도 에러창 대신 세련된 네온 디지털 시계 자동 전환.
+- **실시간 미니 웹 미리보기 (v1.0.5):** 화면보호기를 직접 실행하지 않고도 설정창에서 즉시 렌더링 상태 확인.
+- **화면 배율 조절 & 시계 HUD 오버레이 (v1.0.5):** 4K/QHD 해상도 맞춤 배율(75%~200%) 및 글래스모피즘 디지털 시계 HUD.
+- **설정 원클릭 백업/복원 (v1.0.5):** 전체 설정을 JSON 파일로 손쉽게 내보내고 타 PC에 불러오기 지원.
 - **시스템 테마 실시간 자동 전환 (v1.0.4):** Windows 라이트/다크 모드 변경 시 재시작 없이 즉시 전환 및 타이틀바 일체화.
 - **목록 내 직접 인라인 편집 (v1.0.4):** 별도 입력창 없이 목록에서 바로 더블클릭/F2로 수정 및 새 행 추가.
 - **우측 일체형 버티컬 툴바 (v1.0.4):** 조작 버튼을 목록 우측에 밀착 배치하고 목록 뷰 높이 대폭 확장.
 - **고해상도(High DPI) 완벽 지원:** 4K 및 QHD 모니터에서 1:1 픽셀 매칭으로 흐림 없는 선명한 화질 제공.
 - **최신 WebView2 엔진 탑재:** 크로미움 기반 Edge WebView2 적용으로 메모리 점유율 및 성능 최적화.
 - **다국어 지원 (v1.0.3):** 설정 창에서 한국어(KOR)와 영어(ENG) 실시간 전환 지원.
-- **신규 모던 로고 적용 (v1.0.4):** 타이틀바 및 실행 파일 아이콘을 세련된 신규 Fluent 로고로 교체.
+- **GitHub 최신 버전 자동 감지 (v1.0.5):** 새 릴리즈 출시 시 설정창 상단에 알림 뱃지 자동 표시.
 
 ## 요구 사항
 

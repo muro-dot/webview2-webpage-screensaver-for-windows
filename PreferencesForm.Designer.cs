@@ -38,6 +38,9 @@ namespace Web_Page_Screensaver
             this.btnLangKor = new Web_Page_Screensaver.ModernButton();
             this.btnLangEng = new Web_Page_Screensaver.ModernButton();
             this.btnGithub = new Web_Page_Screensaver.ModernButton();
+            this.btnExport = new Web_Page_Screensaver.ModernButton();
+            this.btnImport = new Web_Page_Screensaver.ModernButton();
+            this.btnUpdateNotice = new Web_Page_Screensaver.ModernButton();
             this.lblSubtitle = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
             this.multiScreenCard = new Web_Page_Screensaver.ModernCard();
@@ -50,6 +53,9 @@ namespace Web_Page_Screensaver
             this.prefsByScreenUserControl1 = new Web_Page_Screensaver.PrefsByScreenUserControl();
             this.bottomPanel = new System.Windows.Forms.Panel();
             this.cbCloseOnActivity = new Web_Page_Screensaver.ModernCheckBox();
+            this.cbMuteAudio = new Web_Page_Screensaver.ModernCheckBox();
+            this.cbInPrivate = new Web_Page_Screensaver.ModernCheckBox();
+            this.cbClockOverlay = new Web_Page_Screensaver.ModernCheckBox();
             this.cancelButton = new Web_Page_Screensaver.ModernButton();
             this.okButton = new Web_Page_Screensaver.ModernButton();
             this.screenModeTooltip = new System.Windows.Forms.ToolTip(this.components);
@@ -66,6 +72,9 @@ namespace Web_Page_Screensaver
             this.headerPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.headerPanel.BackColor = System.Drawing.Color.Transparent;
+            this.headerPanel.Controls.Add(this.btnUpdateNotice);
+            this.headerPanel.Controls.Add(this.btnExport);
+            this.headerPanel.Controls.Add(this.btnImport);
             this.headerPanel.Controls.Add(this.langPanel);
             this.headerPanel.Controls.Add(this.btnGithub);
             this.headerPanel.Controls.Add(this.lblSubtitle);
@@ -75,12 +84,67 @@ namespace Web_Page_Screensaver
             this.headerPanel.Size = new System.Drawing.Size(712, 56);
             this.headerPanel.TabIndex = 0;
             // 
+            // btnUpdateNotice
+            // 
+            this.btnUpdateNotice.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnUpdateNotice.BackColor = System.Drawing.Color.Transparent;
+            this.btnUpdateNotice.BorderRadius = 6;
+            this.btnUpdateNotice.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnUpdateNotice.FlatAppearance.BorderSize = 0;
+            this.btnUpdateNotice.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUpdateNotice.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
+            this.btnUpdateNotice.Location = new System.Drawing.Point(272, 11);
+            this.btnUpdateNotice.Name = "btnUpdateNotice";
+            this.btnUpdateNotice.Size = new System.Drawing.Size(108, 30);
+            this.btnUpdateNotice.Style = Web_Page_Screensaver.ModernButtonStyle.Primary;
+            this.btnUpdateNotice.TabIndex = 6;
+            this.btnUpdateNotice.Text = "🚀 New Update";
+            this.btnUpdateNotice.UseVisualStyleBackColor = false;
+            this.btnUpdateNotice.Visible = false;
+            this.btnUpdateNotice.Click += new System.EventHandler(this.btnUpdateNotice_Click);
+            // 
+            // btnExport
+            // 
+            this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnExport.BackColor = System.Drawing.Color.Transparent;
+            this.btnExport.BorderRadius = 6;
+            this.btnExport.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnExport.FlatAppearance.BorderSize = 0;
+            this.btnExport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnExport.Font = new System.Drawing.Font("Segoe UI", 8.5F);
+            this.btnExport.Location = new System.Drawing.Point(386, 11);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(56, 30);
+            this.btnExport.Style = Web_Page_Screensaver.ModernButtonStyle.Ghost;
+            this.btnExport.TabIndex = 4;
+            this.btnExport.Text = "Export";
+            this.btnExport.UseVisualStyleBackColor = false;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            // 
+            // btnImport
+            // 
+            this.btnImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnImport.BackColor = System.Drawing.Color.Transparent;
+            this.btnImport.BorderRadius = 6;
+            this.btnImport.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnImport.FlatAppearance.BorderSize = 0;
+            this.btnImport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnImport.Font = new System.Drawing.Font("Segoe UI", 8.5F);
+            this.btnImport.Location = new System.Drawing.Point(446, 11);
+            this.btnImport.Name = "btnImport";
+            this.btnImport.Size = new System.Drawing.Size(56, 30);
+            this.btnImport.Style = Web_Page_Screensaver.ModernButtonStyle.Ghost;
+            this.btnImport.TabIndex = 5;
+            this.btnImport.Text = "Import";
+            this.btnImport.UseVisualStyleBackColor = false;
+            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
+            // 
             // langPanel
             // 
             this.langPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.langPanel.Controls.Add(this.btnLangKor);
             this.langPanel.Controls.Add(this.btnLangEng);
-            this.langPanel.Location = new System.Drawing.Point(472, 11);
+            this.langPanel.Location = new System.Drawing.Point(508, 11);
             this.langPanel.Name = "langPanel";
             this.langPanel.Size = new System.Drawing.Size(126, 30);
             this.langPanel.TabIndex = 3;
@@ -130,9 +194,9 @@ namespace Web_Page_Screensaver
             this.btnGithub.FlatAppearance.BorderSize = 0;
             this.btnGithub.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGithub.Font = new System.Drawing.Font("Segoe UI", 8.5F);
-            this.btnGithub.Location = new System.Drawing.Point(608, 11);
+            this.btnGithub.Location = new System.Drawing.Point(636, 11);
             this.btnGithub.Name = "btnGithub";
-            this.btnGithub.Size = new System.Drawing.Size(102, 30);
+            this.btnGithub.Size = new System.Drawing.Size(74, 30);
             this.btnGithub.Style = Web_Page_Screensaver.ModernButtonStyle.Ghost;
             this.btnGithub.TabIndex = 2;
             this.btnGithub.Text = "GitHub ↗";
@@ -251,7 +315,7 @@ namespace Web_Page_Screensaver
             this.screenTabControl.Location = new System.Drawing.Point(24, 132);
             this.screenTabControl.Name = "screenTabControl";
             this.screenTabControl.SelectedIndex = 0;
-            this.screenTabControl.Size = new System.Drawing.Size(712, 376);
+            this.screenTabControl.Size = new System.Drawing.Size(712, 372);
             this.screenTabControl.TabIndex = 2;
             // 
             // screenTabPage1
@@ -261,7 +325,7 @@ namespace Web_Page_Screensaver
             this.screenTabPage1.Location = new System.Drawing.Point(4, 40);
             this.screenTabPage1.Name = "screenTabPage1";
             this.screenTabPage1.Padding = new System.Windows.Forms.Padding(12);
-            this.screenTabPage1.Size = new System.Drawing.Size(704, 332);
+            this.screenTabPage1.Size = new System.Drawing.Size(704, 328);
             this.screenTabPage1.TabIndex = 0;
             this.screenTabPage1.Text = "Screen 1";
             // 
@@ -273,7 +337,7 @@ namespace Web_Page_Screensaver
             this.prefsByScreenUserControl1.Location = new System.Drawing.Point(12, 12);
             this.prefsByScreenUserControl1.Margin = new System.Windows.Forms.Padding(0);
             this.prefsByScreenUserControl1.Name = "prefsByScreenUserControl1";
-            this.prefsByScreenUserControl1.Size = new System.Drawing.Size(680, 308);
+            this.prefsByScreenUserControl1.Size = new System.Drawing.Size(680, 304);
             this.prefsByScreenUserControl1.TabIndex = 0;
             // 
             // bottomPanel
@@ -282,11 +346,14 @@ namespace Web_Page_Screensaver
             | System.Windows.Forms.AnchorStyles.Right)));
             this.bottomPanel.BackColor = System.Drawing.Color.Transparent;
             this.bottomPanel.Controls.Add(this.cbCloseOnActivity);
+            this.bottomPanel.Controls.Add(this.cbMuteAudio);
+            this.bottomPanel.Controls.Add(this.cbInPrivate);
+            this.bottomPanel.Controls.Add(this.cbClockOverlay);
             this.bottomPanel.Controls.Add(this.cancelButton);
             this.bottomPanel.Controls.Add(this.okButton);
-            this.bottomPanel.Location = new System.Drawing.Point(24, 518);
+            this.bottomPanel.Location = new System.Drawing.Point(24, 514);
             this.bottomPanel.Name = "bottomPanel";
-            this.bottomPanel.Size = new System.Drawing.Size(712, 46);
+            this.bottomPanel.Size = new System.Drawing.Size(712, 58);
             this.bottomPanel.TabIndex = 3;
             // 
             // cbCloseOnActivity
@@ -295,14 +362,55 @@ namespace Web_Page_Screensaver
             this.cbCloseOnActivity.Checked = true;
             this.cbCloseOnActivity.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbCloseOnActivity.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.cbCloseOnActivity.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.cbCloseOnActivity.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.cbCloseOnActivity.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(245)))));
-            this.cbCloseOnActivity.Location = new System.Drawing.Point(4, 12);
+            this.cbCloseOnActivity.Location = new System.Drawing.Point(4, 7);
             this.cbCloseOnActivity.Name = "cbCloseOnActivity";
-            this.cbCloseOnActivity.Size = new System.Drawing.Size(262, 21);
+            this.cbCloseOnActivity.Size = new System.Drawing.Size(225, 19);
             this.cbCloseOnActivity.TabIndex = 0;
-            this.cbCloseOnActivity.Text = "Exit screensaver on mouse movement";
+            this.cbCloseOnActivity.Text = "Exit on mouse movement";
             this.cbCloseOnActivity.UseVisualStyleBackColor = true;
+            // 
+            // cbMuteAudio
+            // 
+            this.cbMuteAudio.AutoSize = true;
+            this.cbMuteAudio.Checked = true;
+            this.cbMuteAudio.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbMuteAudio.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.cbMuteAudio.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.cbMuteAudio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(245)))));
+            this.cbMuteAudio.Location = new System.Drawing.Point(234, 7);
+            this.cbMuteAudio.Name = "cbMuteAudio";
+            this.cbMuteAudio.Size = new System.Drawing.Size(180, 19);
+            this.cbMuteAudio.TabIndex = 1;
+            this.cbMuteAudio.Text = "Mute Audio (Silent)";
+            this.cbMuteAudio.UseVisualStyleBackColor = true;
+            // 
+            // cbInPrivate
+            // 
+            this.cbInPrivate.AutoSize = true;
+            this.cbInPrivate.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.cbInPrivate.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.cbInPrivate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(245)))));
+            this.cbInPrivate.Location = new System.Drawing.Point(4, 31);
+            this.cbInPrivate.Name = "cbInPrivate";
+            this.cbInPrivate.Size = new System.Drawing.Size(210, 19);
+            this.cbInPrivate.TabIndex = 2;
+            this.cbInPrivate.Text = "InPrivate Browsing";
+            this.cbInPrivate.UseVisualStyleBackColor = true;
+            // 
+            // cbClockOverlay
+            // 
+            this.cbClockOverlay.AutoSize = true;
+            this.cbClockOverlay.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.cbClockOverlay.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.cbClockOverlay.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(245)))));
+            this.cbClockOverlay.Location = new System.Drawing.Point(234, 31);
+            this.cbClockOverlay.Name = "cbClockOverlay";
+            this.cbClockOverlay.Size = new System.Drawing.Size(180, 19);
+            this.cbClockOverlay.TabIndex = 3;
+            this.cbClockOverlay.Text = "Clock HUD Overlay";
+            this.cbClockOverlay.UseVisualStyleBackColor = true;
             // 
             // cancelButton
             // 
@@ -314,11 +422,11 @@ namespace Web_Page_Screensaver
             this.cancelButton.FlatAppearance.BorderSize = 0;
             this.cancelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cancelButton.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.cancelButton.Location = new System.Drawing.Point(498, 6);
+            this.cancelButton.Location = new System.Drawing.Point(498, 14);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(98, 33);
             this.cancelButton.Style = Web_Page_Screensaver.ModernButtonStyle.Secondary;
-            this.cancelButton.TabIndex = 1;
+            this.cancelButton.TabIndex = 4;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = false;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
@@ -333,11 +441,11 @@ namespace Web_Page_Screensaver
             this.okButton.FlatAppearance.BorderSize = 0;
             this.okButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.okButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.okButton.Location = new System.Drawing.Point(604, 6);
+            this.okButton.Location = new System.Drawing.Point(604, 14);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(108, 33);
             this.okButton.Style = Web_Page_Screensaver.ModernButtonStyle.Primary;
-            this.okButton.TabIndex = 2;
+            this.okButton.TabIndex = 5;
             this.okButton.Text = "Save & Apply";
             this.okButton.UseVisualStyleBackColor = false;
             this.okButton.Click += new System.EventHandler(this.okButton_Click);
@@ -386,6 +494,9 @@ namespace Web_Page_Screensaver
         private ModernButton btnLangKor;
         private ModernButton btnLangEng;
         private ModernButton btnGithub;
+        private ModernButton btnExport;
+        private ModernButton btnImport;
+        private ModernButton btnUpdateNotice;
         private ModernCard multiScreenCard;
         private System.Windows.Forms.Label lblMultiScreen;
         private ModernRadioButton spanScreensButton;
@@ -396,6 +507,9 @@ namespace Web_Page_Screensaver
         private PrefsByScreenUserControl prefsByScreenUserControl1;
         private System.Windows.Forms.Panel bottomPanel;
         private ModernCheckBox cbCloseOnActivity;
+        public ModernCheckBox cbMuteAudio;
+        public ModernCheckBox cbInPrivate;
+        public ModernCheckBox cbClockOverlay;
         private ModernButton cancelButton;
         private ModernButton okButton;
         private System.Windows.Forms.ToolTip screenModeTooltip;

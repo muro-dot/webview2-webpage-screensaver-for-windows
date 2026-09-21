@@ -16,6 +16,10 @@ namespace Web_Page_Screensaver
         private const string RANDOMIZE_PREF = "RandomOrder";
         private const string CLOSE_ON_ACTIVITY_PREF = "CloseOnActivity";
         private const string LANGUAGE_PREF = "Language";
+        private const string MUTE_AUDIO_PREF = "MuteAudio";
+        private const string INPRIVATE_PREF = "InPrivate";
+        private const string CLOCK_OVERLAY_PREF = "ShowClockOverlay";
+        private const string ZOOM_FACTOR_PREF = "ZoomFactor";
 
         private const string SCREEN_SPECIFIC_PREF_NAME_FORMATSTRING = "{0}Screen{1}";
 
@@ -26,8 +30,17 @@ namespace Web_Page_Screensaver
         private const string RANDOMIZE_PREF_DEFAULT = "False";
         private const string CLOSE_ON_ACTIVITY_PREF_DEFAULT = "True";
         private const string LANGUAGE_PREF_DEFAULT = "ko";
+        private const string MUTE_AUDIO_PREF_DEFAULT = "True";
+        private const string INPRIVATE_PREF_DEFAULT = "False";
+        private const string CLOCK_OVERLAY_PREF_DEFAULT = "False";
+        private const string ZOOM_FACTOR_PREF_DEFAULT = "100";
 
         public string Language { get; set; }
+        public bool MuteAudio { get; set; }
+        public bool InPrivate { get; set; }
+        public bool ShowClockOverlay { get; set; }
+
+        private List<int> zoomFactorsByScreen;
 
         private static RegistryKey reg = Registry.CurrentUser.CreateSubKey(Program.KEY);
 
@@ -238,14 +251,48 @@ namespace Web_Page_Screensaver
             return EffectiveScreensList[screenNum].IsPrimary ? RealPrimaryScreenNum() : screenNum;
         }
 
+        public int GetZoomFactorByScreen(int screenNum)
+        {
+            int idx = TranslateScreenNumToScreenPrefNum(screenNum);
+            if (zoomFactorsByScreen != null && idx < zoomFactorsByScreen.Count)
+            {
+                return zoomFactorsByScreen[idx];
+            }
+            return 100;
+        }
+
+        public void SetZoomFactorForScreen(int screenNum, int value)
+        {
+            int idx = TranslateScreenNumToScreenPrefNum(screenNum);
+            if (zoomFactorsByScreen != null && idx < zoomFactorsByScreen.Count)
+            {
+                zoomFactorsByScreen[idx] = value;
+            }
+        }
+
+        public List<List<string>> GetAllUrlsByScreenDirect() => urlsByScreen;
+        public List<int> GetAllIntervalsDirect() => rotationIntervalsByScreen;
+        public List<bool> GetAllRandomizeDirect() => randomizeFlagByScreen;
+        public List<int> GetAllZoomFactorsDirect() => zoomFactorsByScreen;
+
+        public void SetAllUrlsByScreenDirect(List<List<string>> val) { urlsByScreen = val; }
+        public void SetAllIntervalsDirect(List<int> val) { rotationIntervalsByScreen = val; }
+        public void SetAllRandomizeDirect(List<bool> val) { randomizeFlagByScreen = val; }
+        public void SetAllZoomFactorsDirect(List<int> val) { zoomFactorsByScreen = val; }
+
         public void SavePreferences()
         {
             reg.SetValue(MULTISCREEN_PREF, MultiScreenMode);
             reg.SetValue(CLOSE_ON_ACTIVITY_PREF, CloseOnActivity);
             reg.SetValue(LANGUAGE_PREF, Language ?? LANGUAGE_PREF_DEFAULT);
+            reg.SetValue(MUTE_AUDIO_PREF, MuteAudio);
+            reg.SetValue(INPRIVATE_PREF, InPrivate);
+            reg.SetValue(CLOCK_OVERLAY_PREF, ShowClockOverlay);
+
             SaveUrlsAllScreens();
             SavePrefAllScreens(INTERVAL_PREF, rotationIntervalsByScreen);
             SavePrefAllScreens(RANDOMIZE_PREF, randomizeFlagByScreen);
+            SavePrefAllScreens(ZOOM_FACTOR_PREF, zoomFactorsByScreen);
             reg.Close();
         }
 
@@ -254,9 +301,14 @@ namespace Web_Page_Screensaver
             MultiScreenMode = (MultiScreenModeItem)Enum.Parse(typeof(MultiScreenModeItem), (string)reg.GetValue(MULTISCREEN_PREF, MULTISCREEN_PREF_DEFAULT));
             CloseOnActivity = bool.Parse((string)reg.GetValue(CLOSE_ON_ACTIVITY_PREF, CLOSE_ON_ACTIVITY_PREF_DEFAULT));
             Language = (string)reg.GetValue(LANGUAGE_PREF, LANGUAGE_PREF_DEFAULT);
+            MuteAudio = bool.Parse((string)reg.GetValue(MUTE_AUDIO_PREF, MUTE_AUDIO_PREF_DEFAULT));
+            InPrivate = bool.Parse((string)reg.GetValue(INPRIVATE_PREF, INPRIVATE_PREF_DEFAULT));
+            ShowClockOverlay = bool.Parse((string)reg.GetValue(CLOCK_OVERLAY_PREF, CLOCK_OVERLAY_PREF_DEFAULT));
+
             urlsByScreen = LoadUrlsAllScreens();
             rotationIntervalsByScreen = LoadPrefAllScreens<int>(INTERVAL_PREF, INTERVAL_PREF_DEFAULT, INTERVAL_PREF_DEFAULT);
             randomizeFlagByScreen = LoadPrefAllScreens<bool>(RANDOMIZE_PREF, RANDOMIZE_PREF_DEFAULT, RANDOMIZE_PREF_DEFAULT);
+            zoomFactorsByScreen = LoadPrefAllScreens<int>(ZOOM_FACTOR_PREF, ZOOM_FACTOR_PREF_DEFAULT, ZOOM_FACTOR_PREF_DEFAULT);
         }
 
         private List<List<string>> LoadUrlsAllScreens()
@@ -355,6 +407,40 @@ namespace Web_Page_Screensaver
                 rectangles.Min(r => r.Top),
                 rectangles.Max(r => r.Right),
                 rectangles.Max(r => r.Bottom));
+        }
+    }
+
+    /// <summary>
+    /// 개별 표시 시간(초)이 지정된 URL 항목 모델.
+    /// 구버전 단일 URL과 'URL|초' 포맷을 완벽하게 상호 호환 파싱합니다.
+    /// </summary>
+    public class ScreensaverUrlItem
+    {
+        public string Url { get; set; }
+        public int? CustomInterval { get; set; } // null일 경우 화면 기본 회전 주기 사용
+
+        public static ScreensaverUrlItem Parse(string raw)
+        {
+            if (string.IsNullOrWhiteSpace(raw)) return new ScreensaverUrlItem { Url = string.Empty };
+            int pipeIdx = raw.LastIndexOf('|');
+            if (pipeIdx > 0 && pipeIdx < raw.Length - 1)
+            {
+                string potentialSec = raw.Substring(pipeIdx + 1);
+                if (int.TryParse(potentialSec, out int sec) && sec > 0)
+                {
+                    return new ScreensaverUrlItem
+                    {
+                        Url = raw.Substring(0, pipeIdx),
+                        CustomInterval = sec
+                    };
+                }
+            }
+            return new ScreensaverUrlItem { Url = raw };
+        }
+
+        public string ToRawString()
+        {
+            return CustomInterval.HasValue ? $"{Url}|{CustomInterval.Value}" : Url;
         }
     }
 }

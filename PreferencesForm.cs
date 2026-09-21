@@ -31,6 +31,9 @@ namespace Web_Page_Screensaver
         private void PreferencesForm_Load(object sender, EventArgs e)
         {
             cbCloseOnActivity.Checked = prefsManager.CloseOnActivity;
+            cbMuteAudio.Checked = prefsManager.MuteAudio;
+            cbInPrivate.Checked = prefsManager.InPrivate;
+            cbClockOverlay.Checked = prefsManager.ShowClockOverlay;
 
             // 1. 윈도우 시스템 테마(다크/라이트) 감지 및 실시간 변경 이벤트 등록
             RegisterThemeEvents();
@@ -54,6 +57,27 @@ namespace Web_Page_Screensaver
             }
 
             ApplyLanguage(currentLanguage);
+
+            // 3. 백그라운드에서 GitHub 최신 릴리즈 비동기 확인
+            CheckForUpdatesAsync();
+        }
+
+        private async void CheckForUpdatesAsync()
+        {
+            try
+            {
+                var release = await UpdateChecker.CheckForUpdateAsync();
+                if (release != null && release.HasUpdate && !IsDisposed && IsHandleCreated)
+                {
+                    BeginInvoke((MethodInvoker)(() =>
+                    {
+                        btnUpdateNotice.Text = $"🚀 New: v{release.LatestVersion}";
+                        btnUpdateNotice.Tag = release.ReleaseUrl;
+                        btnUpdateNotice.Visible = true;
+                    }));
+                }
+            }
+            catch { }
         }
 
         private void RegisterThemeEvents()
@@ -131,6 +155,13 @@ namespace Web_Page_Screensaver
 
             // 5. 하단 패널 및 컨트롤
             cbCloseOnActivity.ForeColor = colors.TextPrimary;
+            cbMuteAudio.ForeColor = colors.TextPrimary;
+            cbInPrivate.ForeColor = colors.TextPrimary;
+            cbClockOverlay.ForeColor = colors.TextPrimary;
+
+            btnExport.Invalidate();
+            btnImport.Invalidate();
+            btnUpdateNotice.Invalidate();
 
             // 6. 자식 화면 컨트롤들에 테마 전파
             if (screenUserControls != null)
@@ -154,10 +185,13 @@ namespace Web_Page_Screensaver
             btnLangKor.IsSelected = isKo;
             btnLangEng.IsSelected = !isKo;
 
-            Text = isKo ? "웹 화면보호기 설정 v1.0.4" : "WebView2 Web Page Screensaver Settings v1.0.4";
-            lblTitle.Text = isKo ? "WebView2 웹 화면보호기 v1.0.4" : "WebView2 Web Screensaver v1.0.4";
+            Text = isKo ? "웹 화면보호기 설정 v1.0.5" : "WebView2 Web Page Screensaver Settings v1.0.5";
+            lblTitle.Text = isKo ? "WebView2 웹 화면보호기 v1.0.5" : "WebView2 Web Screensaver v1.0.5";
             lblSubtitle.Text = isKo ? "웹사이트 및 대시보드를 고해상도 화면보호기로 출력합니다" : "Display websites and live dashboards with Microsoft WebView2";
             lblMultiScreen.Text = isKo ? "다중 모니터 모드:" : "Multi-Monitor Mode:";
+
+            btnExport.Text = isKo ? "백업" : "Export";
+            btnImport.Text = isKo ? "복원" : "Import";
 
             spanScreensButton.Text = isKo ? "확장 (전체 통합)" : "Span (All)";
             mirrorScreensButton.Text = isKo ? "복제 (동일 출력)" : "Mirror (Clone)";
@@ -167,7 +201,11 @@ namespace Web_Page_Screensaver
             screenModeTooltip.SetToolTip(mirrorScreensButton, isKo ? "모든 모니터에 똑같은 웹사이트를 동시에 복제 출력합니다" : "Same websites shown on all monitors");
             screenModeTooltip.SetToolTip(separateScreensButton, isKo ? "각 모니터마다 서로 다른 웹사이트 목록을 설정합니다" : "Configure individual URL list for each screen");
 
-            cbCloseOnActivity.Text = isKo ? "마우스 움직임 시 화면보호기 종료" : "Exit screensaver on mouse movement";
+            cbCloseOnActivity.Text = isKo ? "마우스 움직임 시 종료" : "Exit on mouse move";
+            cbMuteAudio.Text = isKo ? "오디오 음소거 (소리 끄기)" : "Mute Audio (Silent)";
+            cbInPrivate.Text = isKo ? "시크릿 모드 (InPrivate)" : "InPrivate Browsing";
+            cbClockOverlay.Text = isKo ? "시계 HUD 오버레이" : "Clock HUD Overlay";
+
             cancelButton.Text = isKo ? "취소" : "Cancel";
             okButton.Text = isKo ? "저장 및 적용" : "Save & Apply";
 
@@ -202,6 +240,13 @@ namespace Web_Page_Screensaver
                 loadUrlsForTabToControl(screenNum, currentPrefsUserControl);
                 currentPrefsUserControl.nudRotationInterval.Value = Math.Max(1, prefsManager.GetRotationIntervalByScreen(screenNum));
                 currentPrefsUserControl.cbRandomize.Checked = prefsManager.GetRandomizeFlagByScreen(screenNum);
+
+                // 줌 팩터 반영
+                int zoom = prefsManager.GetZoomFactorByScreen(screenNum);
+                string zoomStr = $"{zoom}%";
+                int idx = currentPrefsUserControl.cmbZoom.Items.IndexOf(zoomStr);
+                currentPrefsUserControl.cmbZoom.SelectedIndex = idx >= 0 ? idx : 1;
+
                 currentPrefsUserControl.ApplyLanguage(currentLanguage);
             }
         }
@@ -338,6 +383,12 @@ namespace Web_Page_Screensaver
         {
             try
             {
+                prefsManager.CloseOnActivity = cbCloseOnActivity.Checked;
+                prefsManager.MuteAudio = cbMuteAudio.Checked;
+                prefsManager.InPrivate = cbInPrivate.Checked;
+                prefsManager.ShowClockOverlay = cbClockOverlay.Checked;
+                prefsManager.Language = currentLanguage;
+
                 for (var i = 0; i < screenUserControls.Count; i++)
                 {
                     var currentPrefsUserControl = screenUserControls[i];
@@ -347,8 +398,15 @@ namespace Web_Page_Screensaver
                     prefsManager.SetRotationIntervalForScreen(i,
                         (int) currentPrefsUserControl.nudRotationInterval.Value);
                     prefsManager.SetRandomizeFlagForScreen(i, currentPrefsUserControl.cbRandomize.Checked);
-                    prefsManager.CloseOnActivity = cbCloseOnActivity.Checked;
-                    prefsManager.Language = currentLanguage;
+
+                    if (currentPrefsUserControl.cmbZoom.SelectedItem != null)
+                    {
+                        string zoomStr = currentPrefsUserControl.cmbZoom.SelectedItem.ToString().TrimEnd('%');
+                        if (int.TryParse(zoomStr, out int z))
+                        {
+                            prefsManager.SetZoomFactorForScreen(i, z);
+                        }
+                    }
                 }
             }
             catch (Exception e)
@@ -380,6 +438,36 @@ namespace Web_Page_Screensaver
             }
 
             base.OnClosed(e);
+        }
+
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            readBackValuesFromUI();
+            ConfigExportImport.ExportToFile(prefsManager, this, currentLanguage);
+        }
+
+        private void btnImport_Click(object sender, EventArgs e)
+        {
+            if (ConfigExportImport.ImportFromFile(prefsManager, this, currentLanguage))
+            {
+                cbCloseOnActivity.Checked = prefsManager.CloseOnActivity;
+                cbMuteAudio.Checked = prefsManager.MuteAudio;
+                cbInPrivate.Checked = prefsManager.InPrivate;
+                cbClockOverlay.Checked = prefsManager.ShowClockOverlay;
+                currentLanguage = prefsManager.Language ?? "ko";
+                SetMultiScreenButtonFromMode();
+                ArrangeScreenTabs();
+                ApplyLanguage(currentLanguage);
+            }
+        }
+
+        private void btnUpdateNotice_Click(object sender, EventArgs e)
+        {
+            string url = btnUpdateNotice.Tag?.ToString();
+            if (!string.IsNullOrEmpty(url))
+            {
+                try { System.Diagnostics.Process.Start(url); } catch { }
+            }
         }
 
         private void btnGithub_Click(object sender, EventArgs e)

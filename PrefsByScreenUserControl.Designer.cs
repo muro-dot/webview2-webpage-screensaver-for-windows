@@ -40,14 +40,18 @@ namespace Web_Page_Screensaver
             this.lvUrls = new System.Windows.Forms.ListView();
             this.chUrl = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnAddUrl = new Web_Page_Screensaver.ModernButton();
+            this.btnPresets = new Web_Page_Screensaver.ModernButton();
             this.btnUp = new Web_Page_Screensaver.ModernButton();
             this.btnDown = new Web_Page_Screensaver.ModernButton();
             this.btnEdit = new Web_Page_Screensaver.ModernButton();
+            this.btnPreview = new Web_Page_Screensaver.ModernButton();
             this.btnDelete = new Web_Page_Screensaver.ModernButton();
             this.optionsCard = new Web_Page_Screensaver.ModernCard();
             this.lblSeconds = new System.Windows.Forms.Label();
             this.nudRotationInterval = new System.Windows.Forms.NumericUpDown();
             this.lblRotation = new System.Windows.Forms.Label();
+            this.lblZoom = new System.Windows.Forms.Label();
+            this.cmbZoom = new System.Windows.Forms.ComboBox();
             this.cbRandomize = new Web_Page_Screensaver.ModernCheckBox();
             this.urlButtonsTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.listCard.SuspendLayout();
@@ -106,10 +110,10 @@ namespace Web_Page_Screensaver
             this.btnUp.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnUp.FlatAppearance.BorderSize = 0;
             this.btnUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnUp.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnUp.Font = new System.Drawing.Font("Segoe UI", 8.8F);
             this.btnUp.Location = new System.Drawing.Point(578, 2);
             this.btnUp.Name = "btnUp";
-            this.btnUp.Size = new System.Drawing.Size(102, 34);
+            this.btnUp.Size = new System.Drawing.Size(102, 30);
             this.btnUp.Style = Web_Page_Screensaver.ModernButtonStyle.Secondary;
             this.btnUp.TabIndex = 1;
             this.btnUp.Text = "▲ Move Up";
@@ -125,10 +129,10 @@ namespace Web_Page_Screensaver
             this.btnDown.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnDown.FlatAppearance.BorderSize = 0;
             this.btnDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDown.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnDown.Location = new System.Drawing.Point(578, 42);
+            this.btnDown.Font = new System.Drawing.Font("Segoe UI", 8.8F);
+            this.btnDown.Location = new System.Drawing.Point(578, 36);
             this.btnDown.Name = "btnDown";
-            this.btnDown.Size = new System.Drawing.Size(102, 34);
+            this.btnDown.Size = new System.Drawing.Size(102, 30);
             this.btnDown.Style = Web_Page_Screensaver.ModernButtonStyle.Secondary;
             this.btnDown.TabIndex = 2;
             this.btnDown.Text = "▼ Move Down";
@@ -144,16 +148,35 @@ namespace Web_Page_Screensaver
             this.btnAddUrl.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAddUrl.FlatAppearance.BorderSize = 0;
             this.btnAddUrl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddUrl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnAddUrl.Location = new System.Drawing.Point(578, 92);
+            this.btnAddUrl.Font = new System.Drawing.Font("Segoe UI", 8.8F, System.Drawing.FontStyle.Bold);
+            this.btnAddUrl.Location = new System.Drawing.Point(578, 72);
             this.btnAddUrl.Name = "btnAddUrl";
-            this.btnAddUrl.Size = new System.Drawing.Size(102, 34);
+            this.btnAddUrl.Size = new System.Drawing.Size(102, 30);
             this.btnAddUrl.Style = Web_Page_Screensaver.ModernButtonStyle.Secondary;
             this.btnAddUrl.TabIndex = 3;
             this.btnAddUrl.Text = "＋ Add URL";
             this.urlButtonsTooltip.SetToolTip(this.btnAddUrl, "Add a new URL to the list");
             this.btnAddUrl.UseVisualStyleBackColor = false;
             this.btnAddUrl.Click += new System.EventHandler(this.btnAddUrl_Click);
+            // 
+            // btnPresets
+            // 
+            this.btnPresets.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPresets.BackColor = System.Drawing.Color.Transparent;
+            this.btnPresets.BorderRadius = 6;
+            this.btnPresets.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnPresets.FlatAppearance.BorderSize = 0;
+            this.btnPresets.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPresets.Font = new System.Drawing.Font("Segoe UI", 8.8F, System.Drawing.FontStyle.Bold);
+            this.btnPresets.Location = new System.Drawing.Point(578, 106);
+            this.btnPresets.Name = "btnPresets";
+            this.btnPresets.Size = new System.Drawing.Size(102, 30);
+            this.btnPresets.Style = Web_Page_Screensaver.ModernButtonStyle.Secondary;
+            this.btnPresets.TabIndex = 4;
+            this.btnPresets.Text = "★ Presets";
+            this.urlButtonsTooltip.SetToolTip(this.btnPresets, "Choose from recommended screensaver presets");
+            this.btnPresets.UseVisualStyleBackColor = false;
+            this.btnPresets.Click += new System.EventHandler(this.btnPresets_Click);
             // 
             // btnEdit
             // 
@@ -163,16 +186,35 @@ namespace Web_Page_Screensaver
             this.btnEdit.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnEdit.FlatAppearance.BorderSize = 0;
             this.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEdit.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnEdit.Location = new System.Drawing.Point(578, 132);
+            this.btnEdit.Font = new System.Drawing.Font("Segoe UI", 8.8F);
+            this.btnEdit.Location = new System.Drawing.Point(578, 142);
             this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(102, 34);
+            this.btnEdit.Size = new System.Drawing.Size(102, 30);
             this.btnEdit.Style = Web_Page_Screensaver.ModernButtonStyle.Secondary;
-            this.btnEdit.TabIndex = 4;
+            this.btnEdit.TabIndex = 5;
             this.btnEdit.Text = "✎ Edit";
             this.urlButtonsTooltip.SetToolTip(this.btnEdit, "Edit selected URL (F2)");
             this.btnEdit.UseVisualStyleBackColor = false;
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            // 
+            // btnPreview
+            // 
+            this.btnPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPreview.BackColor = System.Drawing.Color.Transparent;
+            this.btnPreview.BorderRadius = 6;
+            this.btnPreview.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnPreview.FlatAppearance.BorderSize = 0;
+            this.btnPreview.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPreview.Font = new System.Drawing.Font("Segoe UI", 8.8F);
+            this.btnPreview.Location = new System.Drawing.Point(578, 176);
+            this.btnPreview.Name = "btnPreview";
+            this.btnPreview.Size = new System.Drawing.Size(102, 30);
+            this.btnPreview.Style = Web_Page_Screensaver.ModernButtonStyle.Secondary;
+            this.btnPreview.TabIndex = 6;
+            this.btnPreview.Text = "👁 Preview";
+            this.urlButtonsTooltip.SetToolTip(this.btnPreview, "Preview selected web page in live screensaver window");
+            this.btnPreview.UseVisualStyleBackColor = false;
+            this.btnPreview.Click += new System.EventHandler(this.btnPreview_Click);
             // 
             // btnDelete
             // 
@@ -182,12 +224,12 @@ namespace Web_Page_Screensaver
             this.btnDelete.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnDelete.FlatAppearance.BorderSize = 0;
             this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDelete.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnDelete.Location = new System.Drawing.Point(578, 172);
+            this.btnDelete.Font = new System.Drawing.Font("Segoe UI", 8.8F);
+            this.btnDelete.Location = new System.Drawing.Point(578, 212);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(102, 34);
+            this.btnDelete.Size = new System.Drawing.Size(102, 30);
             this.btnDelete.Style = Web_Page_Screensaver.ModernButtonStyle.Danger;
-            this.btnDelete.TabIndex = 5;
+            this.btnDelete.TabIndex = 7;
             this.btnDelete.Text = "Delete";
             this.urlButtonsTooltip.SetToolTip(this.btnDelete, "Delete selected URLs (Del)");
             this.btnDelete.UseVisualStyleBackColor = false;
@@ -200,6 +242,8 @@ namespace Web_Page_Screensaver
             this.optionsCard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(28)))));
             this.optionsCard.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(56)))));
             this.optionsCard.BorderRadius = 6;
+            this.optionsCard.Controls.Add(this.cmbZoom);
+            this.optionsCard.Controls.Add(this.lblZoom);
             this.optionsCard.Controls.Add(this.lblSeconds);
             this.optionsCard.Controls.Add(this.nudRotationInterval);
             this.optionsCard.Controls.Add(this.lblRotation);
@@ -208,14 +252,43 @@ namespace Web_Page_Screensaver
             this.optionsCard.Name = "optionsCard";
             this.optionsCard.Padding = new System.Windows.Forms.Padding(12, 8, 12, 8);
             this.optionsCard.Size = new System.Drawing.Size(680, 44);
-            this.optionsCard.TabIndex = 6;
+            this.optionsCard.TabIndex = 8;
+            // 
+            // lblZoom
+            // 
+            this.lblZoom.AutoSize = true;
+            this.lblZoom.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblZoom.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(245)))));
+            this.lblZoom.Location = new System.Drawing.Point(268, 13);
+            this.lblZoom.Name = "lblZoom";
+            this.lblZoom.Size = new System.Drawing.Size(42, 15);
+            this.lblZoom.TabIndex = 4;
+            this.lblZoom.Text = "Zoom:";
+            // 
+            // cmbZoom
+            // 
+            this.cmbZoom.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbZoom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cmbZoom.Font = new System.Drawing.Font("Segoe UI", 8.8F);
+            this.cmbZoom.FormattingEnabled = true;
+            this.cmbZoom.Items.AddRange(new object[] {
+            "75%",
+            "100%",
+            "125%",
+            "150%",
+            "175%",
+            "200%"});
+            this.cmbZoom.Location = new System.Drawing.Point(314, 10);
+            this.cmbZoom.Name = "cmbZoom";
+            this.cmbZoom.Size = new System.Drawing.Size(70, 23);
+            this.cmbZoom.TabIndex = 5;
             // 
             // lblSeconds
             // 
             this.lblSeconds.AutoSize = true;
             this.lblSeconds.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblSeconds.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(161)))), ((int)(((byte)(161)))), ((int)(((byte)(170)))));
-            this.lblSeconds.Location = new System.Drawing.Point(232, 13);
+            this.lblSeconds.Location = new System.Drawing.Point(208, 13);
             this.lblSeconds.Name = "lblSeconds";
             this.lblSeconds.Size = new System.Drawing.Size(50, 15);
             this.lblSeconds.TabIndex = 3;
@@ -227,7 +300,26 @@ namespace Web_Page_Screensaver
             this.nudRotationInterval.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.nudRotationInterval.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.nudRotationInterval.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(245)))));
-            this.nudRotationInterval.Location = new System.Drawing.Point(165, 9);
+            this.nudRotationInterval.Location = new System.Drawing.Point(148, 9);
+            this.nudRotationInterval.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.nudRotationInterval.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudRotationInterval.Name = "nudRotationInterval";
+            this.nudRotationInterval.Size = new System.Drawing.Size(55, 24);
+            this.nudRotationInterval.TabIndex = 2;
+            this.nudRotationInterval.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nudRotationInterval.Value = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
             this.nudRotationInterval.Maximum = new decimal(new int[] {
             999,
             0,
@@ -280,10 +372,12 @@ namespace Web_Page_Screensaver
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(32)))));
             this.Controls.Add(this.optionsCard);
             this.Controls.Add(this.btnDelete);
+            this.Controls.Add(this.btnPreview);
             this.Controls.Add(this.btnEdit);
+            this.Controls.Add(this.btnPresets);
+            this.Controls.Add(this.btnAddUrl);
             this.Controls.Add(this.btnDown);
             this.Controls.Add(this.btnUp);
-            this.Controls.Add(this.btnAddUrl);
             this.Controls.Add(this.listCard);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(0);
@@ -303,14 +397,18 @@ namespace Web_Page_Screensaver
         public System.Windows.Forms.ListView lvUrls;
         private System.Windows.Forms.ColumnHeader chUrl;
         private ModernButton btnAddUrl;
+        private ModernButton btnPresets;
         private ModernButton btnUp;
         private ModernButton btnDown;
         private ModernButton btnEdit;
+        private ModernButton btnPreview;
         private ModernButton btnDelete;
         private ModernCard optionsCard;
         private System.Windows.Forms.Label lblRotation;
         public System.Windows.Forms.NumericUpDown nudRotationInterval;
         private System.Windows.Forms.Label lblSeconds;
+        private System.Windows.Forms.Label lblZoom;
+        public System.Windows.Forms.ComboBox cmbZoom;
         public ModernCheckBox cbRandomize;
         private System.Windows.Forms.ToolTip urlButtonsTooltip;
     }

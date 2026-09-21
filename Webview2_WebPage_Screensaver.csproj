@@ -159,11 +159,17 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PreferencesManager.cs" />
     <Compile Include="ModernUiControls.cs" />
+    <Compile Include="FallbackHtmlProvider.cs" />
+    <Compile Include="PresetsManager.cs" />
+    <Compile Include="ConfigExportImport.cs" />
+    <Compile Include="UpdateChecker.cs" />
+    <Compile Include="PreviewDialog.cs" />
     <Compile Include="PreferencesForm.cs">
       <SubType>Form</SubType>
     </Compile>
