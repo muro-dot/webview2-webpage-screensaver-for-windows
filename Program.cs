@@ -32,6 +32,15 @@ namespace Web_Page_Screensaver
                 return;
             }
 
+            // 3. 테마 미리보기 스크린샷 자동 생성 모드 (/capture-assets 또는 /screenshot)
+            // 빌드 시 실행되어 assets 폴더에 항상 예시 URL(https://example.com/screensaver)이 적용된 최신 스크린샷을 생성합니다.
+            if (args.Length > 0 && (args[0].ToLower().Contains("/capture-assets") || args[0].ToLower().Contains("/screenshot")))
+            {
+                string outputDir = args.Length > 1 ? args[1] : null;
+                AssetScreenshotGenerator.GenerateAssets(outputDir);
+                return;
+            }
+
             // 3. Screensaver configuration mode (/c)
             if (args.Length > 0 && args[0].ToLower().Contains("/c"))
             {

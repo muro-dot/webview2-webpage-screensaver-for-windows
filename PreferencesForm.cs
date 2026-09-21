@@ -232,6 +232,20 @@ namespace Web_Page_Screensaver
             ApplyLanguage("en");
         }
 
+        /// <summary>
+        /// 빌드 시 자동 스크린샷 캡처를 위해 개인 URL 대신 안전한 예시 URL을 주입하고 화면을 정돈합니다.
+        /// </summary>
+        public void PrepareForScreenshot(string exampleUrl = "https://example.com/screensaver")
+        {
+            if (prefsByScreenUserControl1 != null && prefsByScreenUserControl1.lvUrls != null)
+            {
+                prefsByScreenUserControl1.lvUrls.Items.Clear();
+                prefsByScreenUserControl1.lvUrls.Items.Add(exampleUrl);
+            }
+            btnUpdateNotice.Visible = false;
+            ApplyLanguage("ko");
+        }
+
         private void LoadValuesForTab(int screenNum)
         {
             if (screenNum < screenUserControls.Count)

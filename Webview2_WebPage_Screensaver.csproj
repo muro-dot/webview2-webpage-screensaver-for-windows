@@ -163,6 +163,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssetScreenshotGenerator.cs" />
     <Compile Include="PreferencesManager.cs" />
     <Compile Include="ModernUiControls.cs" />
     <Compile Include="FallbackHtmlProvider.cs" />
@@ -237,7 +238,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if $(ConfigurationName) == Release Move /Y $(TargetPath) $(TargetDir)$(TargetName).scr</PostBuildEvent>
+    <PostBuildEvent>"$(TargetPath)" /capture-assets "$(ProjectDir)assets"
+if $(ConfigurationName) == Release Move /Y "$(TargetPath)" "$(TargetDir)$(TargetName).scr"</PostBuildEvent>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
