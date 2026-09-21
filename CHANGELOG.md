@@ -11,25 +11,25 @@ All notable changes to this project will be documented in this file.
 - **Audio Mute (Silent Screensaver)**: Prevents sudden noise by automatically muting audio on all web pages.
 - **InPrivate Browsing**: Protects privacy with isolated, non-persistent browsing sessions.
 - **Graceful Fallback Clock**: Automatically displays a sleek neon digital clock when offline or when a webpage fails to load.
-- **Preset Library**: One-click selection for aesthetic screensavers (Minimal Flip Clock, Drive & Listen, Matrix Rain, NASA APOD, Crypto Heatmap, Solar System 3D, EarthCam Live).
 - **Live Web Preview**: Instant preview dialog to test URLs directly from the settings window with active zoom and mute.
 - **Zoom Factor Adjustment**: Custom display scale (75% to 200%) optimized for 4K and QHD monitors.
 - **Clock HUD Overlay**: Optional glassmorphism floating digital clock/date widget on top of any web screensaver.
 - **Custom Per-URL Intervals**: Support for individual rotation times (`URL|seconds`).
 - **Config Backup & Restore**: Export and import full configuration in JSON format.
 - **GitHub Update Checker**: Non-intrusive background check for newer releases.
+- **Dynamic Responsive Layout**: Resolved text overlapping and improved dialog spacing (800px width).
 
 ### 🇰🇷 한국어
 - **오디오 자동 음소거 (소리 끄기)**: 웹페이지 로드 시 불시의 소음을 방지하기 위해 기본 음소거 적용.
 - **시크릿 모드 (InPrivate)**: 공용/업무 PC 환경에서 방문 기록 및 쿠키를 남기지 않는 안전 모드.
 - **오프라인/에러 시 우아한 모던 시계 폴백**: 인터넷 단절 시 에러창 대신 세련된 네온 디지털 시계 자동 출력.
-- **추천 프리셋 라이브러리**: 플립 시계, 드라이브&라디오, 매트릭스, NASA APOD 등 감성 웹 화면보호기 원클릭 추가.
 - **실시간 미니 웹 미리보기**: 설정창에서 선택한 사이트의 렌더링 상태를 즉시 모달 창으로 확인.
 - **화면 배율 조절 (Zoom Factor)**: 4K 및 QHD 고해상도 환경에 최적화된 화면 배율(75% ~ 200%) 지원.
 - **디지털 시계 HUD 오버레이**: 어떤 웹 화면보호기 위에도 반투명 글래스모피즘 시계/날짜 위젯 표시.
 - **URL별 개별 표시 시간(초) 지정**: 사이트마다 `URL|초` 형식으로 가변 회전 주기 지원.
 - **설정 원클릭 백업/복원 (JSON)**: 전체 설정을 JSON 파일로 손쉽게 내보내고 타 PC에 복원.
 - **GitHub 최신 버전 자동 감지**: 새 릴리즈 출시 시 설정창 상단에 알림 뱃지 자동 표시.
+- **동적 반응형 레이아웃 & 텍스트 겹침 방지**: 언어 변경 시 라벨과 컨트롤 간격 자동 조정 및 800px 폼 확장.
 
 ---
 
