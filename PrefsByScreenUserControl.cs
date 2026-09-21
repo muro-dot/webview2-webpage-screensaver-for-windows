@@ -52,7 +52,6 @@ namespace Web_Page_Screensaver
             listCard.Invalidate();
             optionsCard.Invalidate();
             btnAddUrl.Invalidate();
-            btnPresets.Invalidate();
             btnUp.Invalidate();
             btnDown.Invalidate();
             btnEdit.Invalidate();
@@ -90,7 +89,6 @@ namespace Web_Page_Screensaver
             bool isKo = (lang == "ko");
 
             btnAddUrl.Text = isKo ? "＋ URL 추가" : "＋ Add URL";
-            btnPresets.Text = isKo ? "★ 프리셋" : "★ Presets";
             btnUp.Text = isKo ? "▲ 위로" : "▲ Move Up";
             btnDown.Text = isKo ? "▼ 아래로" : "▼ Move Down";
             btnEdit.Text = isKo ? "✎ 수정" : "✎ Edit";
@@ -107,7 +105,6 @@ namespace Web_Page_Screensaver
             urlButtonsTooltip.SetToolTip(btnUp, isKo ? "선택한 URL을 위로 이동합니다 (Alt+▲)" : "Move selected URL up (Alt+▲)");
             urlButtonsTooltip.SetToolTip(btnDown, isKo ? "선택한 URL을 아래로 이동합니다 (Alt+▼)" : "Move selected URL down (Alt+▼)");
             urlButtonsTooltip.SetToolTip(btnAddUrl, isKo ? "목록에 새 사이트 URL을 추가하고 인라인으로 편집합니다" : "Add a new URL and edit inline");
-            urlButtonsTooltip.SetToolTip(btnPresets, isKo ? "추천 웹 화면보호기 프리셋 라이브러리를 열어 간편하게 추가합니다" : "Open and add recommended screensaver presets");
             urlButtonsTooltip.SetToolTip(btnEdit, isKo ? "선택한 URL을 목록에서 직접 수정합니다 (F2 / 더블클릭)" : "Edit selected URL directly in list (F2 / Double-click)");
             urlButtonsTooltip.SetToolTip(btnPreview, isKo ? "선택한 URL을 실시간 화면보호기 창으로 미리 봅니다" : "Preview selected URL in live screensaver window");
             urlButtonsTooltip.SetToolTip(btnDelete, isKo ? "선택한 URL을 삭제합니다 (Del)" : "Delete selected URLs (Del)");
@@ -352,23 +349,7 @@ namespace Web_Page_Screensaver
 
         #endregion
 
-        #region 추천 프리셋 선택 및 실시간 미리보기
-
-        /// <summary>
-        /// 추천 웹 화면보호기 프리셋 팝업을 열어 선택된 URL을 현재 목록에 추가합니다.
-        /// </summary>
-        private void btnPresets_Click(object sender, EventArgs e)
-        {
-            var urls = PresetsManager.ShowPresetSelector(this.FindForm(), currentLanguage);
-            if (urls != null && urls.Count > 0)
-            {
-                foreach (var u in urls)
-                {
-                    var item = new ListViewItem(u);
-                    lvUrls.Items.Add(item);
-                }
-            }
-        }
+        #region 실시간 미리보기
 
         /// <summary>
         /// 목록에서 선택된 URL을 실제 화면보호기 모달 창으로 즉시 미리 봅니다.

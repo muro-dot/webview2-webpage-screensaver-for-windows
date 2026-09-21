@@ -166,7 +166,6 @@
     <Compile Include="PreferencesManager.cs" />
     <Compile Include="ModernUiControls.cs" />
     <Compile Include="FallbackHtmlProvider.cs" />
-    <Compile Include="PresetsManager.cs" />
     <Compile Include="ConfigExportImport.cs" />
     <Compile Include="UpdateChecker.cs" />
     <Compile Include="PreviewDialog.cs" />

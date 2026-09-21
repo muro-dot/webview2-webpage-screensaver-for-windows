@@ -40,7 +40,6 @@ namespace Web_Page_Screensaver
             this.lvUrls = new System.Windows.Forms.ListView();
             this.chUrl = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnAddUrl = new Web_Page_Screensaver.ModernButton();
-            this.btnPresets = new Web_Page_Screensaver.ModernButton();
             this.btnUp = new Web_Page_Screensaver.ModernButton();
             this.btnDown = new Web_Page_Screensaver.ModernButton();
             this.btnEdit = new Web_Page_Screensaver.ModernButton();
@@ -159,25 +158,6 @@ namespace Web_Page_Screensaver
             this.btnAddUrl.UseVisualStyleBackColor = false;
             this.btnAddUrl.Click += new System.EventHandler(this.btnAddUrl_Click);
             // 
-            // btnPresets
-            // 
-            this.btnPresets.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPresets.BackColor = System.Drawing.Color.Transparent;
-            this.btnPresets.BorderRadius = 6;
-            this.btnPresets.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnPresets.FlatAppearance.BorderSize = 0;
-            this.btnPresets.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPresets.Font = new System.Drawing.Font("Segoe UI", 8.8F, System.Drawing.FontStyle.Bold);
-            this.btnPresets.Location = new System.Drawing.Point(578, 106);
-            this.btnPresets.Name = "btnPresets";
-            this.btnPresets.Size = new System.Drawing.Size(102, 30);
-            this.btnPresets.Style = Web_Page_Screensaver.ModernButtonStyle.Secondary;
-            this.btnPresets.TabIndex = 4;
-            this.btnPresets.Text = "★ Presets";
-            this.urlButtonsTooltip.SetToolTip(this.btnPresets, "Choose from recommended screensaver presets");
-            this.btnPresets.UseVisualStyleBackColor = false;
-            this.btnPresets.Click += new System.EventHandler(this.btnPresets_Click);
-            // 
             // btnEdit
             // 
             this.btnEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -187,11 +167,11 @@ namespace Web_Page_Screensaver
             this.btnEdit.FlatAppearance.BorderSize = 0;
             this.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEdit.Font = new System.Drawing.Font("Segoe UI", 8.8F);
-            this.btnEdit.Location = new System.Drawing.Point(578, 142);
+            this.btnEdit.Location = new System.Drawing.Point(578, 110);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(102, 30);
             this.btnEdit.Style = Web_Page_Screensaver.ModernButtonStyle.Secondary;
-            this.btnEdit.TabIndex = 5;
+            this.btnEdit.TabIndex = 4;
             this.btnEdit.Text = "✎ Edit";
             this.urlButtonsTooltip.SetToolTip(this.btnEdit, "Edit selected URL (F2)");
             this.btnEdit.UseVisualStyleBackColor = false;
@@ -206,11 +186,11 @@ namespace Web_Page_Screensaver
             this.btnPreview.FlatAppearance.BorderSize = 0;
             this.btnPreview.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPreview.Font = new System.Drawing.Font("Segoe UI", 8.8F);
-            this.btnPreview.Location = new System.Drawing.Point(578, 176);
+            this.btnPreview.Location = new System.Drawing.Point(578, 146);
             this.btnPreview.Name = "btnPreview";
             this.btnPreview.Size = new System.Drawing.Size(102, 30);
             this.btnPreview.Style = Web_Page_Screensaver.ModernButtonStyle.Secondary;
-            this.btnPreview.TabIndex = 6;
+            this.btnPreview.TabIndex = 5;
             this.btnPreview.Text = "👁 Preview";
             this.urlButtonsTooltip.SetToolTip(this.btnPreview, "Preview selected web page in live screensaver window");
             this.btnPreview.UseVisualStyleBackColor = false;
@@ -225,11 +205,11 @@ namespace Web_Page_Screensaver
             this.btnDelete.FlatAppearance.BorderSize = 0;
             this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDelete.Font = new System.Drawing.Font("Segoe UI", 8.8F);
-            this.btnDelete.Location = new System.Drawing.Point(578, 212);
+            this.btnDelete.Location = new System.Drawing.Point(578, 182);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(102, 30);
             this.btnDelete.Style = Web_Page_Screensaver.ModernButtonStyle.Danger;
-            this.btnDelete.TabIndex = 7;
+            this.btnDelete.TabIndex = 6;
             this.btnDelete.Text = "Delete";
             this.urlButtonsTooltip.SetToolTip(this.btnDelete, "Delete selected URLs (Del)");
             this.btnDelete.UseVisualStyleBackColor = false;
@@ -355,7 +335,6 @@ namespace Web_Page_Screensaver
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnPreview);
             this.Controls.Add(this.btnEdit);
-            this.Controls.Add(this.btnPresets);
             this.Controls.Add(this.btnAddUrl);
             this.Controls.Add(this.btnDown);
             this.Controls.Add(this.btnUp);
@@ -378,7 +357,6 @@ namespace Web_Page_Screensaver
         public System.Windows.Forms.ListView lvUrls;
         private System.Windows.Forms.ColumnHeader chUrl;
         private ModernButton btnAddUrl;
-        private ModernButton btnPresets;
         private ModernButton btnUp;
         private ModernButton btnDown;
         private ModernButton btnEdit;

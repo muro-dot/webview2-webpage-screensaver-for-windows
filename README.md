@@ -5,7 +5,6 @@ A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](h
 ## Key Improvements
 
 - **Audio Mute & InPrivate Browsing (v1.0.5):** Silent screensaver with automatic sound muting and privacy protection mode.
-- **Recommended Preset Library (v1.0.5):** One-click addition of popular aesthetic screensavers (Flip Clock, Drive & Listen, Matrix, NASA APOD, etc.).
 - **Graceful Fallback Clock (v1.0.5):** Elegant built-in neon digital clock when offline or page fails to load.
 - **Live Mini Web Preview (v1.0.5):** Instant in-dialog preview of selected URLs with active zoom and mute settings.
 - **Display Zoom Factor & Clock HUD (v1.0.5):** Scalable rendering (75%~200%) for 4K/QHD and sleek glassmorphism clock HUD overlay.
