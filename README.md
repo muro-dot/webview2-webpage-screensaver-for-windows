@@ -9,12 +9,13 @@ A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](h
 - **Live Mini Web Preview (v1.0.5):** Instant in-dialog preview of selected URLs with active zoom and mute settings.
 - **Display Zoom Factor & Clock HUD (v1.0.5):** Scalable rendering (75%~200%) for 4K/QHD and sleek glassmorphism clock HUD overlay.
 - **Config Backup & Restore (v1.0.5):** Single-click JSON export and import for seamless cross-PC setup.
+- **Auto Update Checker (v1.0.5):** Background notification badge when newer GitHub releases are published.
+- **Auto Screenshot Asset Generation (v1.0.5):** Automatic generation of latest theme preview screenshots on build with safe example URLs.
 - **System Theme Auto Switching (v1.0.4):** Real-time Light/Dark mode switching with DWM title bar sync.
 - **Inline Editing & Vertical Toolbar (v1.0.4):** In-place double-click/F2 URL editing with compact right-side toolbar.
+- **Multi-language Support (v1.0.3):** Instant switch between English and Korean (ENG/KOR).
 - **High DPI Support:** Sharp 1:1 pixel rendering on 4K/QHD monitors.
 - **Modern WebView2 Engine:** Chromium-based Microsoft Edge WebView2 for low memory usage.
-- **Multi-language Support (v1.0.3):** Instant switch between English and Korean (ENG/KOR).
-- **Auto Update Checker (v1.0.5):** Background notification badge when newer GitHub releases are published.
 
 ## Dependencies
 
@@ -52,13 +53,14 @@ A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](h
 - **실시간 미니 웹 미리보기 (v1.0.5):** 화면보호기를 직접 실행하지 않고도 설정창에서 즉시 렌더링 상태 확인.
 - **화면 배율 조절 & 시계 HUD 오버레이 (v1.0.5):** 4K/QHD 해상도 맞춤 배율(75%~200%) 및 글래스모피즘 디지털 시계 HUD.
 - **설정 원클릭 백업/복원 (v1.0.5):** 전체 설정을 JSON 파일로 손쉽게 내보내고 타 PC에 불러오기 지원.
+- **GitHub 최신 버전 자동 감지 (v1.0.5):** 새 릴리즈 출시 시 설정창 상단에 알림 뱃지 자동 표시.
+- **빌드 시 테마 미리보기 자동 생성 (v1.0.5):** 빌드할 때마다 예시 URL이 적용된 최신 테마 스크린샷 자동 생성.
 - **시스템 테마 실시간 자동 전환 (v1.0.4):** Windows 라이트/다크 모드 변경 시 재시작 없이 즉시 전환 및 타이틀바 일체화.
 - **목록 내 직접 인라인 편집 (v1.0.4):** 별도 입력창 없이 목록에서 바로 더블클릭/F2로 수정 및 새 행 추가.
 - **우측 일체형 버티컬 툴바 (v1.0.4):** 조작 버튼을 목록 우측에 밀착 배치하고 목록 뷰 높이 대폭 확장.
+- **다국어 지원 (v1.0.3):** 설정 창에서 한국어(KOR)와 영어(ENG) 실시간 전환 지원.
 - **고해상도(High DPI) 완벽 지원:** 4K 및 QHD 모니터에서 1:1 픽셀 매칭으로 흐림 없는 선명한 화질 제공.
 - **최신 WebView2 엔진 탑재:** 크로미움 기반 Edge WebView2 적용으로 메모리 점유율 및 성능 최적화.
-- **다국어 지원 (v1.0.3):** 설정 창에서 한국어(KOR)와 영어(ENG) 실시간 전환 지원.
-- **GitHub 최신 버전 자동 감지 (v1.0.5):** 새 릴리즈 출시 시 설정창 상단에 알림 뱃지 자동 표시.
 
 ## 요구 사항
 
