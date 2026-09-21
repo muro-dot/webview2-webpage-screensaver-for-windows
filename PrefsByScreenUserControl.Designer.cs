@@ -259,9 +259,9 @@ namespace Web_Page_Screensaver
             this.lblZoom.AutoSize = true;
             this.lblZoom.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblZoom.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(245)))));
-            this.lblZoom.Location = new System.Drawing.Point(268, 13);
+            this.lblZoom.Location = new System.Drawing.Point(205, 13);
             this.lblZoom.Name = "lblZoom";
-            this.lblZoom.Size = new System.Drawing.Size(42, 15);
+            this.lblZoom.Size = new System.Drawing.Size(65, 15);
             this.lblZoom.TabIndex = 4;
             this.lblZoom.Text = "Zoom:";
             // 
@@ -278,9 +278,9 @@ namespace Web_Page_Screensaver
             "150%",
             "175%",
             "200%"});
-            this.cmbZoom.Location = new System.Drawing.Point(314, 10);
+            this.cmbZoom.Location = new System.Drawing.Point(276, 10);
             this.cmbZoom.Name = "cmbZoom";
-            this.cmbZoom.Size = new System.Drawing.Size(70, 23);
+            this.cmbZoom.Size = new System.Drawing.Size(72, 23);
             this.cmbZoom.TabIndex = 5;
             // 
             // lblSeconds
@@ -288,11 +288,11 @@ namespace Web_Page_Screensaver
             this.lblSeconds.AutoSize = true;
             this.lblSeconds.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblSeconds.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(161)))), ((int)(((byte)(161)))), ((int)(((byte)(170)))));
-            this.lblSeconds.Location = new System.Drawing.Point(208, 13);
+            this.lblSeconds.Location = new System.Drawing.Point(157, 13);
             this.lblSeconds.Name = "lblSeconds";
-            this.lblSeconds.Size = new System.Drawing.Size(50, 15);
+            this.lblSeconds.Size = new System.Drawing.Size(26, 15);
             this.lblSeconds.TabIndex = 3;
-            this.lblSeconds.Text = "seconds";
+            this.lblSeconds.Text = "sec";
             // 
             // nudRotationInterval
             // 
@@ -300,7 +300,7 @@ namespace Web_Page_Screensaver
             this.nudRotationInterval.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.nudRotationInterval.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.nudRotationInterval.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(245)))));
-            this.nudRotationInterval.Location = new System.Drawing.Point(148, 9);
+            this.nudRotationInterval.Location = new System.Drawing.Point(96, 9);
             this.nudRotationInterval.Maximum = new decimal(new int[] {
             999,
             0,
@@ -320,25 +320,6 @@ namespace Web_Page_Screensaver
             0,
             0,
             0});
-            this.nudRotationInterval.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.nudRotationInterval.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudRotationInterval.Name = "nudRotationInterval";
-            this.nudRotationInterval.Size = new System.Drawing.Size(60, 24);
-            this.nudRotationInterval.TabIndex = 2;
-            this.nudRotationInterval.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.nudRotationInterval.Value = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
             // 
             // lblRotation
             // 
@@ -347,9 +328,9 @@ namespace Web_Page_Screensaver
             this.lblRotation.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(245)))));
             this.lblRotation.Location = new System.Drawing.Point(12, 13);
             this.lblRotation.Name = "lblRotation";
-            this.lblRotation.Size = new System.Drawing.Size(147, 15);
+            this.lblRotation.Size = new System.Drawing.Size(78, 15);
             this.lblRotation.TabIndex = 1;
-            this.lblRotation.Text = "Rotate website every:";
+            this.lblRotation.Text = "Rotate every:";
             // 
             // cbRandomize
             // 

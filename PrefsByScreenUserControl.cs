@@ -19,6 +19,7 @@ namespace Web_Page_Screensaver
             ThemeManager.ThemeChanged += themeChangeHandler;
 
             ApplyTheme(ThemeManager.IsLightTheme);
+            AdjustOptionsLayout();
         }
 
         public void ApplyTheme(bool isLight)
@@ -101,6 +102,8 @@ namespace Web_Page_Screensaver
             lblZoom.Text = isKo ? "화면 배율:" : "Zoom:";
             cbRandomize.Text = isKo ? "무작위 순서 (Shuffle)" : "Shuffle order";
 
+            AdjustOptionsLayout();
+
             urlButtonsTooltip.SetToolTip(btnUp, isKo ? "선택한 URL을 위로 이동합니다 (Alt+▲)" : "Move selected URL up (Alt+▲)");
             urlButtonsTooltip.SetToolTip(btnDown, isKo ? "선택한 URL을 아래로 이동합니다 (Alt+▼)" : "Move selected URL down (Alt+▼)");
             urlButtonsTooltip.SetToolTip(btnAddUrl, isKo ? "목록에 새 사이트 URL을 추가하고 인라인으로 편집합니다" : "Add a new URL and edit inline");
@@ -108,6 +111,19 @@ namespace Web_Page_Screensaver
             urlButtonsTooltip.SetToolTip(btnEdit, isKo ? "선택한 URL을 목록에서 직접 수정합니다 (F2 / 더블클릭)" : "Edit selected URL directly in list (F2 / Double-click)");
             urlButtonsTooltip.SetToolTip(btnPreview, isKo ? "선택한 URL을 실시간 화면보호기 창으로 미리 봅니다" : "Preview selected URL in live screensaver window");
             urlButtonsTooltip.SetToolTip(btnDelete, isKo ? "선택한 URL을 삭제합니다 (Del)" : "Delete selected URLs (Del)");
+        }
+
+        /// <summary>
+        /// 언어별 라벨 길이 변화(한글/영문 및 폰트 크기)에 맞춰 회전 주기, 초, 화면 배율 라벨과 컨트롤들의 가로 위치를 동적으로 정렬하여
+        /// 텍스트가 잘리거나 컨트롤과 겹치지 않도록 자동 조정합니다.
+        /// </summary>
+        public void AdjustOptionsLayout()
+        {
+            lblRotation.Location = new Point(12, 13);
+            nudRotationInterval.Location = new Point(lblRotation.Right + 8, 9);
+            lblSeconds.Location = new Point(nudRotationInterval.Right + 6, 13);
+            lblZoom.Location = new Point(lblSeconds.Right + 22, 13);
+            cmbZoom.Location = new Point(lblZoom.Right + 8, 10);
         }
 
         #region URL 추가 / 수정 / 삭제 (인라인 편집 지원)

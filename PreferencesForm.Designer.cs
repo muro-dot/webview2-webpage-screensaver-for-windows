@@ -81,7 +81,7 @@ namespace Web_Page_Screensaver
             this.headerPanel.Controls.Add(this.lblTitle);
             this.headerPanel.Location = new System.Drawing.Point(24, 16);
             this.headerPanel.Name = "headerPanel";
-            this.headerPanel.Size = new System.Drawing.Size(712, 56);
+            this.headerPanel.Size = new System.Drawing.Size(752, 56);
             this.headerPanel.TabIndex = 0;
             // 
             // btnUpdateNotice
@@ -93,7 +93,7 @@ namespace Web_Page_Screensaver
             this.btnUpdateNotice.FlatAppearance.BorderSize = 0;
             this.btnUpdateNotice.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUpdateNotice.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
-            this.btnUpdateNotice.Location = new System.Drawing.Point(272, 11);
+            this.btnUpdateNotice.Location = new System.Drawing.Point(314, 11);
             this.btnUpdateNotice.Name = "btnUpdateNotice";
             this.btnUpdateNotice.Size = new System.Drawing.Size(108, 30);
             this.btnUpdateNotice.Style = Web_Page_Screensaver.ModernButtonStyle.Primary;
@@ -112,7 +112,7 @@ namespace Web_Page_Screensaver
             this.btnExport.FlatAppearance.BorderSize = 0;
             this.btnExport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExport.Font = new System.Drawing.Font("Segoe UI", 8.5F);
-            this.btnExport.Location = new System.Drawing.Point(386, 11);
+            this.btnExport.Location = new System.Drawing.Point(428, 11);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(56, 30);
             this.btnExport.Style = Web_Page_Screensaver.ModernButtonStyle.Ghost;
@@ -130,7 +130,7 @@ namespace Web_Page_Screensaver
             this.btnImport.FlatAppearance.BorderSize = 0;
             this.btnImport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnImport.Font = new System.Drawing.Font("Segoe UI", 8.5F);
-            this.btnImport.Location = new System.Drawing.Point(446, 11);
+            this.btnImport.Location = new System.Drawing.Point(488, 11);
             this.btnImport.Name = "btnImport";
             this.btnImport.Size = new System.Drawing.Size(56, 30);
             this.btnImport.Style = Web_Page_Screensaver.ModernButtonStyle.Ghost;
@@ -144,7 +144,7 @@ namespace Web_Page_Screensaver
             this.langPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.langPanel.Controls.Add(this.btnLangKor);
             this.langPanel.Controls.Add(this.btnLangEng);
-            this.langPanel.Location = new System.Drawing.Point(508, 11);
+            this.langPanel.Location = new System.Drawing.Point(548, 11);
             this.langPanel.Name = "langPanel";
             this.langPanel.Size = new System.Drawing.Size(126, 30);
             this.langPanel.TabIndex = 3;
@@ -194,9 +194,9 @@ namespace Web_Page_Screensaver
             this.btnGithub.FlatAppearance.BorderSize = 0;
             this.btnGithub.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGithub.Font = new System.Drawing.Font("Segoe UI", 8.5F);
-            this.btnGithub.Location = new System.Drawing.Point(636, 11);
+            this.btnGithub.Location = new System.Drawing.Point(678, 11);
             this.btnGithub.Name = "btnGithub";
-            this.btnGithub.Size = new System.Drawing.Size(74, 30);
+            this.btnGithub.Size = new System.Drawing.Size(70, 30);
             this.btnGithub.Style = Web_Page_Screensaver.ModernButtonStyle.Ghost;
             this.btnGithub.TabIndex = 2;
             this.btnGithub.Text = "GitHub ↗";
@@ -239,7 +239,7 @@ namespace Web_Page_Screensaver
             this.multiScreenCard.Location = new System.Drawing.Point(24, 78);
             this.multiScreenCard.Name = "multiScreenCard";
             this.multiScreenCard.Padding = new System.Windows.Forms.Padding(12, 10, 12, 10);
-            this.multiScreenCard.Size = new System.Drawing.Size(712, 44);
+            this.multiScreenCard.Size = new System.Drawing.Size(752, 44);
             this.multiScreenCard.TabIndex = 1;
             // 
             // separateScreensButton
@@ -248,7 +248,7 @@ namespace Web_Page_Screensaver
             this.separateScreensButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.separateScreensButton.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.separateScreensButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(245)))));
-            this.separateScreensButton.Location = new System.Drawing.Point(450, 12);
+            this.separateScreensButton.Location = new System.Drawing.Point(485, 12);
             this.separateScreensButton.Name = "separateScreensButton";
             this.separateScreensButton.Size = new System.Drawing.Size(161, 19);
             this.separateScreensButton.TabIndex = 3;
@@ -264,7 +264,7 @@ namespace Web_Page_Screensaver
             this.mirrorScreensButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.mirrorScreensButton.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.mirrorScreensButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(245)))));
-            this.mirrorScreensButton.Location = new System.Drawing.Point(300, 12);
+            this.mirrorScreensButton.Location = new System.Drawing.Point(315, 12);
             this.mirrorScreensButton.Name = "mirrorScreensButton";
             this.mirrorScreensButton.Size = new System.Drawing.Size(95, 19);
             this.mirrorScreensButton.TabIndex = 2;
@@ -315,7 +315,7 @@ namespace Web_Page_Screensaver
             this.screenTabControl.Location = new System.Drawing.Point(24, 132);
             this.screenTabControl.Name = "screenTabControl";
             this.screenTabControl.SelectedIndex = 0;
-            this.screenTabControl.Size = new System.Drawing.Size(712, 372);
+            this.screenTabControl.Size = new System.Drawing.Size(752, 372);
             this.screenTabControl.TabIndex = 2;
             // 
             // screenTabPage1
@@ -325,7 +325,7 @@ namespace Web_Page_Screensaver
             this.screenTabPage1.Location = new System.Drawing.Point(4, 40);
             this.screenTabPage1.Name = "screenTabPage1";
             this.screenTabPage1.Padding = new System.Windows.Forms.Padding(12);
-            this.screenTabPage1.Size = new System.Drawing.Size(704, 328);
+            this.screenTabPage1.Size = new System.Drawing.Size(744, 328);
             this.screenTabPage1.TabIndex = 0;
             this.screenTabPage1.Text = "Screen 1";
             // 
@@ -337,7 +337,7 @@ namespace Web_Page_Screensaver
             this.prefsByScreenUserControl1.Location = new System.Drawing.Point(12, 12);
             this.prefsByScreenUserControl1.Margin = new System.Windows.Forms.Padding(0);
             this.prefsByScreenUserControl1.Name = "prefsByScreenUserControl1";
-            this.prefsByScreenUserControl1.Size = new System.Drawing.Size(680, 304);
+            this.prefsByScreenUserControl1.Size = new System.Drawing.Size(720, 304);
             this.prefsByScreenUserControl1.TabIndex = 0;
             // 
             // bottomPanel
@@ -353,7 +353,7 @@ namespace Web_Page_Screensaver
             this.bottomPanel.Controls.Add(this.okButton);
             this.bottomPanel.Location = new System.Drawing.Point(24, 514);
             this.bottomPanel.Name = "bottomPanel";
-            this.bottomPanel.Size = new System.Drawing.Size(712, 58);
+            this.bottomPanel.Size = new System.Drawing.Size(752, 58);
             this.bottomPanel.TabIndex = 3;
             // 
             // cbCloseOnActivity
@@ -422,7 +422,7 @@ namespace Web_Page_Screensaver
             this.cancelButton.FlatAppearance.BorderSize = 0;
             this.cancelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cancelButton.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.cancelButton.Location = new System.Drawing.Point(498, 14);
+            this.cancelButton.Location = new System.Drawing.Point(538, 14);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(98, 33);
             this.cancelButton.Style = Web_Page_Screensaver.ModernButtonStyle.Secondary;
@@ -441,9 +441,9 @@ namespace Web_Page_Screensaver
             this.okButton.FlatAppearance.BorderSize = 0;
             this.okButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.okButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.okButton.Location = new System.Drawing.Point(604, 14);
+            this.okButton.Location = new System.Drawing.Point(644, 14);
             this.okButton.Name = "okButton";
-            this.okButton.Size = new System.Drawing.Size(108, 33);
+            this.okButton.Size = new System.Drawing.Size(104, 33);
             this.okButton.Style = Web_Page_Screensaver.ModernButtonStyle.Primary;
             this.okButton.TabIndex = 5;
             this.okButton.Text = "Save & Apply";
@@ -456,7 +456,7 @@ namespace Web_Page_Screensaver
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(23)))));
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(760, 580);
+            this.ClientSize = new System.Drawing.Size(800, 580);
             this.Controls.Add(this.bottomPanel);
             this.Controls.Add(this.screenTabControl);
             this.Controls.Add(this.multiScreenCard);
@@ -466,7 +466,7 @@ namespace Web_Page_Screensaver
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(650, 480);
+            this.MinimumSize = new System.Drawing.Size(760, 520);
             this.Name = "PreferencesForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

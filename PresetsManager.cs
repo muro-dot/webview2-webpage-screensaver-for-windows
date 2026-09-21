@@ -143,7 +143,7 @@ namespace Web_Page_Screensaver
         {
             bool isKo = (language == "ko");
             Text = isKo ? "추천 웹 화면보호기 프리셋 라이브러리" : "Recommended Web Screensaver Presets";
-            Size = new Size(680, 480);
+            ClientSize = new Size(740, 520);
             StartPosition = FormStartPosition.CenterParent;
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
@@ -153,8 +153,8 @@ namespace Web_Page_Screensaver
             var panelHeader = new Panel
             {
                 Dock = DockStyle.Top,
-                Height = 64,
-                Padding = new Padding(20, 14, 20, 0)
+                Height = 68,
+                Padding = new Padding(20, 12, 20, 0)
             };
 
             lblHeader = new Label
@@ -168,8 +168,8 @@ namespace Web_Page_Screensaver
             lblSub = new Label
             {
                 Text = isKo 
-                    ? "원하는 프리셋을 선택하고 [목록에 추가]를 클릭하면 현재 화면에 즉시 등록됩니다 (다중 선택 가능)" 
-                    : "Select presets and click [Add to List] to add them to the current display (Multi-select enabled)",
+                    ? "원하는 프리셋을 체크하고 [목록에 추가]를 누르거나, 항목을 더블클릭하세요." 
+                    : "Check presets and click [Add to List], or double-click any item to add.",
                 Font = new Font("Segoe UI", 8.8f),
                 ForeColor = Color.FromArgb(161, 161, 170),
                 AutoSize = true,
@@ -188,8 +188,8 @@ namespace Web_Page_Screensaver
                 Font = new Font("Segoe UI", 9.5f),
                 BorderStyle = BorderStyle.None
             };
-            lvPresets.Columns.Add(isKo ? "프리셋 명칭" : "Preset Name", 240);
-            lvPresets.Columns.Add(isKo ? "설명" : "Description", 390);
+            lvPresets.Columns.Add(isKo ? "프리셋 명칭" : "Preset Name", 250);
+            lvPresets.Columns.Add(isKo ? "설명" : "Description", 440);
 
             foreach (var p in PresetsManager.Presets)
             {
@@ -199,21 +199,45 @@ namespace Web_Page_Screensaver
                 lvPresets.Items.Add(lvi);
             }
 
+            // 더블클릭 시 즉시 해당 프리셋 추가
+            lvPresets.DoubleClick += (s, e) =>
+            {
+                if (lvPresets.SelectedItems.Count > 0 && lvPresets.SelectedItems[0].Tag != null)
+                {
+                    SelectedUrls.Clear();
+                    SelectedUrls.Add(lvPresets.SelectedItems[0].Tag.ToString());
+                    DialogResult = DialogResult.OK;
+                    Close();
+                }
+            };
+
             var panelBottom = new Panel
             {
                 Dock = DockStyle.Bottom,
-                Height = 54,
-                Padding = new Padding(16, 10, 16, 10)
+                Height = 60,
+                Padding = new Padding(16, 12, 16, 12)
             };
+
+            btnCancel = new ModernButton
+            {
+                Text = isKo ? "닫기" : "Close",
+                Style = ModernButtonStyle.Secondary,
+                Width = 84,
+                Height = 36,
+                Anchor = AnchorStyles.Right | AnchorStyles.Top,
+                Location = new Point(510 - 84 - 10, 12),
+                Cursor = Cursors.Hand
+            };
+            btnCancel.Click += (s, e) => { DialogResult = DialogResult.Cancel; Close(); };
 
             btnAdd = new ModernButton
             {
                 Text = isKo ? "＋ 선택한 프리셋 목록에 추가" : "＋ Add Selected to List",
                 Style = ModernButtonStyle.Primary,
-                Width = 200,
-                Height = 34,
+                Width = 210,
+                Height = 36,
                 Anchor = AnchorStyles.Right | AnchorStyles.Top,
-                Location = new Point(446, 10),
+                Location = new Point(740 - 210 - 20, 12),
                 Cursor = Cursors.Hand
             };
             btnAdd.Click += (s, e) =>
@@ -245,31 +269,25 @@ namespace Web_Page_Screensaver
                 Close();
             };
 
-            btnCancel = new ModernButton
-            {
-                Text = isKo ? "닫기" : "Close",
-                Style = ModernButtonStyle.Secondary,
-                Width = 84,
-                Height = 34,
-                Anchor = AnchorStyles.Right | AnchorStyles.Top,
-                Location = new Point(354, 10),
-                Cursor = Cursors.Hand
-            };
-            btnCancel.Click += (s, e) => { DialogResult = DialogResult.Cancel; Close(); };
-
             panelBottom.Controls.Add(btnCancel);
             panelBottom.Controls.Add(btnAdd);
 
             var listContainer = new Panel
             {
                 Dock = DockStyle.Fill,
-                Padding = new Padding(16, 4, 16, 4)
+                Padding = new Padding(20, 4, 20, 4)
             };
             listContainer.Controls.Add(lvPresets);
 
+            // WinForms Docking: panelHeader(Top)와 panelBottom(Bottom)이 가장 먼저 공간을 확보하도록 하고,
+            // 중앙 영역을 채우는 listContainer(Fill)는 반드시 SendToBack() 처리해야 하단 패널이 가려지지 않습니다.
             Controls.Add(listContainer);
-            Controls.Add(panelHeader);
             Controls.Add(panelBottom);
+            Controls.Add(panelHeader);
+
+            panelHeader.BringToFront();
+            panelBottom.BringToFront();
+            listContainer.SendToBack();
         }
 
         private void ApplyTheme(bool isLight)
