@@ -243,11 +243,11 @@ namespace Web_Page_Screensaver
                 ? selectedClockIndex
                 : 0;
 
-            // 언어 텍스트 길이에 맞춰 콤보박스 위치 자동 정렬
-            cmbClockPosition.Location = new Point(cbClockOverlay.Right + 8, 29);
-
             cancelButton.Text = isKo ? "취소" : "Cancel";
             okButton.Text = isKo ? "저장 및 적용" : "Save & Apply";
+
+            // 언어별 텍스트 길이 변화에 따른 상단/하단 컨트롤 동적 정렬 (간섭 및 겹침 방지)
+            AdjustResponsiveLayout();
 
             // 탭 이름 갱신
             UpdateTabTitles();
@@ -260,6 +260,46 @@ namespace Web_Page_Screensaver
                     ctrl.ApplyLanguage(lang);
                 }
             }
+        }
+
+        /// <summary>
+        /// 언어 변경 및 텍스트 폭 변화에 따라 멀티 모니터 라디오 버튼과 하단 옵션 컨트롤들을
+        /// 동적으로 정렬하여 문구 간섭 및 글자 잘림을 방지합니다.
+        /// </summary>
+        public void AdjustResponsiveLayout()
+        {
+            // 1. 다중 모니터 라벨 및 라디오 버튼 동적 정렬 (영문 오버랩 해결)
+            lblMultiScreen.AutoSize = true;
+            spanScreensButton.AutoSize = true;
+            mirrorScreensButton.AutoSize = true;
+            separateScreensButton.AutoSize = true;
+
+            int multiStartX = lblMultiScreen.Right + 14;
+            spanScreensButton.Location = new Point(multiStartX, 12);
+            mirrorScreensButton.Location = new Point(spanScreensButton.Right + 14, 12);
+            separateScreensButton.Location = new Point(mirrorScreensButton.Right + 14, 12);
+
+            // 2. 하단 패널 컨트롤 동적 정렬 (1열과 2열 및 버튼 간격 최적화)
+            cbCloseOnActivity.AutoSize = true;
+            cbInPrivate.AutoSize = true;
+            cbMuteAudio.AutoSize = true;
+            cbClockOverlay.AutoSize = true;
+
+            cbCloseOnActivity.Location = new Point(4, 7);
+            cbInPrivate.Location = new Point(4, 31);
+
+            int col2Left = Math.Max(cbCloseOnActivity.Right, cbInPrivate.Right) + 24;
+            cbMuteAudio.Location = new Point(col2Left, 7);
+            cbClockOverlay.Location = new Point(col2Left, 31);
+
+            // 시계 위치 콤보박스: 영문 텍스트가 전부 보이도록 180px 너비 및 안전 여백 확보
+            cmbClockPosition.Size = new Size(180, 23);
+            cmbClockPosition.Location = new Point(cbClockOverlay.Right + 8, 28);
+
+            // 우측 확인/취소 버튼 정렬
+            int panelW = bottomPanel.ClientSize.Width > 0 ? bottomPanel.ClientSize.Width : 812;
+            okButton.Location = new Point(panelW - okButton.Width - 12, 14);
+            cancelButton.Location = new Point(okButton.Left - cancelButton.Width - 8, 14);
         }
 
         private void btnLangKor_Click(object sender, EventArgs e)

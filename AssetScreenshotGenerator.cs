@@ -60,6 +60,16 @@ namespace Web_Page_Screensaver
 
                 CaptureFormWindow(form, Path.Combine(outputDirectory, "screenshot_light.png"));
 
+                // 4. 영문 모드 캡처 (다국어 UI 문구 간섭 및 겹침 자가 검증용)
+                form.ApplyLanguage("en");
+                ThemeManager.IsLightTheme = false;
+                form.ApplyTheme(false);
+                form.Refresh();
+                Application.DoEvents();
+                Thread.Sleep(200);
+
+                CaptureFormWindow(form, Path.Combine(outputDirectory, "screenshot_en.png"));
+
                 // 정리
                 form.DialogResult = DialogResult.Cancel;
                 form.Close();

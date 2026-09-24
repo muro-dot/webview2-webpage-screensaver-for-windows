@@ -82,7 +82,7 @@ namespace Web_Page_Screensaver
             this.headerPanel.Controls.Add(this.lblTitle);
             this.headerPanel.Location = new System.Drawing.Point(24, 16);
             this.headerPanel.Name = "headerPanel";
-            this.headerPanel.Size = new System.Drawing.Size(752, 56);
+            this.headerPanel.Size = new System.Drawing.Size(812, 56);
             this.headerPanel.TabIndex = 0;
             // 
             // btnUpdateNotice
@@ -240,7 +240,7 @@ namespace Web_Page_Screensaver
             this.multiScreenCard.Location = new System.Drawing.Point(24, 78);
             this.multiScreenCard.Name = "multiScreenCard";
             this.multiScreenCard.Padding = new System.Windows.Forms.Padding(12, 10, 12, 10);
-            this.multiScreenCard.Size = new System.Drawing.Size(752, 44);
+            this.multiScreenCard.Size = new System.Drawing.Size(812, 44);
             this.multiScreenCard.TabIndex = 1;
             // 
             // separateScreensButton
@@ -316,7 +316,7 @@ namespace Web_Page_Screensaver
             this.screenTabControl.Location = new System.Drawing.Point(24, 132);
             this.screenTabControl.Name = "screenTabControl";
             this.screenTabControl.SelectedIndex = 0;
-            this.screenTabControl.Size = new System.Drawing.Size(752, 372);
+            this.screenTabControl.Size = new System.Drawing.Size(812, 372);
             this.screenTabControl.TabIndex = 2;
             // 
             // screenTabPage1
@@ -326,7 +326,7 @@ namespace Web_Page_Screensaver
             this.screenTabPage1.Location = new System.Drawing.Point(4, 40);
             this.screenTabPage1.Name = "screenTabPage1";
             this.screenTabPage1.Padding = new System.Windows.Forms.Padding(12);
-            this.screenTabPage1.Size = new System.Drawing.Size(744, 328);
+            this.screenTabPage1.Size = new System.Drawing.Size(804, 328);
             this.screenTabPage1.TabIndex = 0;
             this.screenTabPage1.Text = "Screen 1";
             // 
@@ -338,7 +338,7 @@ namespace Web_Page_Screensaver
             this.prefsByScreenUserControl1.Location = new System.Drawing.Point(12, 12);
             this.prefsByScreenUserControl1.Margin = new System.Windows.Forms.Padding(0);
             this.prefsByScreenUserControl1.Name = "prefsByScreenUserControl1";
-            this.prefsByScreenUserControl1.Size = new System.Drawing.Size(720, 304);
+            this.prefsByScreenUserControl1.Size = new System.Drawing.Size(780, 304);
             this.prefsByScreenUserControl1.TabIndex = 0;
             // 
             // bottomPanel
@@ -355,7 +355,7 @@ namespace Web_Page_Screensaver
             this.bottomPanel.Controls.Add(this.okButton);
             this.bottomPanel.Location = new System.Drawing.Point(24, 514);
             this.bottomPanel.Name = "bottomPanel";
-            this.bottomPanel.Size = new System.Drawing.Size(752, 58);
+            this.bottomPanel.Size = new System.Drawing.Size(812, 58);
             this.bottomPanel.TabIndex = 3;
             // 
             // cbCloseOnActivity
@@ -422,7 +422,7 @@ namespace Web_Page_Screensaver
             this.cmbClockPosition.FormattingEnabled = true;
             this.cmbClockPosition.Location = new System.Drawing.Point(372, 29);
             this.cmbClockPosition.Name = "cmbClockPosition";
-            this.cmbClockPosition.Size = new System.Drawing.Size(135, 23);
+            this.cmbClockPosition.Size = new System.Drawing.Size(180, 23);
             this.cmbClockPosition.TabIndex = 4;
             // 
             // cancelButton
@@ -435,7 +435,7 @@ namespace Web_Page_Screensaver
             this.cancelButton.FlatAppearance.BorderSize = 0;
             this.cancelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cancelButton.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.cancelButton.Location = new System.Drawing.Point(538, 14);
+            this.cancelButton.Location = new System.Drawing.Point(594, 14);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(98, 33);
             this.cancelButton.Style = Web_Page_Screensaver.ModernButtonStyle.Secondary;
@@ -454,7 +454,7 @@ namespace Web_Page_Screensaver
             this.okButton.FlatAppearance.BorderSize = 0;
             this.okButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.okButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.okButton.Location = new System.Drawing.Point(644, 14);
+            this.okButton.Location = new System.Drawing.Point(700, 14);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(104, 33);
             this.okButton.Style = Web_Page_Screensaver.ModernButtonStyle.Primary;
@@ -469,7 +469,7 @@ namespace Web_Page_Screensaver
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(23)))));
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(800, 580);
+            this.ClientSize = new System.Drawing.Size(860, 580);
             this.Controls.Add(this.bottomPanel);
             this.Controls.Add(this.screenTabControl);
             this.Controls.Add(this.multiScreenCard);
