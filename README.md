@@ -43,6 +43,12 @@ A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](h
 - Right click the `.scr` file, select `Install` to install, or `Test` to test it out
 - Use the `Settings...` button to configure your custom URLs.
 
+### Preview (Dark Mode / Light Mode)
+
+| Dark Mode | Light Mode |
+| :---: | :---: |
+| <img width="420" alt="Dark Mode" src="assets/screenshot_dark.png" /> | <img width="420" alt="Light Mode" src="assets/screenshot_light.png" /> |
+
 # WebView2 웹 페이지 화면 보호기 (Web Page Screensaver)
 
 이 프로젝트는 오래된 [ZenProjects/Chromium-Web-Page-Screensaver](https://github.com/ZenProjects/Chromium-Web-Page-Screensaver) 프로젝트를 포크하여 개선한 버전입니다. 기존의 [CefSharp WinForms](https://github.com/cefsharp/CefSharp) 대신 **Microsoft Edge WebView2 (Chromium)** 엔진을 사용하여 웹 페이지를 화면 보호기로 부드럽고 선명하게 출력합니다.

@@ -35,12 +35,12 @@ namespace Web_Page_Screensaver
                 form.TopMost = true;
                 form.Show();
 
-                // 1. 개인 설정 대신 안전한 예시 URL 주입 및 UI 정리
+                // 1. 개인 설정 대신 안전한 예시 URL 주입 및 영문(기본) 설정
                 form.PrepareForScreenshot("https://example.com/screensaver");
                 Application.DoEvents();
                 Thread.Sleep(200);
 
-                // 2. 다크 모드 테마 캡처
+                // 2. 영문(English) 다크 모드 테마 캡처 (GitHub 기본 표시용)
                 ThemeManager.IsLightTheme = false;
                 form.ApplyTheme(false);
                 form.Refresh();
@@ -48,10 +48,10 @@ namespace Web_Page_Screensaver
                 Thread.Sleep(200);
 
                 CaptureFormWindow(form, Path.Combine(outputDirectory, "screenshot_dark.png"));
-                // screenshot.png는 기본 다크 모드 스크린샷과 동일
                 CaptureFormWindow(form, Path.Combine(outputDirectory, "screenshot.png"));
+                CaptureFormWindow(form, Path.Combine(outputDirectory, "screenshot_en.png"));
 
-                // 3. 라이트 모드 테마 캡처
+                // 3. 영문(English) 라이트 모드 테마 캡처
                 ThemeManager.IsLightTheme = true;
                 form.ApplyTheme(true);
                 form.Refresh();
@@ -60,15 +60,33 @@ namespace Web_Page_Screensaver
 
                 CaptureFormWindow(form, Path.Combine(outputDirectory, "screenshot_light.png"));
 
-                // 4. 영문 모드 캡처 (다국어 UI 문구 간섭 및 겹침 자가 검증용)
-                form.ApplyLanguage("en");
+                // 4. 영문 업데이트 알림 뱃지(Update Badge) 시연 캡처
+                ThemeManager.IsLightTheme = false;
+                form.ApplyTheme(false);
+                form.SetUpdateNoticeForDemo("1.0.7");
+                form.Refresh();
+                Application.DoEvents();
+                Thread.Sleep(200);
+
+                CaptureFormWindow(form, Path.Combine(outputDirectory, "screenshot_update_badge.png"));
+
+                // 5. 한국어(Korean) 모드 캡처
+                form.ApplyLanguage("ko");
                 ThemeManager.IsLightTheme = false;
                 form.ApplyTheme(false);
                 form.Refresh();
                 Application.DoEvents();
                 Thread.Sleep(200);
 
-                CaptureFormWindow(form, Path.Combine(outputDirectory, "screenshot_en.png"));
+                CaptureFormWindow(form, Path.Combine(outputDirectory, "screenshot_ko_dark.png"));
+
+                ThemeManager.IsLightTheme = true;
+                form.ApplyTheme(true);
+                form.Refresh();
+                Application.DoEvents();
+                Thread.Sleep(200);
+
+                CaptureFormWindow(form, Path.Combine(outputDirectory, "screenshot_ko_light.png"));
 
                 // 정리
                 form.DialogResult = DialogResult.Cancel;

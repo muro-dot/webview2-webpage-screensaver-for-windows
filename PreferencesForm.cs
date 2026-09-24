@@ -332,7 +332,18 @@ namespace Web_Page_Screensaver
             cmbClockPosition.Enabled = true;
             cmbClockPosition.SelectedIndex = 0;
             btnUpdateNotice.Visible = false;
-            ApplyLanguage("ko");
+            ApplyLanguage("en");
+        }
+
+        /// <summary>
+        /// 스크린샷 및 시연용으로 새 버전 업데이트 알림 배지를 활성화합니다.
+        /// </summary>
+        public void SetUpdateNoticeForDemo(string version = "1.0.7", string url = "https://github.com/muro-dot/Webview2_WebPage_Screensaver/releases")
+        {
+            btnUpdateNotice.Text = $"🚀 New: v{version}";
+            btnUpdateNotice.Tag = url;
+            btnUpdateNotice.Visible = true;
+            btnUpdateNotice.BringToFront();
         }
 
         private void LoadValuesForTab(int screenNum)
