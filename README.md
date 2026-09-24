@@ -2,21 +2,21 @@
 
 A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](https://github.com/ZenProjects/Chromium-Web-Page-Screensaver) that uses **Microsoft Edge WebView2 (Chromium)** in place of the [CefSharp WinForms](https://github.com/cefsharp/CefSharp) to display web pages as your screensaver.
 
-## Key Improvements
+## Features
 
-- **Relocated Backup/Restore & Streamlined Labels (v1.0.6):** Export/Import buttons directly above action buttons, simplified "Mute Audio" label, and 4-corner HUD clock placement.
-- **Audio Mute & InPrivate Browsing (v1.0.5):** Silent screensaver with automatic sound muting and privacy protection mode.
-- **Graceful Fallback Clock (v1.0.5):** Elegant built-in neon digital clock when offline or page fails to load.
-- **Live Mini Web Preview (v1.0.5):** Instant in-dialog preview of selected URLs with active zoom and mute settings.
-- **Display Zoom Factor & Clock HUD (v1.0.5):** Scalable rendering (75%~200%) for 4K/QHD and sleek glassmorphism clock HUD overlay with 4 selectable corner positions.
-- **Config Backup & Restore (v1.0.5):** Single-click JSON export and import for seamless cross-PC setup.
-- **Auto Update Checker (v1.0.5):** Background notification badge when newer GitHub releases are published.
-- **Auto Screenshot Asset Generation (v1.0.5):** Automatic generation of latest theme preview screenshots on build with safe example URLs.
-- **System Theme Auto Switching (v1.0.4):** Real-time Light/Dark mode switching with DWM title bar sync.
-- **Inline Editing & Vertical Toolbar (v1.0.4):** In-place double-click/F2 URL editing with compact right-side toolbar.
-- **Multi-language Support (v1.0.3):** Instant switch between English and Korean (ENG/KOR).
-- **High DPI Support:** Sharp 1:1 pixel rendering on 4K/QHD monitors.
-- **Modern WebView2 Engine:** Chromium-based Microsoft Edge WebView2 for low memory usage.
+- **Modern WebView2 Engine**: Chromium-based rendering with low resource usage.
+- **Audio Mute**: Automatic sound muting during screensaver playback.
+- **InPrivate Browsing**: Privacy mode leaving no browsing history, cache, or cookies.
+- **Clock HUD Overlay**: Floating digital clock with 4 selectable screen corners.
+- **Offline Digital Clock**: Graceful fallback neon clock when disconnected or page errors.
+- **Live Web Preview**: Test URLs and display settings directly in the settings window.
+- **Display Zoom Scaling**: Custom zoom levels (75%~200%) for 4K and QHD monitors.
+- **Config Backup & Restore**: Single-click JSON export and import for easy migration.
+- **Auto Update Notification**: Non-intrusive badge when newer GitHub releases are published.
+- **Multi-Monitor Modes**: Span (Composite), Mirror (Clone), and Separate (Per-monitor URLs).
+- **Custom Per-URL Duration**: Individual display times via `URL|seconds` format.
+- **System Theme Sync**: Real-time Light and Dark mode switching with Windows theme.
+- **Multi-language Support**: Instant toggle between English and Korean.
 
 ## Dependencies
 
@@ -53,22 +53,21 @@ A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](h
 
 이 프로젝트는 오래된 [ZenProjects/Chromium-Web-Page-Screensaver](https://github.com/ZenProjects/Chromium-Web-Page-Screensaver) 프로젝트를 포크하여 개선한 버전입니다. 기존의 [CefSharp WinForms](https://github.com/cefsharp/CefSharp) 대신 **Microsoft Edge WebView2 (Chromium)** 엔진을 사용하여 웹 페이지를 화면 보호기로 부드럽고 선명하게 출력합니다.
 
-## 주요 개선 사항
+## 주요 기능
 
-- **백업/복원 버튼 재배치 & 문구 간결화 (v1.0.6):** 취소/저장 바로 윗자리로 백업/복원 이동, '오디오 음소거' 문구 간결화 및 4대 모서리 HUD 시계 위치 선택.
-- **오디오 자동 음소거 및 시크릿 모드 (v1.0.5):** 웹페이지 소음 차단(기본 Mute) 및 쿠키/기록을 남기지 않는 안전한 브라우징.
-- **오프라인/오류 시 우아한 모던 시계 폴백 (v1.0.5):** 인터넷 연결이 끊겨도 에러창 대신 세련된 네온 디지털 시계 자동 전환.
-- **실시간 미니 웹 미리보기 (v1.0.5):** 화면보호기를 직접 실행하지 않고도 설정창에서 즉시 렌더링 상태 확인.
-- **화면 배율 조절 & 시계 HUD 오버레이 (v1.0.5):** 4K/QHD 해상도 맞춤 배율(75%~200%) 및 4대 모서리 위치 선택이 가능한 글래스모피즘 시계 HUD.
-- **설정 원클릭 백업/복원 (v1.0.5):** 전체 설정을 JSON 파일로 손쉽게 내보내고 타 PC에 불러오기 지원.
-- **GitHub 최신 버전 자동 감지 (v1.0.5):** 새 릴리즈 출시 시 설정창 상단에 알림 뱃지 자동 표시.
-- **빌드 시 테마 미리보기 자동 생성 (v1.0.5):** 빌드할 때마다 예시 URL이 적용된 최신 테마 스크린샷 자동 생성.
-- **시스템 테마 실시간 자동 전환 (v1.0.4):** Windows 라이트/다크 모드 변경 시 재시작 없이 즉시 전환 및 타이틀바 일체화.
-- **목록 내 직접 인라인 편집 (v1.0.4):** 별도 입력창 없이 목록에서 바로 더블클릭/F2로 수정 및 새 행 추가.
-- **우측 일체형 버티컬 툴바 (v1.0.4):** 조작 버튼을 목록 우측에 밀착 배치하고 목록 뷰 높이 대폭 확장.
-- **다국어 지원 (v1.0.3):** 설정 창에서 한국어(KOR)와 영어(ENG) 실시간 전환 지원.
-- **고해상도(High DPI) 완벽 지원:** 4K 및 QHD 모니터에서 1:1 픽셀 매칭으로 흐림 없는 선명한 화질 제공.
-- **최신 WebView2 엔진 탑재:** 크로미움 기반 Edge WebView2 적용으로 메모리 점유율 및 성능 최적화.
+- **최신 WebView2 엔진**: 크로미움 기반의 고성능 및 저메모리 웹 렌더링.
+- **오디오 자동 음소거**: 화면보호기 실행 시 웹페이지 미디어 소리 차단.
+- **시크릿 모드 (InPrivate)**: 방문 기록, 캐시, 쿠키를 남기지 않는 안전 모드.
+- **시계 HUD 오버레이**: 4개 모서리 위치 선택이 가능한 반투명 시계 위젯.
+- **오프라인 시계 폴백**: 네트워크 단절 또는 오류 시 네온 디지털 시계 전환.
+- **실시간 웹 미리보기**: 설정창에서 URL과 화면 상태 즉시 확인.
+- **화면 배율 조절**: 4K 및 QHD 고해상도 환경 맞춤 줌(75%~200%) 지원.
+- **설정 원클릭 백업/복원**: JSON 파일 기반의 설정 내보내기 및 가져오기.
+- **업데이트 자동 감지**: 최신 릴리스 출시 시 상단 알림 뱃지 표시.
+- **다중 모니터 지원**: 전체 통합(Span), 복제(Mirror), 모니터별 개별 설정(Separate).
+- **URL별 개별 시간 설정**: `URL|초` 형식으로 사이트별 가변 표시 시간 지원.
+- **Windows 테마 연동**: 시스템 라이트/다크 모드 실시간 자동 전환.
+- **다국어 지원**: 한국어 및 영어 실시간 인터페이스 전환.
 
 ## 요구 사항
 
