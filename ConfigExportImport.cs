@@ -19,6 +19,7 @@ namespace Web_Page_Screensaver
         public bool MuteAudio { get; set; }
         public bool InPrivate { get; set; }
         public bool ShowClockOverlay { get; set; }
+        public string ClockPosition { get; set; } = "BottomRight";
         public List<List<string>> UrlsByScreen { get; set; }
         public List<int> RotationIntervalsByScreen { get; set; }
         public List<bool> RandomizeFlagByScreen { get; set; }
@@ -56,6 +57,7 @@ namespace Web_Page_Screensaver
                             MuteAudio = prefs.MuteAudio,
                             InPrivate = prefs.InPrivate,
                             ShowClockOverlay = prefs.ShowClockOverlay,
+                            ClockPosition = prefs.ClockPositionPref.ToString(),
                             UrlsByScreen = prefs.GetAllUrlsByScreenDirect(),
                             RotationIntervalsByScreen = prefs.GetAllIntervalsDirect(),
                             RandomizeFlagByScreen = prefs.GetAllRandomizeDirect(),
@@ -120,6 +122,14 @@ namespace Web_Page_Screensaver
                         prefs.MuteAudio = dto.MuteAudio;
                         prefs.InPrivate = dto.InPrivate;
                         prefs.ShowClockOverlay = dto.ShowClockOverlay;
+
+                        if (!string.IsNullOrEmpty(dto.ClockPosition))
+                        {
+                            if (Enum.TryParse(dto.ClockPosition, out PreferencesManager.ClockPosition cp))
+                            {
+                                prefs.ClockPositionPref = cp;
+                            }
+                        }
 
                         if (dto.UrlsByScreen != null) prefs.SetAllUrlsByScreenDirect(dto.UrlsByScreen);
                         if (dto.RotationIntervalsByScreen != null) prefs.SetAllIntervalsDirect(dto.RotationIntervalsByScreen);

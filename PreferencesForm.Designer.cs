@@ -56,6 +56,7 @@ namespace Web_Page_Screensaver
             this.cbMuteAudio = new Web_Page_Screensaver.ModernCheckBox();
             this.cbInPrivate = new Web_Page_Screensaver.ModernCheckBox();
             this.cbClockOverlay = new Web_Page_Screensaver.ModernCheckBox();
+            this.cmbClockPosition = new System.Windows.Forms.ComboBox();
             this.cancelButton = new Web_Page_Screensaver.ModernButton();
             this.okButton = new Web_Page_Screensaver.ModernButton();
             this.screenModeTooltip = new System.Windows.Forms.ToolTip(this.components);
@@ -349,6 +350,7 @@ namespace Web_Page_Screensaver
             this.bottomPanel.Controls.Add(this.cbMuteAudio);
             this.bottomPanel.Controls.Add(this.cbInPrivate);
             this.bottomPanel.Controls.Add(this.cbClockOverlay);
+            this.bottomPanel.Controls.Add(this.cmbClockPosition);
             this.bottomPanel.Controls.Add(this.cancelButton);
             this.bottomPanel.Controls.Add(this.okButton);
             this.bottomPanel.Location = new System.Drawing.Point(24, 514);
@@ -407,10 +409,21 @@ namespace Web_Page_Screensaver
             this.cbClockOverlay.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(245)))));
             this.cbClockOverlay.Location = new System.Drawing.Point(234, 31);
             this.cbClockOverlay.Name = "cbClockOverlay";
-            this.cbClockOverlay.Size = new System.Drawing.Size(180, 19);
+            this.cbClockOverlay.Size = new System.Drawing.Size(130, 19);
             this.cbClockOverlay.TabIndex = 3;
             this.cbClockOverlay.Text = "Clock HUD Overlay";
             this.cbClockOverlay.UseVisualStyleBackColor = true;
+            // 
+            // cmbClockPosition
+            // 
+            this.cmbClockPosition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbClockPosition.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cmbClockPosition.Font = new System.Drawing.Font("Segoe UI", 8.8F);
+            this.cmbClockPosition.FormattingEnabled = true;
+            this.cmbClockPosition.Location = new System.Drawing.Point(372, 29);
+            this.cmbClockPosition.Name = "cmbClockPosition";
+            this.cmbClockPosition.Size = new System.Drawing.Size(135, 23);
+            this.cmbClockPosition.TabIndex = 4;
             // 
             // cancelButton
             // 
@@ -426,7 +439,7 @@ namespace Web_Page_Screensaver
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(98, 33);
             this.cancelButton.Style = Web_Page_Screensaver.ModernButtonStyle.Secondary;
-            this.cancelButton.TabIndex = 4;
+            this.cancelButton.TabIndex = 5;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = false;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
@@ -445,7 +458,7 @@ namespace Web_Page_Screensaver
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(104, 33);
             this.okButton.Style = Web_Page_Screensaver.ModernButtonStyle.Primary;
-            this.okButton.TabIndex = 5;
+            this.okButton.TabIndex = 6;
             this.okButton.Text = "Save & Apply";
             this.okButton.UseVisualStyleBackColor = false;
             this.okButton.Click += new System.EventHandler(this.okButton_Click);
@@ -510,6 +523,7 @@ namespace Web_Page_Screensaver
         public ModernCheckBox cbMuteAudio;
         public ModernCheckBox cbInPrivate;
         public ModernCheckBox cbClockOverlay;
+        public System.Windows.Forms.ComboBox cmbClockPosition;
         private ModernButton cancelButton;
         private ModernButton okButton;
         private System.Windows.Forms.ToolTip screenModeTooltip;

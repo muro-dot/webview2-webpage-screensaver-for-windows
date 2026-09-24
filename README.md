@@ -7,7 +7,7 @@ A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](h
 - **Audio Mute & InPrivate Browsing (v1.0.5):** Silent screensaver with automatic sound muting and privacy protection mode.
 - **Graceful Fallback Clock (v1.0.5):** Elegant built-in neon digital clock when offline or page fails to load.
 - **Live Mini Web Preview (v1.0.5):** Instant in-dialog preview of selected URLs with active zoom and mute settings.
-- **Display Zoom Factor & Clock HUD (v1.0.5):** Scalable rendering (75%~200%) for 4K/QHD and sleek glassmorphism clock HUD overlay.
+- **Display Zoom Factor & Clock HUD (v1.0.5):** Scalable rendering (75%~200%) for 4K/QHD and sleek glassmorphism clock HUD overlay with 4 selectable corner positions.
 - **Config Backup & Restore (v1.0.5):** Single-click JSON export and import for seamless cross-PC setup.
 - **Auto Update Checker (v1.0.5):** Background notification badge when newer GitHub releases are published.
 - **Auto Screenshot Asset Generation (v1.0.5):** Automatic generation of latest theme preview screenshots on build with safe example URLs.
@@ -51,7 +51,7 @@ A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](h
 - **오디오 자동 음소거 및 시크릿 모드 (v1.0.5):** 웹페이지 소음 차단(기본 Mute) 및 쿠키/기록을 남기지 않는 안전한 브라우징.
 - **오프라인/오류 시 우아한 모던 시계 폴백 (v1.0.5):** 인터넷 연결이 끊겨도 에러창 대신 세련된 네온 디지털 시계 자동 전환.
 - **실시간 미니 웹 미리보기 (v1.0.5):** 화면보호기를 직접 실행하지 않고도 설정창에서 즉시 렌더링 상태 확인.
-- **화면 배율 조절 & 시계 HUD 오버레이 (v1.0.5):** 4K/QHD 해상도 맞춤 배율(75%~200%) 및 글래스모피즘 디지털 시계 HUD.
+- **화면 배율 조절 & 시계 HUD 오버레이 (v1.0.5):** 4K/QHD 해상도 맞춤 배율(75%~200%) 및 4대 모서리 위치 선택이 가능한 글래스모피즘 시계 HUD.
 - **설정 원클릭 백업/복원 (v1.0.5):** 전체 설정을 JSON 파일로 손쉽게 내보내고 타 PC에 불러오기 지원.
 - **GitHub 최신 버전 자동 감지 (v1.0.5):** 새 릴리즈 출시 시 설정창 상단에 알림 뱃지 자동 표시.
 - **빌드 시 테마 미리보기 자동 생성 (v1.0.5):** 빌드할 때마다 예시 URL이 적용된 최신 테마 스크린샷 자동 생성.

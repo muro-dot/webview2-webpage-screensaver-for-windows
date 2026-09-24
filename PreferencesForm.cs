@@ -26,6 +26,12 @@ namespace Web_Page_Screensaver
             screenTabControl.TabPages[0].Text = "Main Display";
             screenUserControls = new List<PrefsByScreenUserControl>() { prefsByScreenUserControl1 };
             LoadValuesForTab(0);
+
+            // 시계 HUD 오버레이 체크 여부에 따라 위치 콤보박스 활성화/비활성화 연동
+            cbClockOverlay.CheckedChanged += (s, e) =>
+            {
+                cmbClockPosition.Enabled = cbClockOverlay.Checked;
+            };
         }
 
         private void PreferencesForm_Load(object sender, EventArgs e)
@@ -34,6 +40,7 @@ namespace Web_Page_Screensaver
             cbMuteAudio.Checked = prefsManager.MuteAudio;
             cbInPrivate.Checked = prefsManager.InPrivate;
             cbClockOverlay.Checked = prefsManager.ShowClockOverlay;
+            cmbClockPosition.Enabled = cbClockOverlay.Checked;
 
             // 1. 윈도우 시스템 테마(다크/라이트) 감지 및 실시간 변경 이벤트 등록
             RegisterThemeEvents();
@@ -158,6 +165,8 @@ namespace Web_Page_Screensaver
             cbMuteAudio.ForeColor = colors.TextPrimary;
             cbInPrivate.ForeColor = colors.TextPrimary;
             cbClockOverlay.ForeColor = colors.TextPrimary;
+            cmbClockPosition.BackColor = colors.InputBackground;
+            cmbClockPosition.ForeColor = colors.TextPrimary;
 
             btnExport.Invalidate();
             btnImport.Invalidate();
@@ -206,6 +215,37 @@ namespace Web_Page_Screensaver
             cbInPrivate.Text = isKo ? "시크릿 모드 (InPrivate)" : "InPrivate Browsing";
             cbClockOverlay.Text = isKo ? "시계 HUD 오버레이" : "Clock HUD Overlay";
 
+            // 시계 HUD 모서리 위치 선택 콤보박스 항목 갱신 (선택 상태 보존)
+            int selectedClockIndex = cmbClockPosition.SelectedIndex >= 0
+                ? cmbClockPosition.SelectedIndex
+                : (int)prefsManager.ClockPositionPref;
+
+            cmbClockPosition.Items.Clear();
+            if (isKo)
+            {
+                cmbClockPosition.Items.AddRange(new object[] {
+                    "우측 하단 (기본)",
+                    "좌측 하단",
+                    "우측 상단",
+                    "좌측 상단"
+                });
+            }
+            else
+            {
+                cmbClockPosition.Items.AddRange(new object[] {
+                    "Bottom-Right (Default)",
+                    "Bottom-Left",
+                    "Top-Right",
+                    "Top-Left"
+                });
+            }
+            cmbClockPosition.SelectedIndex = (selectedClockIndex >= 0 && selectedClockIndex < cmbClockPosition.Items.Count)
+                ? selectedClockIndex
+                : 0;
+
+            // 언어 텍스트 길이에 맞춰 콤보박스 위치 자동 정렬
+            cmbClockPosition.Location = new Point(cbClockOverlay.Right + 8, 29);
+
             cancelButton.Text = isKo ? "취소" : "Cancel";
             okButton.Text = isKo ? "저장 및 적용" : "Save & Apply";
 
@@ -242,6 +282,9 @@ namespace Web_Page_Screensaver
                 prefsByScreenUserControl1.lvUrls.Items.Clear();
                 prefsByScreenUserControl1.lvUrls.Items.Add(exampleUrl);
             }
+            cbClockOverlay.Checked = true;
+            cmbClockPosition.Enabled = true;
+            cmbClockPosition.SelectedIndex = 0;
             btnUpdateNotice.Visible = false;
             ApplyLanguage("ko");
         }
@@ -401,6 +444,10 @@ namespace Web_Page_Screensaver
                 prefsManager.MuteAudio = cbMuteAudio.Checked;
                 prefsManager.InPrivate = cbInPrivate.Checked;
                 prefsManager.ShowClockOverlay = cbClockOverlay.Checked;
+                if (cmbClockPosition.SelectedIndex >= 0)
+                {
+                    prefsManager.ClockPositionPref = (PreferencesManager.ClockPosition)cmbClockPosition.SelectedIndex;
+                }
                 prefsManager.Language = currentLanguage;
 
                 for (var i = 0; i < screenUserControls.Count; i++)
@@ -468,6 +515,8 @@ namespace Web_Page_Screensaver
                 cbMuteAudio.Checked = prefsManager.MuteAudio;
                 cbInPrivate.Checked = prefsManager.InPrivate;
                 cbClockOverlay.Checked = prefsManager.ShowClockOverlay;
+                cmbClockPosition.Enabled = cbClockOverlay.Checked;
+                cmbClockPosition.SelectedIndex = (int)prefsManager.ClockPositionPref;
                 currentLanguage = prefsManager.Language ?? "ko";
                 SetMultiScreenButtonFromMode();
                 ArrangeScreenTabs();

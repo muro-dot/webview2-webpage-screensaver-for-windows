@@ -121,10 +121,10 @@ namespace Web_Page_Screensaver
                         int zoomPercent = prefsManager.GetZoomFactorByScreen(screenNum);
                         webView.ZoomFactor = (zoomPercent > 0 ? zoomPercent : 100) / 100.0;
 
-                        // 2. 글래스모피즘 디지털 시계/날짜 HUD 오버레이 주입
+                        // 2. 글래스모피즘 디지털 시계/날짜 HUD 오버레이 주입 (사용자 설정 모서리 반영)
                         if (prefsManager.ShowClockOverlay)
                         {
-                            webView.ExecuteScriptAsync(FallbackHtmlProvider.GetClockOverlayScript());
+                            webView.ExecuteScriptAsync(FallbackHtmlProvider.GetClockOverlayScript(prefsManager.ClockPositionPref));
                         }
                     }
                 };

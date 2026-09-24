@@ -19,6 +19,7 @@ namespace Web_Page_Screensaver
         private const string MUTE_AUDIO_PREF = "MuteAudio";
         private const string INPRIVATE_PREF = "InPrivate";
         private const string CLOCK_OVERLAY_PREF = "ShowClockOverlay";
+        private const string CLOCK_POSITION_PREF = "ClockPosition";
         private const string ZOOM_FACTOR_PREF = "ZoomFactor";
 
         private const string SCREEN_SPECIFIC_PREF_NAME_FORMATSTRING = "{0}Screen{1}";
@@ -33,12 +34,26 @@ namespace Web_Page_Screensaver
         private const string MUTE_AUDIO_PREF_DEFAULT = "True";
         private const string INPRIVATE_PREF_DEFAULT = "False";
         private const string CLOCK_OVERLAY_PREF_DEFAULT = "False";
+        private const string CLOCK_POSITION_PREF_DEFAULT = "BottomRight";
         private const string ZOOM_FACTOR_PREF_DEFAULT = "100";
 
         public string Language { get; set; }
         public bool MuteAudio { get; set; }
         public bool InPrivate { get; set; }
         public bool ShowClockOverlay { get; set; }
+
+        /// <summary>
+        /// 시계 HUD 오버레이가 표시될 모서리 위치
+        /// </summary>
+        public enum ClockPosition
+        {
+            BottomRight,
+            BottomLeft,
+            TopRight,
+            TopLeft
+        }
+
+        public ClockPosition ClockPositionPref { get; set; } = ClockPosition.BottomRight;
 
         private List<int> zoomFactorsByScreen;
 
@@ -288,6 +303,7 @@ namespace Web_Page_Screensaver
             reg.SetValue(MUTE_AUDIO_PREF, MuteAudio);
             reg.SetValue(INPRIVATE_PREF, InPrivate);
             reg.SetValue(CLOCK_OVERLAY_PREF, ShowClockOverlay);
+            reg.SetValue(CLOCK_POSITION_PREF, ClockPositionPref.ToString());
 
             SaveUrlsAllScreens();
             SavePrefAllScreens(INTERVAL_PREF, rotationIntervalsByScreen);
@@ -304,6 +320,16 @@ namespace Web_Page_Screensaver
             MuteAudio = bool.Parse((string)reg.GetValue(MUTE_AUDIO_PREF, MUTE_AUDIO_PREF_DEFAULT));
             InPrivate = bool.Parse((string)reg.GetValue(INPRIVATE_PREF, INPRIVATE_PREF_DEFAULT));
             ShowClockOverlay = bool.Parse((string)reg.GetValue(CLOCK_OVERLAY_PREF, CLOCK_OVERLAY_PREF_DEFAULT));
+
+            string clockPosStr = (string)reg.GetValue(CLOCK_POSITION_PREF, CLOCK_POSITION_PREF_DEFAULT);
+            if (Enum.TryParse(clockPosStr, out ClockPosition cp))
+            {
+                ClockPositionPref = cp;
+            }
+            else
+            {
+                ClockPositionPref = ClockPosition.BottomRight;
+            }
 
             urlsByScreen = LoadUrlsAllScreens();
             rotationIntervalsByScreen = LoadPrefAllScreens<int>(INTERVAL_PREF, INTERVAL_PREF_DEFAULT, INTERVAL_PREF_DEFAULT);

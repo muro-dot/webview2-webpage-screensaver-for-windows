@@ -137,20 +137,45 @@ namespace Web_Page_Screensaver
         }
 
         /// <summary>
-        /// 웹페이지 우측 하단에 반투명 글래스모피즘 디지털 시계/날짜 위젯을 띄우는 주입 스크립트를 반환합니다.
+        /// 웹페이지 모서리에 반투명 글래스모피즘 디지털 시계/날짜 위젯을 띄우는 주입 스크립트를 반환합니다.
+        /// 사용자가 선택한 모서리 위치(상하좌우 4모서리)에 맞춰 배치되며,
         /// pointer-events: none 으로 마우스 조작을 일체 방해하지 않습니다.
         /// </summary>
-        public static string GetClockOverlayScript()
+        /// <param name="position">시계가 표시될 모서리 위치 (기본: BottomRight)</param>
+        public static string GetClockOverlayScript(PreferencesManager.ClockPosition position = PreferencesManager.ClockPosition.BottomRight)
         {
-            return @"
+            string posCss;
+            string textAlign;
+
+            switch (position)
+            {
+                case PreferencesManager.ClockPosition.TopLeft:
+                    posCss = "host.style.top = '24px'; host.style.left = '24px';";
+                    textAlign = "left";
+                    break;
+                case PreferencesManager.ClockPosition.TopRight:
+                    posCss = "host.style.top = '24px'; host.style.right = '24px';";
+                    textAlign = "right";
+                    break;
+                case PreferencesManager.ClockPosition.BottomLeft:
+                    posCss = "host.style.bottom = '24px'; host.style.left = '24px';";
+                    textAlign = "left";
+                    break;
+                case PreferencesManager.ClockPosition.BottomRight:
+                default:
+                    posCss = "host.style.bottom = '24px'; host.style.right = '24px';";
+                    textAlign = "right";
+                    break;
+            }
+
+            string scriptTemplate = @"
 (function() {
     if (document.getElementById('webview2-screensaver-hud-clock')) return;
 
     const host = document.createElement('div');
     host.id = 'webview2-screensaver-hud-clock';
     host.style.position = 'fixed';
-    host.style.right = '24px';
-    host.style.bottom = '24px';
+    __POS_CSS__
     host.style.zIndex = '2147483647';
     host.style.pointerEvents = 'none';
     host.style.userSelect = 'none';
@@ -165,7 +190,7 @@ namespace Web_Page_Screensaver
     box.style.padding = '10px 18px';
     box.style.color = '#f4f4f5';
     box.style.boxShadow = '0 10px 30px rgba(0,0,0,0.45)';
-    box.style.textAlign = 'right';
+    box.style.textAlign = '__TEXT_ALIGN__';
 
     const timeEl = document.createElement('div');
     timeEl.style.fontSize = '26px';
@@ -197,6 +222,9 @@ namespace Web_Page_Screensaver
     setInterval(update, 1000);
 })();
 ";
+            return scriptTemplate
+                .Replace("__POS_CSS__", posCss)
+                .Replace("__TEXT_ALIGN__", textAlign);
         }
     }
 }
