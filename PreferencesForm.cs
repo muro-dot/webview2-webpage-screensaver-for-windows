@@ -296,16 +296,26 @@ namespace Web_Page_Screensaver
             cmbClockPosition.Size = new Size(180, 23);
             cmbClockPosition.Location = new Point(cbClockOverlay.Right + 8, 39);
 
-            // 우측 확인/취소 버튼 및 바로 윗자리 백업/복원 버튼 정렬
+            // 3. 상단 헤더 우측 컨트롤 정렬 (GitHub 버튼 우측 여백을 하단 버튼과 일치하게 8px로 밀착)
+            if (headerPanel.Width >= 500)
+            {
+                int headerRight = headerPanel.Width - 8;
+                btnGithub.Location = new Point(headerRight - btnGithub.Width, 11);
+                langPanel.Location = new Point(btnGithub.Left - 8 - langPanel.Width, 11);
+                btnUpdateNotice.Location = new Point(langPanel.Left - 8 - btnUpdateNotice.Width, 11);
+            }
+
+            // 4. 우측 확인/취소 버튼 및 바로 윗자리 백업/복원 버튼 정렬 (우측 끝 8px 일치)
             int panelW = bottomPanel.ClientSize.Width > 0 ? bottomPanel.ClientSize.Width : 812;
-            okButton.Location = new Point(panelW - okButton.Width - 12, 38);
-            cancelButton.Location = new Point(okButton.Left - cancelButton.Width - 8, 38);
+            int bottomRight = panelW - 8;
+            okButton.Location = new Point(bottomRight - okButton.Width, 38);
+            cancelButton.Location = new Point(okButton.Left - 8 - cancelButton.Width, 38);
 
             // 취소/저장 바로 윗자리로 백업/복원 배치
             btnExport.Location = new Point(cancelButton.Left, 6);
-            btnExport.Size = new Size(cancelButton.Width, 26);
+            btnExport.Size = new Size(cancelButton.Width, 28);
             btnImport.Location = new Point(okButton.Left, 6);
-            btnImport.Size = new Size(okButton.Width, 26);
+            btnImport.Size = new Size(okButton.Width, 28);
         }
 
         private void btnLangKor_Click(object sender, EventArgs e)

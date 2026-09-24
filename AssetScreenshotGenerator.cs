@@ -32,6 +32,7 @@ namespace Web_Page_Screensaver
             using (var form = new PreferencesForm())
             {
                 form.StartPosition = FormStartPosition.CenterScreen;
+                form.ClientSize = new Size(860, 596);
                 form.TopMost = true;
                 form.Show();
 

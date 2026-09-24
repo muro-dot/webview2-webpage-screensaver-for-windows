@@ -92,7 +92,7 @@ namespace Web_Page_Screensaver
             this.btnUpdateNotice.FlatAppearance.BorderSize = 0;
             this.btnUpdateNotice.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUpdateNotice.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
-            this.btnUpdateNotice.Location = new System.Drawing.Point(434, 11);
+            this.btnUpdateNotice.Location = new System.Drawing.Point(484, 11);
             this.btnUpdateNotice.Name = "btnUpdateNotice";
             this.btnUpdateNotice.Size = new System.Drawing.Size(108, 30);
             this.btnUpdateNotice.Style = Web_Page_Screensaver.ModernButtonStyle.Primary;
@@ -143,7 +143,7 @@ namespace Web_Page_Screensaver
             this.langPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.langPanel.Controls.Add(this.btnLangKor);
             this.langPanel.Controls.Add(this.btnLangEng);
-            this.langPanel.Location = new System.Drawing.Point(548, 11);
+            this.langPanel.Location = new System.Drawing.Point(600, 11);
             this.langPanel.Name = "langPanel";
             this.langPanel.Size = new System.Drawing.Size(126, 30);
             this.langPanel.TabIndex = 3;
@@ -193,7 +193,7 @@ namespace Web_Page_Screensaver
             this.btnGithub.FlatAppearance.BorderSize = 0;
             this.btnGithub.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGithub.Font = new System.Drawing.Font("Segoe UI", 8.5F);
-            this.btnGithub.Location = new System.Drawing.Point(678, 11);
+            this.btnGithub.Location = new System.Drawing.Point(734, 11);
             this.btnGithub.Name = "btnGithub";
             this.btnGithub.Size = new System.Drawing.Size(70, 30);
             this.btnGithub.Style = Web_Page_Screensaver.ModernButtonStyle.Ghost;
