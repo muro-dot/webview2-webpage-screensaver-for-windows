@@ -194,8 +194,8 @@ namespace Web_Page_Screensaver
             btnLangKor.IsSelected = isKo;
             btnLangEng.IsSelected = !isKo;
 
-            Text = isKo ? "웹 화면보호기 설정 v1.0.5" : "WebView2 Web Page Screensaver Settings v1.0.5";
-            lblTitle.Text = isKo ? "WebView2 웹 화면보호기 v1.0.5" : "WebView2 Web Screensaver v1.0.5";
+            Text = isKo ? "웹 화면보호기 설정 v1.0.6" : "WebView2 Web Page Screensaver Settings v1.0.6";
+            lblTitle.Text = isKo ? "WebView2 웹 화면보호기 v1.0.6" : "WebView2 Web Screensaver v1.0.6";
             lblSubtitle.Text = isKo ? "웹사이트 및 대시보드를 고해상도 화면보호기로 출력합니다" : "Display websites and live dashboards with Microsoft WebView2";
             lblMultiScreen.Text = isKo ? "다중 모니터 모드:" : "Multi-Monitor Mode:";
 
@@ -211,7 +211,7 @@ namespace Web_Page_Screensaver
             screenModeTooltip.SetToolTip(separateScreensButton, isKo ? "각 모니터마다 서로 다른 웹사이트 목록을 설정합니다" : "Configure individual URL list for each screen");
 
             cbCloseOnActivity.Text = isKo ? "마우스 움직임 시 종료" : "Exit on mouse move";
-            cbMuteAudio.Text = isKo ? "오디오 음소거 (소리 끄기)" : "Mute Audio (Silent)";
+            cbMuteAudio.Text = isKo ? "오디오 음소거" : "Mute Audio";
             cbInPrivate.Text = isKo ? "시크릿 모드 (InPrivate)" : "InPrivate Browsing";
             cbClockOverlay.Text = isKo ? "시계 HUD 오버레이" : "Clock HUD Overlay";
 
@@ -285,21 +285,27 @@ namespace Web_Page_Screensaver
             cbMuteAudio.AutoSize = true;
             cbClockOverlay.AutoSize = true;
 
-            cbCloseOnActivity.Location = new Point(4, 7);
-            cbInPrivate.Location = new Point(4, 31);
+            cbCloseOnActivity.Location = new Point(4, 10);
+            cbInPrivate.Location = new Point(4, 42);
 
             int col2Left = Math.Max(cbCloseOnActivity.Right, cbInPrivate.Right) + 24;
-            cbMuteAudio.Location = new Point(col2Left, 7);
-            cbClockOverlay.Location = new Point(col2Left, 31);
+            cbMuteAudio.Location = new Point(col2Left, 10);
+            cbClockOverlay.Location = new Point(col2Left, 42);
 
             // 시계 위치 콤보박스: 영문 텍스트가 전부 보이도록 180px 너비 및 안전 여백 확보
             cmbClockPosition.Size = new Size(180, 23);
-            cmbClockPosition.Location = new Point(cbClockOverlay.Right + 8, 28);
+            cmbClockPosition.Location = new Point(cbClockOverlay.Right + 8, 39);
 
-            // 우측 확인/취소 버튼 정렬
+            // 우측 확인/취소 버튼 및 바로 윗자리 백업/복원 버튼 정렬
             int panelW = bottomPanel.ClientSize.Width > 0 ? bottomPanel.ClientSize.Width : 812;
-            okButton.Location = new Point(panelW - okButton.Width - 12, 14);
-            cancelButton.Location = new Point(okButton.Left - cancelButton.Width - 8, 14);
+            okButton.Location = new Point(panelW - okButton.Width - 12, 38);
+            cancelButton.Location = new Point(okButton.Left - cancelButton.Width - 8, 38);
+
+            // 취소/저장 바로 윗자리로 백업/복원 배치
+            btnExport.Location = new Point(cancelButton.Left, 6);
+            btnExport.Size = new Size(cancelButton.Width, 26);
+            btnImport.Location = new Point(okButton.Left, 6);
+            btnImport.Size = new Size(okButton.Width, 26);
         }
 
         private void btnLangKor_Click(object sender, EventArgs e)

@@ -191,6 +191,6 @@ ModelManifest.xml
 
 Thumbs.db
 /.vs
-/.vs
 /.vs/slnx.sqlite
 /.vs/ProjectSettings.json
+*.zip

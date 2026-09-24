@@ -24,7 +24,7 @@ namespace Web_Page_Screensaver
     {
         private const string REPO_OWNER = "muro-dot";
         private const string REPO_NAME = "Webview2_WebPage_Screensaver";
-        private const string CURRENT_VERSION = "1.0.5";
+        private const string CURRENT_VERSION = "1.0.6";
 
         /// <summary>
         /// 백그라운드에서 GitHub 최신 릴리즈 정보를 비동기로 조회합니다.

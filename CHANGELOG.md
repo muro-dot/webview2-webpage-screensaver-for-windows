@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [v1.0.6] - 2026-09-24
+
+### 🌐 English
+- **Relocated Export & Import Buttons**: Placed configuration Backup (Export) and Restore (Import) buttons directly above Cancel and Save & Apply for a seamless workflow.
+- **Clock HUD Corner Selection**: Selectable clock placement across all 4 corners (Bottom-Right, Bottom-Left, Top-Right, Top-Left) with unclipped dropdown labels.
+- **Streamlined UI Labels**: Simplified audio option label to "Mute Audio" removing redundant text.
+- **Dynamic Responsive Alignment**: Auto-spaced multi-monitor radio options and bottom controls preventing any text clipping or overlap across all languages.
+- **Expanded Dialog Dimensions**: Widened form to 860x596 for optimal breathing room and zero layout interference.
+
+### 🇰🇷 한국어
+- **백업/복원 버튼 하단 재배치**: 백업 및 복원 버튼을 설정창 하단의 '취소' 및 '저장 및 적용' 바로 윗자리로 이동하여 조작 편의성 극대화.
+- **디지털 시계 HUD 4개 모서리 위치 선택**: 글래스모피즘 시계를 4대 모서리(우측 하단, 좌측 하단, 우측 상단, 좌측 상단) 중 원하는 곳으로 자유롭게 배치.
+- **문구 간결화**: '오디오 음소거 (소리 끄기)'에서 중복 문구를 삭제하고 '오디오 음소거'로 간결하게 정리.
+- **동적 반응형 레이아웃 강화**: 다중 모니터 라벨 및 컨트롤 간격 자동 조정으로 영문/한글 전환 시 문구 겹침 및 글자 잘림 완전 해소.
+- **설정창 크기 최적화 (860x596)**: 시원시원한 가로 폭과 여유 있는 세로 높이로 컨트롤 간 안전 여백 완벽 확보.
+
+---
+
 ## [v1.0.5] - 2026-09-22
 
 ### 🌐 English

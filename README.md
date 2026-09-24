@@ -4,6 +4,7 @@ A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](h
 
 ## Key Improvements
 
+- **Relocated Backup/Restore & Streamlined Labels (v1.0.6):** Export/Import buttons directly above action buttons, simplified "Mute Audio" label, and 4-corner HUD clock placement.
 - **Audio Mute & InPrivate Browsing (v1.0.5):** Silent screensaver with automatic sound muting and privacy protection mode.
 - **Graceful Fallback Clock (v1.0.5):** Elegant built-in neon digital clock when offline or page fails to load.
 - **Live Mini Web Preview (v1.0.5):** Instant in-dialog preview of selected URLs with active zoom and mute settings.
@@ -48,6 +49,7 @@ A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](h
 
 ## 주요 개선 사항
 
+- **백업/복원 버튼 재배치 & 문구 간결화 (v1.0.6):** 취소/저장 바로 윗자리로 백업/복원 이동, '오디오 음소거' 문구 간결화 및 4대 모서리 HUD 시계 위치 선택.
 - **오디오 자동 음소거 및 시크릿 모드 (v1.0.5):** 웹페이지 소음 차단(기본 Mute) 및 쿠키/기록을 남기지 않는 안전한 브라우징.
 - **오프라인/오류 시 우아한 모던 시계 폴백 (v1.0.5):** 인터넷 연결이 끊겨도 에러창 대신 세련된 네온 디지털 시계 자동 전환.
 - **실시간 미니 웹 미리보기 (v1.0.5):** 화면보호기를 직접 실행하지 않고도 설정창에서 즉시 렌더링 상태 확인.
