@@ -57,7 +57,39 @@ namespace Web_Page_Screensaver
 
         private List<int> zoomFactorsByScreen;
 
-        private static RegistryKey reg = Registry.CurrentUser.CreateSubKey(Program.KEY);
+        private static RegistryKey reg;
+
+        /// <summary>
+        /// 레지스트리 키가 닫혔거나 Disposed된 상태라도 안전하게 자동 복구하여 핸들을 반환하는 동적 프로퍼티입니다.
+        /// </summary>
+        private static RegistryKey Reg
+        {
+            get
+            {
+                try
+                {
+                    if (reg != null)
+                    {
+                        var _ = reg.Name; // Disposed 여부 안전 확인
+                        return reg;
+                    }
+                }
+                catch
+                {
+                    reg = null;
+                }
+
+                try
+                {
+                    reg = Registry.CurrentUser.CreateSubKey(Program.KEY);
+                }
+                catch
+                {
+                    reg = Registry.CurrentUser.OpenSubKey(Program.KEY, true);
+                }
+                return reg;
+            }
+        }
 
         public PreferencesManager()
         {
@@ -297,31 +329,31 @@ namespace Web_Page_Screensaver
 
         public void SavePreferences()
         {
-            reg.SetValue(MULTISCREEN_PREF, MultiScreenMode);
-            reg.SetValue(CLOSE_ON_ACTIVITY_PREF, CloseOnActivity);
-            reg.SetValue(LANGUAGE_PREF, Language ?? LANGUAGE_PREF_DEFAULT);
-            reg.SetValue(MUTE_AUDIO_PREF, MuteAudio);
-            reg.SetValue(INPRIVATE_PREF, InPrivate);
-            reg.SetValue(CLOCK_OVERLAY_PREF, ShowClockOverlay);
-            reg.SetValue(CLOCK_POSITION_PREF, ClockPositionPref.ToString());
+            Reg.SetValue(MULTISCREEN_PREF, MultiScreenMode);
+            Reg.SetValue(CLOSE_ON_ACTIVITY_PREF, CloseOnActivity);
+            Reg.SetValue(LANGUAGE_PREF, Language ?? LANGUAGE_PREF_DEFAULT);
+            Reg.SetValue(MUTE_AUDIO_PREF, MuteAudio);
+            Reg.SetValue(INPRIVATE_PREF, InPrivate);
+            Reg.SetValue(CLOCK_OVERLAY_PREF, ShowClockOverlay);
+            Reg.SetValue(CLOCK_POSITION_PREF, ClockPositionPref.ToString());
 
             SaveUrlsAllScreens();
             SavePrefAllScreens(INTERVAL_PREF, rotationIntervalsByScreen);
             SavePrefAllScreens(RANDOMIZE_PREF, randomizeFlagByScreen);
             SavePrefAllScreens(ZOOM_FACTOR_PREF, zoomFactorsByScreen);
-            reg.Close();
+            Reg.Flush();
         }
 
         private void LoadPreferences()  
         {
-            MultiScreenMode = (MultiScreenModeItem)Enum.Parse(typeof(MultiScreenModeItem), (string)reg.GetValue(MULTISCREEN_PREF, MULTISCREEN_PREF_DEFAULT));
-            CloseOnActivity = bool.Parse((string)reg.GetValue(CLOSE_ON_ACTIVITY_PREF, CLOSE_ON_ACTIVITY_PREF_DEFAULT));
-            Language = (string)reg.GetValue(LANGUAGE_PREF, LANGUAGE_PREF_DEFAULT);
-            MuteAudio = bool.Parse((string)reg.GetValue(MUTE_AUDIO_PREF, MUTE_AUDIO_PREF_DEFAULT));
-            InPrivate = bool.Parse((string)reg.GetValue(INPRIVATE_PREF, INPRIVATE_PREF_DEFAULT));
-            ShowClockOverlay = bool.Parse((string)reg.GetValue(CLOCK_OVERLAY_PREF, CLOCK_OVERLAY_PREF_DEFAULT));
+            MultiScreenMode = (MultiScreenModeItem)Enum.Parse(typeof(MultiScreenModeItem), (string)Reg.GetValue(MULTISCREEN_PREF, MULTISCREEN_PREF_DEFAULT));
+            CloseOnActivity = bool.Parse((string)Reg.GetValue(CLOSE_ON_ACTIVITY_PREF, CLOSE_ON_ACTIVITY_PREF_DEFAULT));
+            Language = (string)Reg.GetValue(LANGUAGE_PREF, LANGUAGE_PREF_DEFAULT);
+            MuteAudio = bool.Parse((string)Reg.GetValue(MUTE_AUDIO_PREF, MUTE_AUDIO_PREF_DEFAULT));
+            InPrivate = bool.Parse((string)Reg.GetValue(INPRIVATE_PREF, INPRIVATE_PREF_DEFAULT));
+            ShowClockOverlay = bool.Parse((string)Reg.GetValue(CLOCK_OVERLAY_PREF, CLOCK_OVERLAY_PREF_DEFAULT));
 
-            string clockPosStr = (string)reg.GetValue(CLOCK_POSITION_PREF, CLOCK_POSITION_PREF_DEFAULT);
+            string clockPosStr = (string)Reg.GetValue(CLOCK_POSITION_PREF, CLOCK_POSITION_PREF_DEFAULT);
             if (Enum.TryParse(clockPosStr, out ClockPosition cp))
             {
                 ClockPositionPref = cp;
@@ -384,14 +416,14 @@ namespace Web_Page_Screensaver
         {
             for (int i = 0; i < prefsList.Count(); i++)
             {
-                reg.SetValue(ScreenSpecificPrefName(preferenceName, i), prefsList[i]);
+                Reg.SetValue(ScreenSpecificPrefName(preferenceName, i), prefsList[i]);
             }
         }
 
         private T LoadPrefByScreen<T>(int screenNum, string prefBaseName, string primaryScreenPrefDefaultValue, string nonPrimaryScreenPrefDefaultValue)
         {
             string screenSpecificPrefEntryName = ScreenSpecificPrefName(prefBaseName, screenNum);
-            object regValue = reg.GetValue(screenSpecificPrefEntryName);
+            object regValue = Reg.GetValue(screenSpecificPrefEntryName);
             if (regValue == null)
             {
                 // no screen-specific entry exists.
@@ -401,11 +433,11 @@ namespace Web_Page_Screensaver
 
                 if (Screen.AllScreens.Length == 1 || (screenNum < Screen.AllScreens.Length && Screen.AllScreens[screenNum].Primary))
                 {
-                    if (reg.GetValueNames().Contains(prefBaseName))
+                    if (Reg.GetValueNames().Contains(prefBaseName))
                     {
-                        regValue = reg.GetValue(prefBaseName);
-                        reg.DeleteValue(prefBaseName);
-                        reg.SetValue(screenSpecificPrefEntryName, (T)Convert.ChangeType(regValue, typeof(T)));
+                        regValue = Reg.GetValue(prefBaseName);
+                        Reg.DeleteValue(prefBaseName);
+                        Reg.SetValue(screenSpecificPrefEntryName, (T)Convert.ChangeType(regValue, typeof(T)));
                     }
                     else
                     {

@@ -561,8 +561,15 @@ namespace Web_Page_Screensaver
 
             if (DialogResult == DialogResult.OK)
             {
-                readBackValuesFromUI();
-                prefsManager.SavePreferences();
+                try
+                {
+                    readBackValuesFromUI();
+                    prefsManager.SavePreferences();
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[PreferencesForm.OnClosed] 설정 저장 중 오류: {ex.Message}");
+                }
             }
 
             base.OnClosed(e);
