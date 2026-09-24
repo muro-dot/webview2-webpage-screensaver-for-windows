@@ -95,5 +95,5 @@ A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](h
 
 | 다크 모드 (Dark Mode) | 라이트 모드 (Light Mode) |
 | :---: | :---: |
-| <img width="420" alt="Dark Mode" src="assets/screenshot_dark.png" /> | <img width="420" alt="Light Mode" src="assets/screenshot_light.png" /> |
+| <img width="420" alt="Dark Mode" src="assets/screenshot_ko_dark.png" /> | <img width="420" alt="Light Mode" src="assets/screenshot_ko_light.png" /> |
 
