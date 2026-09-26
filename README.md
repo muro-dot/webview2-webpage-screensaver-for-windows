@@ -22,7 +22,7 @@ A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](h
 
 - [.NET Framework v4.8+](https://dotnet.microsoft.com/ko-kr/download/dotnet-framework/net48)
 - [Microsoft Edge WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/)
-- Windows 10 & up
+- Windows 11 & up
 
 ## Download and Install
 
@@ -73,7 +73,7 @@ A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](h
 
 - [.NET Framework v4.8+](https://dotnet.microsoft.com/ko-kr/download/dotnet-framework/net48)
 - [Microsoft Edge WebView2 런타임](https://developer.microsoft.com/en-us/microsoft-edge/webview2/ "WebView2 Runtime")
-- Windows 10 이상 (권장)
+- Windows 11 이상 (권장)
 
 ## 다운로드 및 설치 방법
 
