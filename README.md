@@ -1,5 +1,18 @@
 # WebView2 Web Page Screensaver
 
+<p align="center">
+  <strong>Display web pages as your Windows PC screensaver with Microsoft Edge WebView2</strong>
+</p>
+
+<p align="center">
+  <a href="https://github.com/muro-dot/Webview2_WebPage_Screensaver/releases/latest"><img src="https://img.shields.io/github/v/release/muro-dot/Webview2_WebPage_Screensaver?color=blue&label=Latest%20Release" alt="Latest Release"></a>
+  <a href="https://github.com/muro-dot/Webview2_WebPage_Screensaver/releases"><img src="https://img.shields.io/github/downloads/muro-dot/Webview2_WebPage_Screensaver/total?color=blueviolet&logo=github&label=Downloads" alt="Total Downloads"></a>
+  <a href="https://github.com/muro-dot/Webview2_WebPage_Screensaver/releases/latest"><img src="https://img.shields.io/badge/Download-Release%20ZIP-success?logo=windows" alt="Download Release"></a>
+  <a href="LICENSE.md"><img src="https://img.shields.io/badge/License-MIT-orange" alt="License"></a>
+</p>
+
+---
+
 A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](https://github.com/ZenProjects/Chromium-Web-Page-Screensaver) that uses **Microsoft Edge WebView2 (Chromium)** in place of the [CefSharp WinForms](https://github.com/cefsharp/CefSharp) to display web pages as your screensaver.
 
 ## Features
