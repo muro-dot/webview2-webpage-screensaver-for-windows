@@ -1,13 +1,13 @@
-# WebView2 Web Page Screensaver
+# WebView2 Web Page Screensaver for Windows
 
 <p align="center">
   <strong>Display web pages as your Windows PC screensaver with Microsoft Edge WebView2</strong>
 </p>
 
 <p align="center">
-  <a href="https://github.com/muro-dot/Webview2_WebPage_Screensaver/releases/latest"><img src="https://img.shields.io/github/v/release/muro-dot/Webview2_WebPage_Screensaver?color=blue&label=Latest%20Release" alt="Latest Release"></a>
-  <a href="https://github.com/muro-dot/Webview2_WebPage_Screensaver/releases"><img src="https://img.shields.io/github/downloads/muro-dot/Webview2_WebPage_Screensaver/total?color=blueviolet&logo=github&label=Downloads" alt="Total Downloads"></a>
-  <a href="https://github.com/muro-dot/Webview2_WebPage_Screensaver/releases/latest"><img src="https://img.shields.io/badge/Download-Release%20ZIP-success?logo=windows" alt="Download Release"></a>
+  <a href="https://github.com/muro-dot/Webview2_WebPage_Screensaver_for_Windows/releases/latest"><img src="https://img.shields.io/github/v/release/muro-dot/Webview2_WebPage_Screensaver_for_Windows?color=blue&label=Latest%20Release" alt="Latest Release"></a>
+  <a href="https://github.com/muro-dot/Webview2_WebPage_Screensaver_for_Windows/releases"><img src="https://img.shields.io/github/downloads/muro-dot/Webview2_WebPage_Screensaver_for_Windows/total?color=blueviolet&logo=github&label=Downloads" alt="Total Downloads"></a>
+  <a href="https://github.com/muro-dot/Webview2_WebPage_Screensaver_for_Windows/releases/latest"><img src="https://img.shields.io/badge/Download-Release%20ZIP-success?logo=windows" alt="Download Release"></a>
   <a href="LICENSE.md"><img src="https://img.shields.io/badge/License-MIT-orange" alt="License"></a>
 </p>
 
@@ -39,7 +39,7 @@ A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](h
 
 ## Download and Install
 
-- Download the ***[Latest WebView2 Web Screensaver binary](https://github.com/muro-dot/Webview2_WebPage_Screensaver/releases/latest)*** 
+- Download the ***[Latest WebView2 Web Screensaver binary](https://github.com/muro-dot/Webview2_WebPage_Screensaver_for_Windows/releases/latest)***
 - Unzip it to a permanent directory
 - Find `Webview2_WebPage_Screensaver.scr` in the unziped directory, right click it
 - Select `Install` to install, or `Test` to test it out without installing it
@@ -62,7 +62,7 @@ A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](h
 | :---: | :---: |
 | <img width="420" alt="Dark Mode" src="assets/screenshot_dark.png" /> | <img width="420" alt="Light Mode" src="assets/screenshot_light.png" /> |
 
-# WebView2 웹 페이지 화면 보호기 (Web Page Screensaver)
+# WebView2 웹 페이지 화면 보호기 for Windows (Web Page Screensaver for Windows)
 
 이 프로젝트는 오래된 [ZenProjects/Chromium-Web-Page-Screensaver](https://github.com/ZenProjects/Chromium-Web-Page-Screensaver) 프로젝트를 포크하여 개선한 버전입니다. 기존의 [CefSharp WinForms](https://github.com/cefsharp/CefSharp) 대신 **Microsoft Edge WebView2 (Chromium)** 엔진을 사용하여 웹 페이지를 화면 보호기로 부드럽고 선명하게 출력합니다.
 
@@ -90,7 +90,7 @@ A Fork of the old archived project [ZenProjects/Chromium-Web-Page-Screensaver](h
 
 ## 다운로드 및 설치 방법
 
-- ***[최신 WebView2 화면 보호기 실행 파일 다운로드](https://github.com/muro-dot/Webview2_WebPage_Screensaver/releases/latest)***
+- ***[최신 WebView2 화면 보호기 실행 파일 다운로드](https://github.com/muro-dot/Webview2_WebPage_Screensaver_for_Windows/releases/latest)***
 - 다운로드한 압축 파일을 원하는 폴더(예: `C:\Program Files\WebScreensaver`)에 풉니다.
 - 폴더 내의 `Webview2_WebPage_Screensaver.scr` 파일을 마우스 우클릭합니다.
 - **'설치'**를 선택하여 시스템에 등록하거나, **'테스트'**를 눌러 즉시 실행해 볼 수 있습니다.

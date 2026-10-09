@@ -23,7 +23,7 @@ namespace Web_Page_Screensaver
     public static class UpdateChecker
     {
         private const string REPO_OWNER = "muro-dot";
-        private const string REPO_NAME = "Webview2_WebPage_Screensaver";
+        private const string REPO_NAME = "Webview2_WebPage_Screensaver_for_Windows";
         private const string CURRENT_VERSION = "1.0.6";
 
         /// <summary>
