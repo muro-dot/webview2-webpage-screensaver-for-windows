@@ -169,6 +169,8 @@
     <Compile Include="FallbackHtmlProvider.cs" />
     <Compile Include="ConfigExportImport.cs" />
     <Compile Include="UpdateChecker.cs" />
+    <Compile Include="GracePeriodManager.cs" />
+    <Compile Include="InPrivateSessionManager.cs" />
     <Compile Include="PreviewDialog.cs" />
     <Compile Include="PreferencesForm.cs">
       <SubType>Form</SubType>
@@ -239,7 +241,10 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>"$(TargetPath)" /capture-assets "$(ProjectDir)assets"
-if $(ConfigurationName) == Release Move /Y "$(TargetPath)" "$(TargetDir)$(TargetName).scr"</PostBuildEvent>
+if $(ConfigurationName) == Release (
+  if exist "$(TargetDir)$(TargetName).scr" del /f /q "$(TargetDir)$(TargetName).scr"
+  Move /Y "$(TargetPath)" "$(TargetDir)$(TargetName).scr"
+)</PostBuildEvent>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

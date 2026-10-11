@@ -273,11 +273,13 @@ namespace Web_Page_Screensaver
         private List<int> rotationIntervalsByScreen;
         public int GetRotationIntervalByScreen(int screenNum)
         {
-            return rotationIntervalsByScreen[TranslateScreenNumToScreenPrefNum(screenNum)];
+            int val = rotationIntervalsByScreen[TranslateScreenNumToScreenPrefNum(screenNum)];
+            // 타이머 Interval에 0 또는 음수가 대입되어 ArgumentOutOfRangeException이 발생하는 것을 원천 차단
+            return Math.Max(1, val);
         }
         public void SetRotationIntervalForScreen(int screenNum, int value)
         {
-            rotationIntervalsByScreen[TranslateScreenNumToScreenPrefNum(screenNum)] = value;
+            rotationIntervalsByScreen[TranslateScreenNumToScreenPrefNum(screenNum)] = Math.Max(1, value);
         }
 
         private List<bool> randomizeFlagByScreen;

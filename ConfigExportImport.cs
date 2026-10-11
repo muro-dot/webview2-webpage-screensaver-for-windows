@@ -11,7 +11,7 @@ namespace Web_Page_Screensaver
     /// </summary>
     public class ScreensaverConfigDto
     {
-        public string Version { get; set; } = "1.0.6";
+        public string Version { get; set; } = UpdateChecker.CurrentVersionString;
         public DateTime ExportedAt { get; set; } = DateTime.Now;
         public string Language { get; set; }
         public string MultiScreenMode { get; set; }
