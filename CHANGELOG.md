@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.  
 이 프로젝트의 주요 변경 이력은 이 문서에 기록됩니다.
 
+## [v1.0.7] - 2026-10-11
+
+### 🌐 English
+- **Keyboard Hook Reliability**: Key release (`WM_KEYUP`) no longer closes screensaver; added 1.5s startup grace period for test execution.
+- **Resilient Registry Parsing**: Safe fallback handling preventing crashes on corrupted registry values.
+- **Auto Recovery & Crash Guard**: Automatic reconnect timer for offline fallback and renderer process recovery.
+- **Defensive Unattended Mode**: Blocked popups, web permissions, downloads, alert dialogs, and context menus.
+- **Isolated InPrivate Sessions**: Ephemeral user data directory ensuring zero leftover cache or cookies on exit.
+- **Unified Versioning**: Synchronized dynamic assembly version lookup eliminating update checker false positives.
+
+### 🇰🇷 한국어
+- **키보드 훅 안정화**: 키 뗌(`WM_KEYUP`) 오종료 방지 및 우클릭 '테스트' 즉시 꺼짐 방지 1.5초 유예시간 적용.
+- **레지스트리 예외 방어**: 손상된 설정값 유입 시 안전한 기본값 자동 복구.
+- **자동 복구 및 렌더러 방어**: 네트워크 단절 시 30초 주기 자동 재연결 및 프로세스 충돌 복구.
+- **무인 화면보호기 보안 강화**: 팝업, 권한 요청, 파일 다운로드, 자바스크립트 알림창, 우클릭 메뉴 차단.
+- **InPrivate 완전 격리**: 실행 시 고유 임시 폴더 생성 및 종료 시 자동 완전 파기.
+- **버전 관리 단일화**: 어셈블리 버전 동적 조회로 업데이트 알림 오작동 방지.
+
 ---
 
 ## [v1.0.6] - 2026-09-24

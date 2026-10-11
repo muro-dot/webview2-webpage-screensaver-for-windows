@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 
@@ -24,7 +25,18 @@ namespace Web_Page_Screensaver
     {
         private const string REPO_OWNER = "muro-dot";
         private const string REPO_NAME = "Webview2_WebPage_Screensaver_for_Windows";
-        private const string CURRENT_VERSION = "1.0.6";
+
+        /// <summary>
+        /// 현재 실행 중인 어셈블리의 실제 버전을 동적으로 반환합니다 (단일 진실 공급원)
+        /// </summary>
+        public static string CurrentVersionString
+        {
+            get
+            {
+                var ver = Assembly.GetExecutingAssembly().GetName().Version;
+                return ver != null ? $"{ver.Major}.{ver.Minor}.{ver.Build}" : "1.0.0";
+            }
+        }
 
         /// <summary>
         /// 백그라운드에서 GitHub 최신 릴리즈 정보를 비동기로 조회합니다.
@@ -62,7 +74,7 @@ namespace Web_Page_Screensaver
                             result.LatestVersion = tagName;
                             result.ReleaseUrl = htmlUrl;
 
-                            if (IsNewerVersion(tagName, CURRENT_VERSION))
+                            if (IsNewerVersion(tagName, CurrentVersionString))
                             {
                                 result.HasUpdate = true;
                             }

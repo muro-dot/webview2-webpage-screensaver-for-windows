@@ -136,6 +136,8 @@ namespace Web_Page_Screensaver
 
         public event EventHandler KeyPressed;
 
+        private readonly DateTime _startTime = DateTime.Now;
+
         public GlobalKeyboardHook()
         {
             _proc = HookCallback;
@@ -155,12 +157,23 @@ namespace Web_Page_Screensaver
 
         private IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
-            // When a keyboard press event is detected (Standard or System key)
-                var handler = KeyPressed;
-                if (handler != null)
+            if (nCode >= 0)
+            {
+                int msg = wParam.ToInt32();
+                // 키를 누르는 이벤트(WM_KEYDOWN 또는 WM_SYSKEYDOWN)에만 반응 (키를 뗄 때의 WM_KEYUP 무시)
+                if (msg == WM_KEYDOWN || msg == WM_SYSKEYDOWN)
                 {
-                    handler(this, EventArgs.Empty);
+                    // 프로그램 시작 직후 1.5초 유예시간을 두어 탐색기 우클릭 '테스트' 시 키 뗌으로 인한 즉시 종료 방지
+                    if (DateTime.Now >= _startTime.AddSeconds(1.5))
+                    {
+                        var handler = KeyPressed;
+                        if (handler != null)
+                        {
+                            handler(this, EventArgs.Empty);
+                        }
+                    }
                 }
+            }
             return CallNextHookEx(_hookID, nCode, wParam, lParam);
         }
 

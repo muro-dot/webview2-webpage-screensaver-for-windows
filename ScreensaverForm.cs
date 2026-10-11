@@ -73,6 +73,8 @@ namespace Web_Page_Screensaver
         }
 
         private string currentLoadedUrl = string.Empty;
+        private string inPrivateTempFolder = null;
+        private Timer recoveryTimer = null;
 
         private async void InitializeWebViewAsync()
         {
@@ -85,28 +87,71 @@ namespace Web_Page_Screensaver
                 this.Controls["closeButton"].BringToFront();
             }
 
-            // [Fix 2] Save WebView2 temporary data in a safe folder (LocalAppData) with no permission issues
-            string userDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "LibraryScreensaver_Data");
-            
-            // InPrivate 모드 및 보안 옵션 설정
+            // 폼 종료 시 InPrivate 임시 데이터 정리 및 타이머 해제
+            this.FormClosed += (s, e) =>
+            {
+                StopRecoveryTimer();
+                CleanupInPrivateData();
+            };
+
+            string userDataFolder;
             CoreWebView2EnvironmentOptions envOptions = null;
+
             if (prefsManager.InPrivate)
             {
+                // InPrivate 모드: 고유한 임시 디렉토리를 생성하여 캐시/쿠키가 남지 않는 완전 격리 세션 보장
+                inPrivateTempFolder = Path.Combine(Path.GetTempPath(), "Screensaver_InPrivate_" + Guid.NewGuid().ToString("N"));
+                userDataFolder = inPrivateTempFolder;
                 envOptions = new CoreWebView2EnvironmentOptions
                 {
                     AdditionalBrowserArguments = "--inprivate"
                 };
             }
+            else
+            {
+                userDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "LibraryScreensaver_Data");
+            }
 
-            var env = await CoreWebView2Environment.CreateAsync(null, userDataFolder, envOptions);
-            await webView.EnsureCoreWebView2Async(env);
+            try
+            {
+                var env = await CoreWebView2Environment.CreateAsync(null, userDataFolder, envOptions);
+                await webView.EnsureCoreWebView2Async(env);
+            }
+            catch
+            {
+                // 환경 초기화 실패 시 무시하고 진행
+                return;
+            }
 
-            // 오디오 자동 음소거 적용
             if (webView.CoreWebView2 != null)
             {
+                // 1. 오디오 자동 음소거 적용
                 webView.CoreWebView2.IsMuted = prefsManager.MuteAudio;
 
-                // 웹페이지 로드 완료 및 오류 시 이벤트 처리
+                // 2. 무인 화면보호기 보안 및 방어 설정 (팝업, 권한, 다운로드, 우클릭 차단)
+                ConfigureWebViewSecurity(webView.CoreWebView2);
+
+                // 3. 브라우저/렌더러 프로세스 충돌(ProcessFailed) 시 자동 복구
+                webView.CoreWebView2.ProcessFailed += (s, e) =>
+                {
+                    try
+                    {
+                        if (e.ProcessFailedKind == CoreWebView2ProcessFailedKind.BrowserProcessExited)
+                        {
+                            if (!string.IsNullOrEmpty(currentLoadedUrl))
+                            {
+                                BrowseTo(currentLoadedUrl);
+                            }
+                        }
+                        else
+                        {
+                            webView.Reload();
+                        }
+                    }
+                    catch { }
+                };
+
+                // 4. 웹페이지 로드 완료 및 오류 시 이벤트 처리
                 webView.CoreWebView2.NavigationCompleted += (s, e) =>
                 {
                     if (!e.IsSuccess && e.WebErrorStatus != CoreWebView2WebErrorStatus.OperationCanceled)
@@ -114,9 +159,15 @@ namespace Web_Page_Screensaver
                         // 네트워크 오류/서버 다운 시 우아한 모던 디지털 시계 Fallback 화면 렌더링
                         string fallbackHtml = FallbackHtmlProvider.GetFallbackClockHtml(currentLoadedUrl, prefsManager.Language);
                         webView.CoreWebView2.NavigateToString(fallbackHtml);
+
+                        // 단일 URL이거나 네트워크 일시 단절 시 30초마다 자동 재연결을 시도하는 복구 타이머 가동
+                        StartRecoveryTimer();
                     }
                     else if (e.IsSuccess)
                     {
+                        // 로드 성공 시 복구 타이머 정지
+                        StopRecoveryTimer();
+
                         // 1. 화면 확대/축소 배율(Zoom Factor) 적용
                         int zoomPercent = prefsManager.GetZoomFactorByScreen(screenNum);
                         webView.ZoomFactor = (zoomPercent > 0 ? zoomPercent : 100) / 100.0;
@@ -130,22 +181,87 @@ namespace Web_Page_Screensaver
                 };
             }
 
-            // ---------------------------------------------------------
-            // [Modified part] Use events of the WebView2 control itself, not CoreWebView2.
-            // 1. Detect general character and number keys
+            // 키보드 입력 감지 (특수키 포함)
             webView.KeyDown += (sender, e) =>
             {
                 Application.Exit();
             };
 
-            // 2. Detect special keys like arrow keys, Tab, Esc, etc., that might be missed by general KeyDown (safety measure)
             webView.PreviewKeyDown += (sender, e) =>
             {
                 Application.Exit();
             };
-            // ---------------------------------------------------------
 
             StartScreensaverLogic();
+        }
+
+        private void ConfigureWebViewSecurity(CoreWebView2 core)
+        {
+            // 우클릭 컨텍스트 메뉴, 개발자 도구, 액셀러레이터 키 비활성화
+            core.Settings.AreDefaultContextMenusEnabled = false;
+            core.Settings.AreDevToolsEnabled = false;
+            core.Settings.AreBrowserAcceleratorKeysEnabled = false;
+
+            // 새 창/팝업 차단 (외부 브라우저나 새 창이 화면보호기 위/아래로 뜨는 것 방지)
+            core.NewWindowRequested += (s, e) =>
+            {
+                e.Handled = true;
+            };
+
+            // 카메라, 마이크, 위치, 알림 등 모든 디바이스/웹 권한 요청 자동 거부
+            core.PermissionRequested += (s, e) =>
+            {
+                e.State = CoreWebView2PermissionState.Deny;
+            };
+
+            // 무인 상태에서의 불필요/악성 파일 다운로드 차단
+            core.DownloadStarting += (s, e) =>
+            {
+                e.Cancel = true;
+            };
+
+            // alert/confirm/prompt 자바스크립트 대화상자가 화면보호기를 정지시키는 현상 차단 (대화상자 UI 억제)
+            core.ScriptDialogOpening += (s, e) =>
+            {
+                e.Accept();
+            };
+        }
+
+        private void StartRecoveryTimer()
+        {
+            if (recoveryTimer == null)
+            {
+                recoveryTimer = new Timer { Interval = 30000 }; // 30초 주기
+                recoveryTimer.Tick += (s, e) =>
+                {
+                    if (!string.IsNullOrEmpty(currentLoadedUrl))
+                    {
+                        BrowseTo(currentLoadedUrl);
+                    }
+                };
+            }
+            recoveryTimer.Stop();
+            recoveryTimer.Start();
+        }
+
+        private void StopRecoveryTimer()
+        {
+            if (recoveryTimer != null)
+            {
+                recoveryTimer.Stop();
+            }
+        }
+
+        private void CleanupInPrivateData()
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(inPrivateTempFolder) && Directory.Exists(inPrivateTempFolder))
+                {
+                    Directory.Delete(inPrivateTempFolder, true);
+                }
+            }
+            catch { }
         }
 
         public List<string> Urls
