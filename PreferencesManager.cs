@@ -344,24 +344,43 @@ namespace Web_Page_Screensaver
             Reg.Flush();
         }
 
+        private static bool ParseBoolPref(string key, bool defaultValue)
+        {
+            try
+            {
+                object val = Reg.GetValue(key, defaultValue ? "True" : "False");
+                if (val != null && bool.TryParse(val.ToString(), out bool parsed))
+                {
+                    return parsed;
+                }
+            }
+            catch { }
+            return defaultValue;
+        }
+
+        private static TEnum ParseEnumPref<TEnum>(string key, TEnum defaultValue) where TEnum : struct
+        {
+            try
+            {
+                object val = Reg.GetValue(key, defaultValue.ToString());
+                if (val != null && Enum.TryParse(val.ToString(), true, out TEnum parsed))
+                {
+                    return parsed;
+                }
+            }
+            catch { }
+            return defaultValue;
+        }
+
         private void LoadPreferences()  
         {
-            MultiScreenMode = (MultiScreenModeItem)Enum.Parse(typeof(MultiScreenModeItem), (string)Reg.GetValue(MULTISCREEN_PREF, MULTISCREEN_PREF_DEFAULT));
-            CloseOnActivity = bool.Parse((string)Reg.GetValue(CLOSE_ON_ACTIVITY_PREF, CLOSE_ON_ACTIVITY_PREF_DEFAULT));
-            Language = (string)Reg.GetValue(LANGUAGE_PREF, LANGUAGE_PREF_DEFAULT);
-            MuteAudio = bool.Parse((string)Reg.GetValue(MUTE_AUDIO_PREF, MUTE_AUDIO_PREF_DEFAULT));
-            InPrivate = bool.Parse((string)Reg.GetValue(INPRIVATE_PREF, INPRIVATE_PREF_DEFAULT));
-            ShowClockOverlay = bool.Parse((string)Reg.GetValue(CLOCK_OVERLAY_PREF, CLOCK_OVERLAY_PREF_DEFAULT));
-
-            string clockPosStr = (string)Reg.GetValue(CLOCK_POSITION_PREF, CLOCK_POSITION_PREF_DEFAULT);
-            if (Enum.TryParse(clockPosStr, out ClockPosition cp))
-            {
-                ClockPositionPref = cp;
-            }
-            else
-            {
-                ClockPositionPref = ClockPosition.BottomRight;
-            }
+            MultiScreenMode = ParseEnumPref(MULTISCREEN_PREF, MultiScreenModeItem.Separate);
+            CloseOnActivity = ParseBoolPref(CLOSE_ON_ACTIVITY_PREF, true);
+            Language = Reg.GetValue(LANGUAGE_PREF, LANGUAGE_PREF_DEFAULT)?.ToString() ?? LANGUAGE_PREF_DEFAULT;
+            MuteAudio = ParseBoolPref(MUTE_AUDIO_PREF, true);
+            InPrivate = ParseBoolPref(INPRIVATE_PREF, false);
+            ShowClockOverlay = ParseBoolPref(CLOCK_OVERLAY_PREF, false);
+            ClockPositionPref = ParseEnumPref(CLOCK_POSITION_PREF, ClockPosition.BottomRight);
 
             urlsByScreen = LoadUrlsAllScreens();
             rotationIntervalsByScreen = LoadPrefAllScreens<int>(INTERVAL_PREF, INTERVAL_PREF_DEFAULT, INTERVAL_PREF_DEFAULT);
@@ -437,20 +456,41 @@ namespace Web_Page_Screensaver
                     {
                         regValue = Reg.GetValue(prefBaseName);
                         Reg.DeleteValue(prefBaseName);
-                        Reg.SetValue(screenSpecificPrefEntryName, (T)Convert.ChangeType(regValue, typeof(T)));
+                        Reg.SetValue(screenSpecificPrefEntryName, SafeChangeType<T>(regValue, primaryScreenPrefDefaultValue));
                     }
                     else
                     {
-                        regValue = (T)Convert.ChangeType(primaryScreenPrefDefaultValue, typeof(T));
+                        regValue = SafeChangeType<T>(primaryScreenPrefDefaultValue, primaryScreenPrefDefaultValue);
                     }
                 }
                 else
                 {
-                    regValue = (T)Convert.ChangeType(nonPrimaryScreenPrefDefaultValue, typeof(T));
+                    regValue = SafeChangeType<T>(nonPrimaryScreenPrefDefaultValue, nonPrimaryScreenPrefDefaultValue);
                 }
             }
 
-            return (T)Convert.ChangeType(regValue, typeof(T));
+            return SafeChangeType<T>(regValue, primaryScreenPrefDefaultValue);
+        }
+
+        private static T SafeChangeType<T>(object value, string fallbackDefault)
+        {
+            try
+            {
+                if (value != null)
+                {
+                    return (T)Convert.ChangeType(value, typeof(T));
+                }
+            }
+            catch { }
+
+            try
+            {
+                return (T)Convert.ChangeType(fallbackDefault, typeof(T));
+            }
+            catch
+            {
+                return default(T);
+            }
         }
 
         private static string ScreenSpecificPrefName(string prefBaseName, int screenNum)
