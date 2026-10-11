@@ -49,6 +49,15 @@ namespace Web_Page_Screensaver
             // 4. Screensaver execution mode (/s or no arguments)
             else
             {
+                // 이전 비정상 종료 등으로 남은 오래된 InPrivate 임시 디렉토리를 백그라운드에서 정리
+                InPrivateSessionManager.CleanupOrphanedSessions();
+
+                // 애플리케이션 종료 시 현재 세션의 InPrivate 임시 데이터 정리
+                Application.ApplicationExit += (s, e) =>
+                {
+                    InPrivateSessionManager.CleanupCurrentSession();
+                };
+
                 var formsList = new List<Form>();
                 var screens = (new PreferencesManager()).EffectiveScreensList;
 
@@ -93,24 +102,35 @@ namespace Web_Page_Screensaver
 
         public bool PreFilterMessage(ref Message m)
         {
-            // Exit unconditionally upon mouse click
+            // 1.5초 유예시간 이내에는 탐색기 우클릭/더블클릭 등의 잔여 클릭으로 인한 조기 종료를 철저히 방지
             if (m.Msg == WM_LBUTTONDOWN || m.Msg == WM_RBUTTONDOWN || m.Msg == WM_MBUTTONDOWN)
             {
-                Application.Exit();
-                return true;
+                if (!GracePeriodManager.IsInGracePeriod())
+                {
+                    Application.Exit();
+                    return true;
+                }
+                return false;
             }
 
-            // If the mouse is moved
+            // 마우스 이동 감지
             if (m.Msg == WM_MOUSEMOVE)
             {
                 if (_originalMouseLocation.X == int.MaxValue)
                 {
-                    // Save the initial mouse location
+                    // 마우스 최초 위치 기록
                     _originalMouseLocation = Cursor.Position;
                 }
                 else
                 {
-                    // Ignore slight mouse movements due to desk vibrations, etc. (Tolerance margin of 10 pixels)
+                    // 유예시간 중에는 마우스 위치 기준점을 계속 갱신하여 유예시간 직후 오동작 방지
+                    if (GracePeriodManager.IsInGracePeriod())
+                    {
+                        _originalMouseLocation = Cursor.Position;
+                        return false;
+                    }
+
+                    // 책상 진동 등을 감안한 10픽셀 이상 유의미한 이동 감지 시에만 종료
                     if (Math.Abs(Cursor.Position.X - _originalMouseLocation.X) > 10 ||
                         Math.Abs(Cursor.Position.Y - _originalMouseLocation.Y) > 10)
                     {
@@ -135,8 +155,6 @@ namespace Web_Page_Screensaver
         private IntPtr _hookID = IntPtr.Zero;
 
         public event EventHandler KeyPressed;
-
-        private readonly DateTime _startTime = DateTime.Now;
 
         public GlobalKeyboardHook()
         {
@@ -163,8 +181,8 @@ namespace Web_Page_Screensaver
                 // 키를 누르는 이벤트(WM_KEYDOWN 또는 WM_SYSKEYDOWN)에만 반응 (키를 뗄 때의 WM_KEYUP 무시)
                 if (msg == WM_KEYDOWN || msg == WM_SYSKEYDOWN)
                 {
-                    // 프로그램 시작 직후 1.5초 유예시간을 두어 탐색기 우클릭 '테스트' 시 키 뗌으로 인한 즉시 종료 방지
-                    if (DateTime.Now >= _startTime.AddSeconds(1.5))
+                    // 전역 유예시간(1.5초)이 지난 후에만 키 입력 종료 이벤트 발생
+                    if (!GracePeriodManager.IsInGracePeriod())
                     {
                         var handler = KeyPressed;
                         if (handler != null)

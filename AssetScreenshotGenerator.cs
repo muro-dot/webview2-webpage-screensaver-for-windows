@@ -64,14 +64,15 @@ namespace Web_Page_Screensaver
                 // 4. 영문 업데이트 알림 뱃지(Update Badge) 시연 캡처
                 ThemeManager.IsLightTheme = false;
                 form.ApplyTheme(false);
-                form.SetUpdateNoticeForDemo("1.0.7");
+                form.SetUpdateNoticeForDemo("1.0.8");
                 form.Refresh();
                 Application.DoEvents();
                 Thread.Sleep(200);
 
                 CaptureFormWindow(form, Path.Combine(outputDirectory, "screenshot_update_badge.png"));
 
-                // 5. 한국어(Korean) 모드 캡처
+                // 5. 한국어(Korean) 모드 캡처 (업데이트 뱃지 숨김 처리로 깔끔한 기본 설정 폼 캡처)
+                form.HideUpdateNotice();
                 form.ApplyLanguage("ko");
                 ThemeManager.IsLightTheme = false;
                 form.ApplyTheme(false);

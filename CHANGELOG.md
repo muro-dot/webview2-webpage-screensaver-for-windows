@@ -3,23 +3,23 @@
 All notable changes to this project will be documented in this file.  
 이 프로젝트의 주요 변경 이력은 이 문서에 기록됩니다.
 
-## [v1.0.7] - 2026-10-11
+## [v1.0.7] - 2026-10-12
 
 ### 🌐 English
-- **Keyboard Hook Reliability**: Key release (`WM_KEYUP`) no longer closes screensaver; added 1.5s startup grace period for test execution.
-- **Resilient Registry Parsing**: Safe fallback handling preventing crashes on corrupted registry values.
-- **Auto Recovery & Crash Guard**: Automatic reconnect timer for offline fallback and renderer process recovery.
-- **Defensive Unattended Mode**: Blocked popups, web permissions, downloads, alert dialogs, and context menus.
-- **Isolated InPrivate Sessions**: Ephemeral user data directory ensuring zero leftover cache or cookies on exit.
-- **Unified Versioning**: Synchronized dynamic assembly version lookup eliminating update checker false positives.
+- **Unified 1.5s Grace Period**: Prevents premature exit across all input triggers (mouse click, keyboard hook, and webview keys) during launch.
+- **Auto-Recovery & Process Guard**: Isolated offline fallback completed events to preserve reconnect loop, and recreated WebView2 on browser process crashes.
+- **Shared Ephemeral InPrivate Sessions**: Unified single temporary profile across multi-monitor setups with automatic startup cleanup of orphaned data.
+- **Defensive Unattended Mode**: Blocked popups, permission requests, downloads, alert dialogs, and context menus.
+- **Resilient Config & Interval Guard**: Graceful fallback for corrupted registry settings and guarded rotation intervals against 0-second crashes.
+- **Dynamic Versioning**: Centralized assembly version lookup as single source of truth across all forms and exports.
 
 ### 🇰🇷 한국어
-- **키보드 훅 안정화**: 키 뗌(`WM_KEYUP`) 오종료 방지 및 우클릭 '테스트' 즉시 꺼짐 방지 1.5초 유예시간 적용.
-- **레지스트리 예외 방어**: 손상된 설정값 유입 시 안전한 기본값 자동 복구.
-- **자동 복구 및 렌더러 방어**: 네트워크 단절 시 30초 주기 자동 재연결 및 프로세스 충돌 복구.
-- **무인 화면보호기 보안 강화**: 팝업, 권한 요청, 파일 다운로드, 자바스크립트 알림창, 우클릭 메뉴 차단.
-- **InPrivate 완전 격리**: 실행 시 고유 임시 폴더 생성 및 종료 시 자동 완전 파기.
-- **버전 관리 단일화**: 어셈블리 버전 동적 조회로 업데이트 알림 오작동 방지.
+- **전역 1.5초 유예시간 통합**: 마우스 클릭, OS 키보드 훅, 웹뷰 내부 키 입력 등 모든 입력 경로에 유예시간을 일괄 적용하여 실행 직후 조기 종료 완벽 차단.
+- **자동 복구 및 프로세스 가드**: 폴백 시계 이벤트 격리로 재연결 타이머 오작동 방지 및 브라우저 프로세스 크래시 시 WebView2 동적 재생성.
+- **InPrivate 세션 공유 및 정리**: 다중 모니터 환경에서 단일 임시 폴더를 공유하여 리소스를 절감하고 시작/종료 시 고아 폴더 자동 정리.
+- **무인 화면보호기 보안 강화**: 팝업, 디바이스 권한, 파일 다운로드, 자바스크립트 알림창, 우클릭 메뉴 차단.
+- **설정 예외 및 주기 방어**: 손상된 레지스트리 자동 복구 및 0초 회전 주기로 인한 타이머 크래시 방어.
+- **버전 관리 단일화**: 어셈블리 버전 동적 연동으로 설정창 타이틀 및 백업 DTO의 버전 표기 일원화.
 
 ---
 

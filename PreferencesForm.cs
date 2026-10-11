@@ -194,8 +194,9 @@ namespace Web_Page_Screensaver
             btnLangKor.IsSelected = isKo;
             btnLangEng.IsSelected = !isKo;
 
-            Text = isKo ? "웹 화면보호기 설정 v1.0.6" : "WebView2 Web Page Screensaver Settings v1.0.6";
-            lblTitle.Text = isKo ? "WebView2 웹 화면보호기 v1.0.6" : "WebView2 Web Screensaver v1.0.6";
+            string ver = UpdateChecker.CurrentVersionString;
+            Text = isKo ? $"웹 화면보호기 설정 v{ver}" : $"WebView2 Web Page Screensaver Settings v{ver}";
+            lblTitle.Text = isKo ? $"WebView2 웹 화면보호기 v{ver}" : $"WebView2 Web Screensaver v{ver}";
             lblSubtitle.Text = isKo ? "웹사이트 및 대시보드를 고해상도 화면보호기로 출력합니다" : "Display websites and live dashboards with Microsoft WebView2";
             lblMultiScreen.Text = isKo ? "다중 모니터 모드:" : "Multi-Monitor Mode:";
 
@@ -348,12 +349,17 @@ namespace Web_Page_Screensaver
         /// <summary>
         /// 스크린샷 및 시연용으로 새 버전 업데이트 알림 배지를 활성화합니다.
         /// </summary>
-        public void SetUpdateNoticeForDemo(string version = "1.0.7", string url = "https://github.com/muro-dot/Webview2_WebPage_Screensaver_for_Windows/releases")
+        public void SetUpdateNoticeForDemo(string version = "1.0.8", string url = "https://github.com/muro-dot/Webview2_WebPage_Screensaver_for_Windows/releases")
         {
             btnUpdateNotice.Text = $"🚀 New: v{version}";
             btnUpdateNotice.Tag = url;
             btnUpdateNotice.Visible = true;
             btnUpdateNotice.BringToFront();
+        }
+
+        public void HideUpdateNotice()
+        {
+            btnUpdateNotice.Visible = false;
         }
 
         private void LoadValuesForTab(int screenNum)
