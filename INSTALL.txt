@@ -1,0 +1,15 @@
+Web Screensaver · Python Edition
+
+Windows 11 x64 / .NET Framework 4.8 / Microsoft Edge WebView2 Runtime
+
+1. Unzip WebScreensaver.scr to a permanent folder.
+2. Right-click WebScreensaver.scr and choose Install.
+3. Use Settings in Windows Screen Saver Settings to configure the playlist.
+4. Add one URL per line. Example: https://example.com|60
+
+1. WebScreensaver.scr를 영구 보관할 폴더에 압축 해제합니다.
+2. 파일을 오른쪽 클릭하고 '설치'를 선택합니다.
+3. Windows 화면보호기 설정의 '설정' 버튼에서 URL을 지정합니다.
+4. 주소를 한 줄에 하나씩 입력합니다. 예: https://example.com|60
+
+Python installation is not required. / Python을 별도로 설치할 필요가 없습니다.

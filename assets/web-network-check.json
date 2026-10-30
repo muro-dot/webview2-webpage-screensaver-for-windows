@@ -1,0 +1,15 @@
+{
+  "windows": 1,
+  "ready": 1,
+  "errors": [],
+  "profiles": [
+    {
+      "url": "https://example.com",
+      "fallback": false,
+      "loaded": 1,
+      "history": [
+        "https://example.com"
+      ]
+    }
+  ]
+}

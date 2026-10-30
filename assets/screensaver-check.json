@@ -1,0 +1,22 @@
+{
+  "windows": 1,
+  "private_profile_removed": null,
+  "ready": 1,
+  "errors": [],
+  "profiles": [
+    {
+      "url": "https://example.com",
+      "fallback": false,
+      "loaded": 1,
+      "history": [
+        "https://example.com"
+      ],
+      "actual": {
+        "mute": true,
+        "zoom": 1.0,
+        "context_menus": false,
+        "devtools": false
+      }
+    }
+  ]
+}

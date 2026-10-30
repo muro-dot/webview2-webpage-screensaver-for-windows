@@ -1,0 +1,83 @@
+[
+  {
+    "scenario": "rotation",
+    "passed": true,
+    "report": {
+      "windows": 1,
+      "private_profile_removed": null,
+      "ready": 1,
+      "errors": [],
+      "profiles": [
+        {
+          "url": "$PROJECT/tests/page-two.html",
+          "fallback": false,
+          "loaded": 4,
+          "history": [
+            "$PROJECT/tests/page-one.html",
+            "$PROJECT/tests/page-two.html",
+            "$PROJECT/tests/page-one.html",
+            "$PROJECT/tests/page-two.html"
+          ],
+          "actual": {
+            "mute": true,
+            "zoom": 1.25,
+            "context_menus": false,
+            "devtools": false
+          }
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "fallback",
+    "passed": true,
+    "report": {
+      "windows": 1,
+      "private_profile_removed": null,
+      "ready": 1,
+      "errors": [
+        "Unknown"
+      ],
+      "profiles": [
+        {
+          "url": "$PROJECT/tests/does-not-exist.html",
+          "fallback": true,
+          "loaded": 0,
+          "history": [
+            "$PROJECT/tests/does-not-exist.html"
+          ],
+          "actual": null
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "private",
+    "passed": true,
+    "report": {
+      "windows": 1,
+      "private_profile_removed": true,
+      "ready": 1,
+      "errors": [],
+      "profiles": [
+        {
+          "url": "$PROJECT/tests/page-two.html",
+          "fallback": false,
+          "loaded": 4,
+          "history": [
+            "$PROJECT/tests/page-one.html",
+            "$PROJECT/tests/page-two.html",
+            "$PROJECT/tests/page-one.html",
+            "$PROJECT/tests/page-two.html"
+          ],
+          "actual": {
+            "mute": true,
+            "zoom": 1.25,
+            "context_menus": false,
+            "devtools": false
+          }
+        }
+      ]
+    }
+  }
+]

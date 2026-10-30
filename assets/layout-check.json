@@ -1,0 +1,22 @@
+[
+  {
+    "language": "en",
+    "theme": "dark",
+    "issues": []
+  },
+  {
+    "language": "en",
+    "theme": "light",
+    "issues": []
+  },
+  {
+    "language": "ko",
+    "theme": "dark",
+    "issues": []
+  },
+  {
+    "language": "ko",
+    "theme": "light",
+    "issues": []
+  }
+]

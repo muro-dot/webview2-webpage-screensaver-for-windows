@@ -1,0 +1,20 @@
+{
+  "language": "en",
+  "theme": "system",
+  "mode": "Separate",
+  "close_on_activity": true,
+  "mute": true,
+  "private": false,
+  "clock": true,
+  "clock_position": "BottomRight",
+  "displays": [
+    {
+      "urls": [
+        "https://example.com"
+      ],
+      "interval": 30,
+      "randomize": false,
+      "zoom": 100
+    }
+  ]
+}
