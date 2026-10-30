@@ -14,6 +14,7 @@ from tkinter import filedialog, messagebox, ttk
 from ..config import CONFIG_PATH, Display, Settings, load
 from ..windows import monitors, system_dark
 from .theme import Button, DARK, LIGHT, Toggle
+from .select import Select
 
 
 TEXT = {
@@ -58,8 +59,14 @@ class SettingsApp:
     def __init__(self, settings=None, capture=False, path=CONFIG_PATH):
         self.root = tk.Tk()
         self.root.title('Web Screensaver')
-        self.root.geometry('1080x900')
-        self.root.minsize(1000, 640)
+        # Geometry and negative-size Tk fonts are physical pixels. Scale both
+        # together so larger Windows text does not collide with fixed controls.
+        self.root.ui_scale = max(1.0, self.root.winfo_fpixels('1i') / 96)
+        self.ui_scale = self.root.ui_scale
+        width = min(self.s(1200), self.root.winfo_screenwidth() - self.s(48))
+        height = min(self.s(1040), self.root.winfo_screenheight() - self.s(90))
+        self.root.geometry(f'{width}x{height}')
+        self.root.minsize(min(self.s(1080), width), min(self.s(640), height))
         self.path, self.capture = Path(path), capture
         self.settings = copy.deepcopy(settings or load(self.path))
         self.original = copy.deepcopy(self.settings)
@@ -82,21 +89,25 @@ class SettingsApp:
     def t(self, key):
         return TEXT[self.settings.language][key]
 
-    def label(self, master, text, size=13, muted=False, bold=False, **kwargs):
+    def s(self, value):
+        return max(0, round(value * self.ui_scale))
+
+    def label(self, master, text, size=16, muted=False, bold=False, **kwargs):
         return tk.Label(master, text=text, bg=master.cget('bg'), fg=self.p['muted'] if muted else self.p['text'],
-                        font=('Malgun Gothic', -size, 'bold' if bold else 'normal'), anchor='w', **kwargs)
+                        font=('Malgun Gothic', -self.s(size), 'bold' if bold else 'normal'), anchor='w', **kwargs)
 
     def card(self, master):
-        return tk.Frame(master, bg=self.p['card'], highlightbackground=self.p['border'], highlightthickness=1, padx=22, pady=20)
+        return tk.Frame(master, bg=self.p['card'], highlightbackground=self.p['border'], highlightthickness=1, padx=self.s(24), pady=self.s(22))
 
     def combo(self, master, values, index, callback=None, width=22):
-        result = ttk.Combobox(master, values=values, state='readonly', width=width, font=('Malgun Gothic', -13))
+        result = Select(master, values, self.p, width=width * 12)
         result.current(index)
         if callback:
             result.bind('<<ComboboxSelected>>', callback)
         return result
 
     def render(self):
+        s = self.s
         for child in self.root.winfo_children():
             child.destroy()
         dark = self.settings.theme == 'dark' or (self.settings.theme == 'system' and system_dark())
@@ -105,49 +116,45 @@ class SettingsApp:
         self.root.configure(bg=p['bg'])
         style = ttk.Style(self.root)
         style.theme_use('clam')
-        style.configure('TCombobox', fieldbackground=p['inset'], background=p['card'], foreground=p['text'], bordercolor=p['border'], arrowcolor=p['muted'], padding=7)
-        style.map('TCombobox', fieldbackground=[('readonly', p['inset'])], foreground=[('readonly', p['text'])], selectbackground=[('readonly', p['inset'])], selectforeground=[('readonly', p['text'])])
         for orientation in ('Vertical', 'Horizontal'):
             style.configure(f'{orientation}.TScrollbar', background=p['border'], troughcolor=p['inset'], bordercolor=p['inset'],
-                lightcolor=p['border'], darkcolor=p['border'], arrowcolor=p['muted'], arrowsize=12, width=12)
+                lightcolor=p['border'], darkcolor=p['border'], arrowcolor=p['muted'], arrowsize=s(12), width=s(12))
             style.map(f'{orientation}.TScrollbar', background=[('active', p['muted'])])
-        self.root.option_add('*TCombobox*Listbox.background', p['card'])
-        self.root.option_add('*TCombobox*Listbox.foreground', p['text'])
 
         header = tk.Frame(self.root, bg=p['bg'])
-        header.pack(fill='x', padx=32, pady=(24, 0))
+        header.pack(fill='x', padx=s(32), pady=(s(24), s(0)))
         brand = tk.Frame(header, bg=p['bg'])
         brand.pack(fill='x')
-        self.label(brand, '◈  WEB SCREENSAVER', 14, bold=True).pack(side='left')
-        Button(brand, '한국어  /  EN', self.switch_language, p, width=130, height=34).pack(side='right')
-        self.label(header, self.t('title'), 28, bold=True).pack(anchor='w', pady=(16, 4))
-        self.label(header, self.t('subtitle'), 13, muted=True).pack(anchor='w')
+        self.label(brand, '◈  WEB SCREENSAVER', 16, bold=True).pack(side='left')
+        Button(brand, '한국어  /  EN', self.switch_language, p, width=144, height=40).pack(side='right')
+        self.label(header, self.t('title'), 32, bold=True).pack(anchor='w', pady=(s(16), s(4)))
+        self.label(header, self.t('subtitle'), 16, muted=True).pack(anchor='w')
 
         toolbar = tk.Frame(self.root, bg=p['bg'])
-        toolbar.pack(fill='x', padx=32, pady=(20, 15))
-        self.label(toolbar, self.t('settings'), 13, bold=True).pack(side='left')
+        toolbar.pack(fill='x', padx=s(32), pady=(s(20), s(15)))
+        self.label(toolbar, self.t('settings'), 16, bold=True).pack(side='left')
         self.theme_combo = self.combo(toolbar, self.t('themes'), ['system', 'dark', 'light'].index(self.settings.theme), self.switch_theme, width=10)
         self.theme_combo.pack(side='right')
-        self.label(toolbar, self.t('theme'), muted=True).pack(side='right', padx=16)
+        self.label(toolbar, self.t('theme'), muted=True).pack(side='right', padx=s(16))
 
         footer = tk.Frame(self.root, bg=p['bg'])
-        footer.pack(side='bottom', fill='x', padx=32, pady=(14, 22))
+        footer.pack(side='bottom', fill='x', padx=s(32), pady=(s(14), s(22)))
         buttons = tk.Frame(footer, bg=p['bg'])
         buttons.pack(fill='x')
-        Button(buttons, self.t('import_'), self.import_settings, p, width=88).pack(side='left')
-        Button(buttons, self.t('export'), self.export_settings, p, width=88).pack(side='left', padx=16)
-        Button(buttons, self.t('reset'), self.reset, p, width=80).pack(side='left')
-        Button(buttons, self.t('save'), self.save, p, width=142, primary=True).pack(side='right')
-        Button(buttons, self.t('preview'), self.preview, p, width=120).pack(side='right', padx=16)
-        Button(buttons, self.t('launch'), lambda: self.preview(full=True), p, width=145).pack(side='right')
+        Button(buttons, self.t('import_'), self.import_settings, p, width=100).pack(side='left')
+        Button(buttons, self.t('export'), self.export_settings, p, width=100).pack(side='left', padx=s(16))
+        Button(buttons, self.t('reset'), self.reset, p, width=88).pack(side='left')
+        Button(buttons, self.t('save'), self.save, p, width=160, primary=True).pack(side='right')
+        Button(buttons, self.t('preview'), self.preview, p, width=128).pack(side='right', padx=s(16))
+        Button(buttons, self.t('launch'), lambda: self.preview(full=True), p, width=170).pack(side='right')
         status = tk.Frame(footer, bg=p['bg'])
-        status.pack(fill='x', pady=(12, 0))
-        self.status = self.label(status, self.t('engine'), 11, muted=True)
+        status.pack(fill='x', pady=(s(12), s(0)))
+        self.status = self.label(status, self.t('engine'), 14, muted=True)
         self.status.pack(side='left')
-        self.label(status, 'PYTHON EDITION  /  2.0', 10, muted=True).pack(side='right')
+        self.label(status, 'PYTHON EDITION  /  2.0', 12, muted=True).pack(side='right')
 
         viewport_frame = tk.Frame(self.root, bg=p['bg'])
-        viewport_frame.pack(fill='both', expand=True, padx=32)
+        viewport_frame.pack(fill='both', expand=True, padx=s(32))
         viewport = tk.Canvas(viewport_frame, bg=p['bg'], highlightthickness=0)
         vertical = ttk.Scrollbar(viewport_frame, orient='vertical', command=viewport.yview)
         viewport.configure(yscrollcommand=vertical.set)
@@ -156,11 +163,11 @@ class SettingsApp:
         body = tk.Frame(viewport, bg=p['bg'])
         body_window = viewport.create_window(0, 0, window=body, anchor='nw')
         def fit_body(event):
-            if event.height < 576:
+            if event.height < s(660):
                 vertical.pack(side='right', fill='y', before=viewport)
             else:
                 vertical.pack_forget()
-            viewport.itemconfigure(body_window, width=event.width, height=max(576, event.height))
+            viewport.itemconfigure(body_window, width=event.width, height=max(s(660), event.height))
             viewport.configure(scrollregion=viewport.bbox('all'))
         viewport.bind('<Configure>', fit_body)
         def wheel(event):
@@ -169,37 +176,37 @@ class SettingsApp:
         self.root.bind_all('<MouseWheel>', wheel)
         body.columnconfigure(1, weight=1)
         body.rowconfigure(0, weight=1)
-        sidebar = tk.Frame(body, bg=p['bg'], width=264)
-        sidebar.grid(row=0, column=0, sticky='nsew', padx=(0, 20))
+        sidebar = tk.Frame(body, bg=p['bg'], width=s(288))
+        sidebar.grid(row=0, column=0, sticky='nsew', padx=(s(0), s(20)))
         sidebar.grid_propagate(False)
         display_card = self.card(sidebar)
         display_card.pack(fill='x')
-        self.label(display_card, self.t('displays'), 11, muted=True, bold=True).pack(anchor='w')
-        self.label(display_card, self.t('profile'), 18, bold=True).pack(anchor='w', pady=(8, 14))
+        self.label(display_card, self.t('displays'), 14, muted=True, bold=True).pack(anchor='w')
+        self.label(display_card, self.t('profile'), 22, bold=True).pack(anchor='w', pady=(s(8), s(14)))
         count = max(len(monitors()), len(self.settings.displays))
         values = [f'{self.t("screen")} {i + 1:02d}' for i in range(count)]
         self.screen_combo = self.combo(display_card, values, self.selected, self.switch_display, width=18)
         self.screen_combo.pack(fill='x')
-        self.label(display_card, self.t('mode'), muted=True).pack(anchor='w', pady=(18, 7))
+        self.label(display_card, self.t('mode'), muted=True).pack(anchor='w', pady=(s(18), s(7)))
         self.mode_combo = self.combo(display_card, self.t('modes'), ['Separate', 'Mirror', 'Span'].index(self.settings.mode), width=18)
         self.mode_combo.pack(fill='x')
-        self.label(display_card, self.t('note'), 12, muted=True, justify='left').pack(anchor='w', pady=(18, 0))
+        self.label(display_card, self.t('note'), 15, muted=True, justify='left').pack(anchor='w', pady=(s(18), s(0)))
         release = tk.Frame(sidebar, bg=p['bg'])
-        release.pack(fill='x', pady=15)
-        Button(release, self.t('update'), self.check_release, p, width=264, height=36).pack()
+        release.pack(fill='x', pady=s(15))
+        Button(release, self.t('update'), self.check_release, p, width=288, height=44).pack()
 
         right = tk.Frame(body, bg=p['bg'])
         right.grid(row=0, column=1, sticky='nsew')
         editor = self.card(right)
         editor.pack(fill='both', expand=True)
-        self.label(editor, self.t('playlist'), 19, bold=True).pack(anchor='w')
-        self.label(editor, self.t('playlist_sub'), 12, muted=True).pack(anchor='w', pady=(4, 14))
-        text_frame = tk.Frame(editor, bg=p['border'], padx=1, pady=1)
+        self.label(editor, self.t('playlist'), 23, bold=True).pack(anchor='w')
+        self.label(editor, self.t('playlist_sub'), 15, muted=True, wraplength=s(690), justify='left').pack(anchor='w', pady=(s(4), s(14)))
+        text_frame = tk.Frame(editor, bg=p['border'], padx=s(1), pady=s(1))
         text_frame.pack(fill='both', expand=True)
         scrollbar = ttk.Scrollbar(text_frame)
         scrollbar.pack(side='right', fill='y')
         self.url_text = tk.Text(text_frame, height=5, wrap='none', bg=p['inset'], fg=p['text'], insertbackground=p['accent'],
-            selectbackground=p['accent'], selectforeground=p['on_accent'], font=('Consolas', -14), relief='flat', padx=14, pady=12, undo=True,
+            selectbackground=p['accent'], selectforeground=p['on_accent'], font=('Consolas', -s(17)), relief='flat', padx=s(14), pady=s(12), undo=True,
             yscrollcommand=scrollbar.set, highlightthickness=0)
         self.url_text.pack(fill='both', expand=True)
         scrollbar.configure(command=self.url_text.yview)
@@ -208,34 +215,34 @@ class SettingsApp:
         horizontal = ttk.Scrollbar(editor, orient='horizontal', command=self.url_text.xview)
         horizontal.pack(fill='x')
         self.url_text.configure(xscrollcommand=horizontal.set)
-        self.label(editor, self.t('hint'), 11, muted=True, wraplength=610, justify='left').pack(anchor='w', pady=(10, 0))
+        self.label(editor, self.t('hint'), 14, muted=True, wraplength=s(690), justify='left').pack(anchor='w', pady=(s(10), s(0)))
 
         lower = tk.Frame(right, bg=p['bg'])
-        lower.pack(fill='x', pady=(16, 0))
+        lower.pack(fill='x', pady=(s(16), s(0)))
         lower.columnconfigure(0, weight=1)
         lower.columnconfigure(1, weight=1)
         playback = self.card(lower)
-        playback.grid(row=0, column=0, sticky='nsew', padx=(0, 8))
+        playback.grid(row=0, column=0, sticky='nsew', padx=(s(0), s(8)))
         behavior = self.card(lower)
-        behavior.grid(row=0, column=1, sticky='nsew', padx=(8, 0))
-        self.label(playback, self.t('playback'), 16, bold=True).pack(anchor='w', pady=(0, 12))
+        behavior.grid(row=0, column=1, sticky='nsew', padx=(s(8), s(0)))
+        self.label(playback, self.t('playback'), 20, bold=True).pack(anchor='w', pady=(s(0), s(16)))
         self.interval = tk.StringVar(value=str(profile.interval))
         self.zoom = tk.StringVar(value=str(profile.zoom))
         for key, variable in [('interval', self.interval), ('zoom', self.zoom)]:
             row = tk.Frame(playback, bg=p['card'])
-            row.pack(fill='x', pady=(0, 12))
-            self.label(row, self.t(key), 12).pack(side='left')
+            row.pack(fill='x', pady=(s(0), s(12)))
+            self.label(row, self.t(key), 15).pack(side='left')
             tk.Entry(row, textvariable=variable, width=5, justify='center', bg=p['inset'], fg=p['text'], insertbackground=p['text'],
-                relief='flat', font=('Segoe UI', -14), highlightbackground=p['border'], highlightthickness=1).pack(side='right', ipady=4)
+                relief='flat', font=('Segoe UI', -s(17)), highlightbackground=p['border'], highlightthickness=1).pack(side='right', ipady=s(6))
         self.variables = {name: tk.BooleanVar(value=getattr(self.settings, name)) for name in ('mute', 'private', 'clock', 'close_on_activity')}
         self.randomize = tk.BooleanVar(value=profile.randomize)
-        Toggle(playback, self.t('random'), self.randomize, p).pack(fill='x', pady=(0, 12))
-        self.label(playback, self.t('position'), 12, muted=True).pack(anchor='w', pady=(0, 6))
+        Toggle(playback, self.t('random'), self.randomize, p).pack(fill='x', pady=(s(0), s(12)))
+        self.label(playback, self.t('position'), 15, muted=True).pack(anchor='w', pady=(s(0), s(8)))
         self.position_combo = self.combo(playback, self.t('positions'), ['BottomRight', 'BottomLeft', 'TopRight', 'TopLeft'].index(self.settings.clock_position), width=15)
         self.position_combo.pack(fill='x')
-        self.label(behavior, self.t('behavior'), 16, bold=True).pack(anchor='w', pady=(0, 8))
+        self.label(behavior, self.t('behavior'), 20, bold=True).pack(anchor='w', pady=(s(0), s(14)))
         for attr, key in [('mute', 'mute'), ('private', 'private'), ('clock', 'clock'), ('close_on_activity', 'close')]:
-            Toggle(behavior, self.t(key), self.variables[attr], p).pack(fill='x', pady=9)
+            Toggle(behavior, self.t(key), self.variables[attr], p).pack(fill='x', pady=s(12))
 
     def collect(self):
         candidate = copy.deepcopy(self.settings)

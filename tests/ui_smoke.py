@@ -32,9 +32,27 @@ def main():
         language_button = next(w for w in widgets(app.root) if isinstance(w, Button) and w.label == '한국어  /  EN')
         language_button.invoke()
         assert app.settings.language == 'en'
-        app.theme_combo.current(2)
-        app.switch_theme()
+        app.theme_combo.open_menu()
+        app.root.update()
+        app.theme_combo.menu.event_generate('<Down>')
+        app.root.update()
+        assert app.theme_combo.active == 2
+        app.theme_combo.menu.event_generate('<Return>')
+        app.root.update()
         assert app.settings.theme == 'light'
+        app.mode_combo.open_menu()
+        app.root.update()
+        app.mode_combo.menu.event_generate('<Down>')
+        app.root.update()
+        app.mode_combo.menu.event_generate('<Escape>')
+        app.root.update()
+        assert app.mode_combo.popup is None and app.mode_combo.current() == 0, (app.mode_combo.popup, app.mode_combo.current())
+        app.position_combo.open_menu()
+        app.root.update()
+        app.position_combo.menu.event_generate('<End>')
+        app.position_combo.menu.event_generate('<Return>')
+        app.root.update()
+        assert app.position_combo.current() == 3
         app.root.update()
         save_button = next(w for w in widgets(app.root) if isinstance(w, Button) and w.label == 'Save settings')
         save_button.invoke()
@@ -42,7 +60,7 @@ def main():
         assert saved.displays[0].interval == 60 and saved.displays[0].zoom == 150
         assert len(saved.displays[0].urls) == 2 and saved.displays[0].randomize
         assert not saved.mute and saved.language == 'en' and saved.theme == 'light'
-        app.root.geometry('1000x700+40+40')
+        app.root.geometry(f'{app.s(1080)}x{app.s(720)}+40+40')
         app.root.update()
         def snapshot():
             app.root.update_idletasks()
@@ -53,7 +71,7 @@ def main():
             app.close()
         app.root.after(500, snapshot)
         app.run()
-    print('PASS: language/theme redraw preserves edits, Save button round trip, small viewport footer.')
+    print('PASS: popup keyboard navigation, Enter/Escape, language/theme preserves edits, Save, small viewport.')
 
 
 if __name__ == '__main__':
