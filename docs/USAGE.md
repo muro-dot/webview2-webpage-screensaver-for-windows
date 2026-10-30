@@ -39,3 +39,9 @@ Integration tests require an unlocked interactive desktop. They open temporary b
 The executable extracts its bundled Python dependencies to a temporary directory while running. Its on-disk EXE size is therefore different from the temporary extracted footprint. Fonts use installed Windows fonts; no third-party font bundle is included.
 
 Multi-monitor hardware and Windows screensaver installation should be checked on the target machine. Automated tests do not install the screensaver or change system settings.
+
+## WebView2 DLLs and fullscreen
+
+The single EXE/SCR contains Microsoft.Web.WebView2.Core.dll, Microsoft.Web.WebView2.WinForms.dll and WebView2Loader.dll. PyInstaller extracts these SDK/loader files into its temporary runtime directory. The actual Evergreen WebView2 Runtime must still be installed on the PC; it is not included in the 24.6 MB download.
+
+The **Preview** button opens a window. **Run screensaver**, `.scr` playback and `/s` cover the physical monitor bounds, including the taskbar, regardless of display scaling.

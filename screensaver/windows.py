@@ -42,6 +42,34 @@ def activity():
     return info.dwTime
 
 
+def window_bounds(handle):
+    user = ctypes.windll.user32
+    user.GetWindowRect.argtypes = [wintypes.HWND, ctypes.POINTER(wintypes.RECT)]
+    user.GetWindowRect.restype = wintypes.BOOL
+    rectangle = wintypes.RECT()
+    if not user.GetWindowRect(handle, ctypes.byref(rectangle)):
+        raise ctypes.WinError()
+    return (rectangle.left, rectangle.top, rectangle.right - rectangle.left, rectangle.bottom - rectangle.top)
+
+
+def cover_monitor(handle, bounds):
+    """Use physical screen pixels, bypassing pywebview's logical-pixel conversion."""
+    user = ctypes.windll.user32
+    user.SetWindowPos.argtypes = [wintypes.HWND, wintypes.HWND, ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_int, wintypes.UINT]
+    user.SetWindowPos.restype = wintypes.BOOL
+    # A normal borderless topmost window can also span multiple monitors, unlike
+    # maximizing a Form, which Windows confines to a single monitor's work area.
+    if not user.SetWindowPos(handle, wintypes.HWND(-1), *bounds, 0x30):
+        raise ctypes.WinError()
+    # Frameless windows can retain rounded corners/shadows on Windows 11.
+    # Remove them so the desktop cannot show through at the screen edges.
+    dwm = ctypes.windll.dwmapi
+    dwm.DwmSetWindowAttribute.argtypes = [wintypes.HWND, wintypes.DWORD, ctypes.c_void_p, wintypes.DWORD]
+    for attribute, value in ((33, 1), (34, 0xFFFFFFFE)):
+        setting = wintypes.DWORD(value)
+        dwm.DwmSetWindowAttribute(handle, attribute, ctypes.byref(setting), ctypes.sizeof(setting))
+
+
 def parent_window(child: int, parent: int):
     user = ctypes.windll.user32
     user.SetParent.argtypes = [wintypes.HWND, wintypes.HWND]

@@ -12,7 +12,7 @@ from pathlib import Path
 
 from .clock import clock_html, overlay_script
 from .config import Display, Settings, parse_url
-from .windows import activity, monitors, parent_window
+from .windows import activity, cover_monitor, monitors, parent_window, window_bounds
 
 
 class Playback:
@@ -34,14 +34,30 @@ class Playback:
             except Exception:
                 logging.exception('Closing browser window')
 
-    def initialize_native(self, window, display):
+    def initialize_native(self, window, display, bounds=None):
         from System import Action
-        from System.Windows.Forms import Button, Cursor, Timer
+        from System.Drawing import Size
+        from System.Windows.Forms import AutoScaleMode, Button, Cursor, Timer, FormWindowState
         from Microsoft.Web.WebView2.Core import CoreWebView2PermissionState
         form = window.native
         control = form.webview
         state = {'ready': False, 'fallback': False, 'index': -1, 'next': float('inf'), 'retry': float('inf'), 'crashes': 0, 'last_url': '', 'history': [], 'loaded': 0}
         self.states.append(state)
+        if bounds is not None and not self.preview and not self.parent:
+            handle = int(form.Handle.ToInt64())
+            state['initial_bounds'] = window_bounds(handle)
+            state['target_bounds'] = bounds
+            # pywebview scales constructor dimensions from logical pixels. The
+            # monitor rectangles are already physical, so size the HWND directly.
+            form.AutoScaleMode = getattr(AutoScaleMode, 'None')
+            form.MinimumSize = Size(0, 0)
+            form.MaximumSize = Size(0, 0)
+            form.WindowState = FormWindowState.Normal
+            def fit_screen(sender=None, args=None):
+                cover_monitor(handle, bounds)
+                state['actual_bounds'] = window_bounds(handle)
+            fit_screen()
+            form.Shown += fit_screen
         urls = list(display.urls)
         if display.randomize:
             random.Random(0 if self.settings.mode == 'Mirror' else None).shuffle(urls)
@@ -150,6 +166,13 @@ class Playback:
 
         def tick(sender, args):
             now = time.monotonic()
+            if 'target_bounds' in state:
+                actual_bounds = window_bounds(handle)
+                if actual_bounds != bounds:
+                    fit_screen()
+                else:
+                    state['actual_bounds'] = actual_bounds
+                state['client_size'] = [int(form.ClientSize.Width), int(form.ClientSize.Height)]
             if self.seconds and now - self.start_time >= self.seconds:
                 self.close()
                 return
@@ -202,8 +225,8 @@ class Playback:
             window = webview.create_window('Web Screensaver — Preview' if self.preview else 'Web Screensaver',
                 html=clock_html(self.settings.language), x=rectangle[0], y=rectangle[1], width=rectangle[2], height=rectangle[3],
                 frameless=not self.preview, on_top=not self.preview, resizable=self.preview,
-                background_color='#0c101a', text_select=False, easy_drag=False)
-            window.events.before_show += lambda w=window, p=profile: self.initialize_native(w, p)
+                background_color='#0c101a', text_select=False, easy_drag=False, shadow=False)
+            window.events.before_show += lambda w=window, p=profile, r=rectangle: self.initialize_native(w, p, r)
             window.events.closed += self.close
             self.windows.append(window)
         temporary = tempfile.mkdtemp(prefix='webscreensaver-private-') if self.settings.private else None
@@ -225,7 +248,8 @@ class Playback:
                     logging.warning('Temporary browser directory is still locked: %s', temporary)
             if self.report:
                 Path(self.report).write_text(json.dumps({'windows': len(self.windows), 'private_profile_removed': not Path(temporary).exists() if temporary else None, 'ready': sum(s['ready'] for s in self.states),
-                    'errors': self.errors, 'profiles': [{'url': s['last_url'], 'fallback': s['fallback'], 'loaded': s['loaded'], 'history': s['history'], 'actual': s.get('actual')} for s in self.states]}, indent=2), encoding='utf-8')
+                    'errors': self.errors, 'profiles': [{'url': s['last_url'], 'fallback': s['fallback'], 'loaded': s['loaded'], 'history': s['history'], 'actual': s.get('actual'),
+                        'initial_bounds': s.get('initial_bounds'), 'target_bounds': s.get('target_bounds'), 'actual_bounds': s.get('actual_bounds'), 'client_size': s.get('client_size')} for s in self.states]}, indent=2), encoding='utf-8')
 
 
 def preview_thumbnail(parent, language='ko', seconds=0):

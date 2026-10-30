@@ -1,0 +1,37 @@
+{
+  "windows": 1,
+  "private_profile_removed": null,
+  "ready": 1,
+  "errors": [],
+  "profiles": [
+    {
+      "url": "",
+      "fallback": true,
+      "loaded": 0,
+      "history": [],
+      "actual": null,
+      "initial_bounds": [
+        0,
+        0,
+        3444,
+        1415
+      ],
+      "target_bounds": [
+        0,
+        0,
+        3440,
+        1440
+      ],
+      "actual_bounds": [
+        0,
+        0,
+        3440,
+        1440
+      ],
+      "client_size": [
+        3440,
+        1440
+      ]
+    }
+  ]
+}

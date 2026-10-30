@@ -23,7 +23,11 @@
             "zoom": 1.25,
             "context_menus": false,
             "devtools": false
-          }
+          },
+          "initial_bounds": null,
+          "target_bounds": null,
+          "actual_bounds": null,
+          "client_size": null
         }
       ]
     }
@@ -46,7 +50,11 @@
           "history": [
             "$PROJECT/tests/does-not-exist.html"
           ],
-          "actual": null
+          "actual": null,
+          "initial_bounds": null,
+          "target_bounds": null,
+          "actual_bounds": null,
+          "client_size": null
         }
       ]
     }
@@ -75,7 +83,11 @@
             "zoom": 1.25,
             "context_menus": false,
             "devtools": false
-          }
+          },
+          "initial_bounds": null,
+          "target_bounds": null,
+          "actual_bounds": null,
+          "client_size": null
         }
       ]
     }
